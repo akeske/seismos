@@ -388,7 +388,11 @@ include("inc/database.php");
 				<img src="images/yellow.png" alt="some_text" width="20">&nbsp;&nbsp;&nbsp; 6 >= Magnitude
 			</td>
 		</tr>
-
+		<tr>
+			<td>
+				<img src="images/pink.png" alt="some_text" width="20">&nbsp;&nbsp;&nbsp; predictions
+			</td>
+		</tr>
 		</table>
 
 	</td>

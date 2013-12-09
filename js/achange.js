@@ -128,6 +128,10 @@ var iconM19 = new google.maps.MarkerImage('images/starRed.png',
 	new google.maps.Size(18, 18)
 );
 
+
+
+
+
 // - 3
 var icon1 = new google.maps.MarkerImage('images/black.png',
 	null,
@@ -163,12 +167,20 @@ var icon5 = new google.maps.MarkerImage('images/yellow.png',
 	new google.maps.Point(3, 3),
 	new google.maps.Size(6, 6)
 );
+// prediction
+var icon6 = new google.maps.MarkerImage('images/pink.png',
+	null,
+	null,
+	new google.maps.Point(3, 3),
+	new google.maps.Size(6, 6)
+);
 var customIcons = [];
 customIcons["1"] = icon1;
 customIcons["2"] = icon2;
 customIcons["3"] = icon3;
 customIcons["4"] = icon4;
 customIcons["5"] = icon5;
+customIcons["6"] = icon6;
 /*
 var customIcons = [];
 customIcons["0"] = iconM0;
@@ -602,7 +614,7 @@ function createMarkerPred(id, latlng, num) {
 		map: null,
 		title: num,
 		clickable: true,
-		icon: customIcons[1]
+		icon: customIcons[6]
 	});
 	return marker;
 }
