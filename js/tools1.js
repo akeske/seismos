@@ -270,7 +270,6 @@ function fib_circles1(coordinates1) {
 			break;
 	}
 }
-
 function drawCircle1(x, y, radius) {
 	var options = {
 		strokeColor: "#1143c1",
@@ -323,14 +322,30 @@ function fib_lines1(coordinates1) {
 	google.maps.event.addListener(markerv12, 'drag', function () {
 		document.getElementById('distVer1').value = distance(markerv11.getPosition().lat(), markerv11.getPosition().lng(), markerv12.getPosition().lat(), markerv12.getPosition().lng(), 1);
 	});
-	var c = y2 - y1;
-	var i = 0;
-	while((dis = custom_distanceVer1(c, i++)) != -1) {
-		lines1.push(drawlines1(y1 + dis));
-		lines1.push(drawlines1(y1 - dis));
+	if(distancesVer1[0]<distancesVer1[1]){
+		var c = y2 - y1;
+		var i = 0;
+		while((dis = custom_distanceVer1(c, i++)) != -1) {
+			lines1.push(drawlines1(y1 + dis));
+			lines1.push(drawlines1(y1 - dis));
+		}
+	}else{
+		lines1.push(drawlines1(y1));
+		lines1.push(drawlines1(y2));
+		var c = y2 - y1;
+		var lastrigh = y2;
+		var lastleft = y1;
+		var diafora = distancesVer1[0] - distancesVer1[1];
+		var monada = c / diafora;
+		var i = 2;
+		while((dis = custom_distanceVer1(monada, i++)) != -1) {
+			lines1.push(drawlines1(lastrigh + dis));
+			lines1.push(drawlines1(lastleft - dis));
+			lastrigh = lastrigh+dis;
+			lastleft = lastleft-dis;
+		}
 	}
 }
-
 function drawlines1(y1) {
 	var lines1coordinates1 = [
 		new google.maps.LatLng(33.815666, y1),
@@ -344,7 +359,6 @@ function drawlines1(y1) {
 		//	geodesic: true,
 		strokeWeight: 1
 	});
-
 	linePath.setMap(map);
 	return linePath;
 }
@@ -387,14 +401,30 @@ function fib_lines12(coordinates1) {
 		document.getElementById('distHor1').value = distance(markerh11.getPosition().lat(), markerh11.getPosition().lng(), markerh12.getPosition().lat(), markerh12.getPosition().lng(), 2);
 	});
 
-	var c = y2 - y1;
-	var i = 0;
-	while((dis = custom_distanceHor1(c, i++)) != -1) {
-		lines12.push(drawlines12(y1 + dis));
-		lines12.push(drawlines12(y1 - dis));
+	if(distancesHor1[0]<distancesHor1[1]){
+		var c = y2 - y1;
+		var i = 0;
+		while((dis = custom_distanceHor1(c, i++)) != -1) {
+			lines12.push(drawlines12(y1 + dis));
+			lines12.push(drawlines12(y1 - dis));
+		}
+	}else{
+		lines12.push(drawlines12(y1));
+		lines12.push(drawlines12(y2));
+		var c = y2 - y1;
+		var lastrigh = y2;
+		var lastleft = y1;
+		var diafora = distancesHor1[0] - distancesHor1[1];
+		var monada = c / diafora;
+		var i = 2;
+		while((dis = custom_distanceHor1(monada, i++)) != -1) {
+			lines12.push(drawlines12(lastrigh + dis));
+			lines12.push(drawlines12(lastleft - dis));
+			lastrigh = lastrigh+dis;
+			lastleft = lastleft-dis;
+		}
 	}
 }
-
 function drawlines12(y1) {
 	var lines1coordinates1 = [
 		new google.maps.LatLng(y1, 34.495),

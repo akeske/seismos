@@ -31,6 +31,7 @@ $graph->title->SetFont(FF_FONT1,FS_BOLD);
 $graph->yaxis->title->SetFont(FF_FONT1,FS_BOLD);
 $graph->xaxis->title->SetFont(FF_FONT1,FS_BOLD);
 $graph->xaxis->SetTextLabelInterval(1);
+$graph->xaxis->SetLabelAngle(30);
 // Create the first line
 $p1 = new LinePlot($datay1);
 $p1->value->Show();

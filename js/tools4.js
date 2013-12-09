@@ -304,11 +304,28 @@ function fib_lines4(coordinates4) {
 	google.maps.event.addListener(markerv42, 'drag', function () {
 		document.getElementById('distVer4').value = distance( markerv41.getPosition().lat(), markerv41.getPosition().lng(), markerv42.getPosition().lat(), markerv42.getPosition().lng(), 1 );
 	});
-	var c = y2 - y1;
-	var i = 0;
-	while((dis = custom_distancever4(c, i++)) != -1) {
-		lines4.push(drawlines4(y1 + dis));
-		lines4.push(drawlines4(y1 - dis));
+	if(distancesVer4[0]<distancesVer4[1]){
+		var c = y2 - y1;
+		var i = 0;
+		while((dis = custom_distancever4(c, i++)) != -1) {
+			lines4.push(drawlines4(y1 + dis));
+			lines4.push(drawlines4(y1 - dis));
+		}
+	}else{
+		lines4.push(drawlines4(y1));
+		lines4.push(drawlines4(y2));
+		var c = y2 - y1;
+		var lastrigh = y2;
+		var lastleft = y1;
+		var diafora = distancesVer4[0] - distancesVer4[1];
+		var monada = c / diafora;
+		var i = 2;
+		while((dis = custom_distancever4(monada, i++)) != -1) {
+			lines4.push(drawlines4(lastrigh + dis));
+			lines4.push(drawlines4(lastleft - dis));
+			lastrigh = lastrigh+dis;
+			lastleft = lastleft-dis;
+		}
 	}
 }
 function drawlines4(y1) {
@@ -367,14 +384,30 @@ function fib_lines42(coordinates4) {
 		document.getElementById('distHor4').value = distance( markerh41.getPosition().lat(), markerh41.getPosition().lng(), markerh42.getPosition().lat(), markerh42.getPosition().lng(), 2 );
 	});
 
-	var c = y2 - y1;
-	var i = 0;
-	while((dis = custom_distancehor4(c, i++)) != -1) {
-		lines42.push(drawlines42(y1 + dis));
-		lines42.push(drawlines42(y1 - dis));
+	if(distancesHor4[0]<distancesHor4[1]){
+		var c = y2 - y1;
+		var i = 0;
+		while((dis = custom_distancehor4(c, i++)) != -1) {
+			lines42.push(drawlines42(y1 + dis));
+			lines42.push(drawlines42(y1 - dis));
+		}
+	}else{
+		lines42.push(drawlines42(y1));
+		lines42.push(drawlines42(y2));
+		var c = y2 - y1;
+		var lastrigh = y2;
+		var lastleft = y1;
+		var diafora = distancesHor4[0] - distancesHor4[1];
+		var monada = c / diafora;
+		var i = 2;
+		while((dis = custom_distancehor4(monada, i++)) != -1) {
+			lines42.push(drawlines42(lastrigh + dis));
+			lines42.push(drawlines42(lastleft - dis));
+			lastrigh = lastrigh+dis;
+			lastleft = lastleft-dis;
+		}
 	}
 }
-
 function drawlines42(y1) {
 	var lines4coordinates4 = [
 		new google.maps.LatLng(y1, 34.495),
