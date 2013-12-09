@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("inc/database.php");
+//include("csvxml.php");
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -20,18 +21,24 @@ include("inc/database.php");
 	<link href="css/styles.css" rel="stylesheet" type="text/css">
 
 	<link rel="stylesheet" type="text/css" href="css/tcal.css" />
+
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+
 	<script type="text/javascript" src="js/tcal.js"></script>
 
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3&amp;sensor=false"></script>
- 	
-	<script src="http://code.jquery.com/jquery-latest.js"></script>
+
 	<script type="text/javascript" src="js/achange.js"></script>
 	<script type="text/javascript" src="js/util.js"></script>
 	<script src="js/tools1.js"></script>
     <script src="js/tools2.js"></script>
     <script src="js/tools3.js"></script>
-     <script src="js/tools4.js"></script>
+    <script src="js/tools4.js"></script>
     <script src="js/memory.js"></script>
+<!--
+    <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+-->
+	
 	
 </head>
 <body onload="load()">
@@ -44,7 +51,7 @@ include("inc/database.php");
 	$_SESSION['order']=$order;
 	
 	$orderby = $_POST['orderby'];
-	if( $orderby=="" ) $orderby='DESC';
+	if( $orderby=="" ) $orderby='ASC';
 	$_SESSION['orderby']=$orderby;
 	
 	$fromlat = $_POST['fromlat'];
@@ -98,7 +105,8 @@ include("inc/database.php");
 	if( $diastaseis=="" ) $diastaseis=1;
 	$_SESSION['diastaseis']=$diastaseis; 
 	
-	
+	$fromPred = $_POST['fromPred'];
+	$toPred = $_POST['toPred'];
 	$fibVer1 = $_POST['fibVer1'];
 	$fibHor1 =  $_POST['fibHor1'];
 	$fibCircle1 =  $_POST['fibCircle1'];
@@ -111,6 +119,8 @@ include("inc/database.php");
 	$fibVer4 =  $_POST['fibVer4'];
 	$fibHor4 =  $_POST['fibHor4'];
 	$fibCircle4 =  $_POST['fibCircle4'];
+	if( $fromPred == "" ) $fromPred = "5";
+	if( $toPred == "" ) $toPred = "9";
 	if( $fibVer1 == "" ) $fibVer1 = "0,1,2,3,5,8";
 	if( $fibHor1 == "" ) $fibHor1 = "0,1,2,3,5,8";
 	if( $fibCircle1 == "" ) $fibCircle1 = "0,1,2,3,5,8";
@@ -123,6 +133,8 @@ include("inc/database.php");
 	if( $fibVer4 == "" ) $fibVer4 = "0,1,2,3,5,8";
 	if( $fibHor4 == "" ) $fibHor4 = "0,1,2,3,5,8";
 	if( $fibCircle4 == "" ) $fibCircle4 = "0,1,2,3,5,8";
+	$_SESSION['fromPred'] = $fromPred;
+	$_SESSION['toPred'] = $toPred;
 	$_SESSION['fibVer1'] = $fibVer1;
 	$_SESSION['fibHor1'] = $fibHor1;
 	$_SESSION['fibCircle1'] = $fibCircle1;
@@ -262,15 +274,15 @@ include("inc/database.php");
 					</th>
 					<td width="170">
 						<select name="order" value="<?php echo $_SESSION['order']; ?>">
-							<option value="date">date</option>
-							<option value="lng">lng</option>
-							<option value="lat">lat</option>
-							<option value="megethos">magnitude</option>
-							<option value="vathos">depth</option>
+							<option <?php if($_SESSION['order'] == "date"){ echo 'selected'; } ?> value="date">date</option>
+							<option <?php if($_SESSION['order'] == "lng"){ echo 'selected'; } ?> value="lng">lng</option>
+							<option <?php if($_SESSION['order'] == "lat"){ echo 'selected'; } ?> value="lat">lat</option>
+							<option <?php if($_SESSION['order'] == "megethos"){ echo 'selected'; } ?> value="megethos">magnitude</option>
+							<option <?php if($_SESSION['order'] == "vathos"){ echo 'selected'; } ?> value="vathos">depth</option>
 						</select>
 						<select name="orderby" value="<?php echo $_SESSION['orderby']; ?>">
-							<option value="DESC">descending</option>
-							<option value="ASC">ascending</option>
+							<option <?php if($_SESSION['orderby'] == "ASC"){ echo 'selected'; } ?> value="ASC">ascending</option>
+							<option <?php if($_SESSION['orderby'] == "DESC"){ echo 'selected'; } ?> value="DESC">descending</option>
 						</select>
 					</td>
 				</tr>
@@ -287,7 +299,7 @@ include("inc/database.php");
 						</div>
 					</td>
 				
-</form>
+			</form>
 					<form action="" method="post" align="center">	
 						<td>
 							<div class="buttons">
@@ -298,45 +310,51 @@ include("inc/database.php");
 							</div>
 						</td>
 					</form>
+
+					
 				</tr>
 			</table>
 	
 	
 	</td>
 
-	<td rowspan="2">
+	<td rowspan="3">
 			<?php
-					if( isset( $_POST['subclear']) ) {
-						unset($_SESSION['todate1']);
-						unset($_SESSION['fromdate1']);
-						unset($_SESSION['tomagn']);
-						unset($_SESSION['frommagn']);
-						unset($_SESSION['order']);
-						unset($_SESSION['orderby']);
-						unset($_SESSION['tolat']);
-						unset($_SESSION['tolng']);
-						unset($_SESSION['fromlat']);
-						unset($_SESSION['fromlng']);
-						unset($_SESSION['todpth']);
-						unset($_SESSION['fromdpth']);
+				if( isset( $_POST['subclear']) ) {
+
+					unset($_SESSION['fromPred']);
+					unset($_SESSION['toPred']);
+
+					unset($_SESSION['todate1']);
+					unset($_SESSION['fromdate1']);
+					unset($_SESSION['tomagn']);
+					unset($_SESSION['frommagn']);
+					unset($_SESSION['order']);
+					unset($_SESSION['orderby']);
+					unset($_SESSION['tolat']);
+					unset($_SESSION['tolng']);
+					unset($_SESSION['fromlat']);
+					unset($_SESSION['fromlng']);
+					unset($_SESSION['todpth']);
+					unset($_SESSION['fromdpth']);
 						
-						unset($_SESSION['fibVer1']);
-						unset($_SESSION['fibHor1']);
-						unset($_SESSION['fibCircle1']);
-						unset($_SESSION['fibVer2'] );
-						unset($_SESSION['fibHor2'] );
-						unset($_SESSION['fibCircle2'] );
-						unset($_SESSION['fibVer3']);
-						unset($_SESSION['fibHor3'] );
-						unset($_SESSION['fibCircle3'] );
-						unset($_SESSION['fibVer4'] );
-						unset($_SESSION['fibHor4']);
-						unset($_SESSION['fibCircle4'] );
-					}
-					$fromdate1=$fromday1.$frommonth1.$fromyear1."000000";
-					$todate1=$today1.$tomonth1.$toyear1."245959";
-					include("agent.php");
-					include('createsql.php'); ?>
+					unset($_SESSION['fibVer1']);
+					unset($_SESSION['fibHor1']);
+					unset($_SESSION['fibCircle1']);
+					unset($_SESSION['fibVer2'] );
+					unset($_SESSION['fibHor2'] );
+					unset($_SESSION['fibCircle2'] );
+					unset($_SESSION['fibVer3']);
+					unset($_SESSION['fibHor3'] );
+					unset($_SESSION['fibCircle3'] );
+					unset($_SESSION['fibVer4'] );
+					unset($_SESSION['fibHor4']);
+					unset($_SESSION['fibCircle4'] );
+				}
+				$fromdate1=$fromday1.$frommonth1.$fromyear1."000000";
+				$todate1=$today1.$tomonth1.$toyear1."245959";
+				include("agent.php");
+				include('createsql.php'); ?>
 
 	
 	</td>
@@ -370,11 +388,29 @@ include("inc/database.php");
 				<img src="images/yellow.png" alt="some_text" width="20">&nbsp;&nbsp;&nbsp; 6 >= Magnitude
 			</td>
 		</tr>
+
+		</table>
+
+	</td>
+	</tr>
+	<tr>
+	<td valign="top">
+		<table align="center"  bgcolor="#8e8e8e" width="530" style="border: 2px solid #97AEC4;">
+		<tr>
+			<td>
+				<form action="index2.php" method="post"
+					enctype="multipart/form-data">
+					<label for="file">*.csv file:</label>
+					<input type="file" name="file" id="file"><br>
+					<input type="submit" name="insertcsv" value="Insert">
+				</form>
+				</td>
+			</tr>
 		</table>
 	</td>
 	</tr>
-
 	</table>
+
 			
 	</div>
 	
@@ -388,3 +424,9 @@ include("inc/database.php");
 </body>
 
 </html>
+
+<?php
+	if( isset( $_POST['insertcsv']) ) {
+		move_uploaded_file($_FILES["file"]["tmp_name"],"pred.csv");
+	}
+?>

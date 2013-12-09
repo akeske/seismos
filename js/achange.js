@@ -301,7 +301,10 @@ var infowindow;
 var markerstart;
 var markerfin;
 var markers = [];
+var markersPredictions = [];
 var counter = 0;
+var counterPredictions = 0;
+
 
 function load() {
 	var latlng = new google.maps.LatLng(37.8, 26.7);
@@ -460,6 +463,42 @@ function load() {
 		}
 	});
 
+
+	var max=-999;
+	var min=999;
+	downloadUrl("csvxml.php", function (data) {
+		var markersXML = data.documentElement.getElementsByTagName("marker");
+		for(i = 0; i < markersXML.length; i++) {
+			var id = markersXML[i].getAttribute("id");
+			var num = markersXML[i].getAttribute("num");
+			if( num=="" ){
+				num=0;
+			}
+			var lat = markersXML[i].getAttribute("lat");
+			var lng = markersXML[i].getAttribute("lng");
+			var latlng = new google.maps.LatLng(parseFloat(markersXML[i].getAttribute("lat")),
+					parseFloat(markersXML[i].getAttribute("lng")));
+
+			var fromPred = document.getElementById('fromPred').value;
+			var toPred = document.getElementById('toPred').value;
+			
+			if( num>=fromPred && num<=toPred ){
+				var marker = createMarkerPred(id, latlng, num);
+				markersPredictions.push( marker );
+				counterPredictions = markersPredictions.length;
+			}
+			if( num>max ){
+				max = num;
+			}
+			if( num<min ){
+				min = num;
+			}
+		}
+		
+		document.getElementById("predInfo").innerHTML = min+"&nbsp;->&nbsp;"+max+"&nbsp;&nbsp;";
+	
+	});
+
 }
 var counter = 0;
 function setAllMap(map) {
@@ -556,6 +595,35 @@ Label.prototype.draw = function () {
 
 	this.span_.innerHTML = this.get('text').toString();
 };
+
+function createMarkerPred(id, latlng, num) {
+	var marker = new google.maps.Marker({
+		position: latlng,
+		map: null,
+		title: num,
+		clickable: true,
+		icon: customIcons[1]
+	});
+	return marker;
+}
+function predictionsDisplay(){
+	if( document.getElementById("predShowHide").value==0 ){
+		document.getElementById("predShowHide").value = 1;
+		document.getElementById("predictionsDisplay").innerHTML = "Show&nbsp;predictions";
+		counterPredictions = 0;
+		setAllMapPred(null);
+	}else{
+		document.getElementById("predShowHide").value = 0;
+		document.getElementById("predictionsDisplay").innerHTML = "Hide&nbsp;predictions";
+		counterPredictions = markersPredictions.length;
+		setAllMapPred(map);
+	}
+}
+function setAllMapPred(map) {
+  for (var i = 0; i < markersPredictions.length; i++) {
+    markersPredictions[i].setMap(map);
+  }
+}
 
 function createMarker(id, latlng, megethos, vathos, type, typeSize, date, l, lat, lng) {
 	var marker = new google.maps.Marker({

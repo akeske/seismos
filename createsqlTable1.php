@@ -39,8 +39,8 @@
 						<form>
 						<?php
 						if ( $ua['name']=='Mozilla Firefox'  || $ua['name']=='Google Chrome' ) { ?>
-							<input style="font-size:12px;" type="button" value="Graph 1" onClick="window.open('graphs1/graph.php?k1=<?php echo $k1; ?>','Graph 1',' width=900,height=600')"/>
-							<input style="font-size:12px;" type="button" value="Graph 2" onClick="window.open('graphs1/graphMagn.php?l1=<?php echo $k1; ?>','Graph 2',' width=900,height=600')"/>
+							<input style="font-size:12px;" type="button" value="Graph 1" onClick="window.open('graphs1/graph.php?k1=<?php echo $k1; ?>','Graph 1',' width=1000,height=700')"/>
+							<input style="font-size:12px;" type="button" value="Graph 2" onClick="window.open('graphs1/graphMagn.php?l1=<?php echo $k1; ?>','Graph 2',' width=1000,height=700')"/>
 						<?php }else{ ?>
 							<a href="graphs1/graph.php?k1=<?php echo $k1; ?>" target="_blank" style="display:block; float:left; height:15px; width:50px; cursor:pointer;"> Graph 1 </a>
 							<a href="graphs1/graphMagn.php?l1=<?php echo $k1; ?>" target="_blank" style="display:block; float:right; height:15px; width:50px; cursor:pointer;"> Graph 2 </a>
