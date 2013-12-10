@@ -304,10 +304,10 @@ function fib_lines3(coordinates3) {
 	google.maps.event.addListener(markerv32, 'drag', function () {
 		document.getElementById('distVer3').value = distance( markerv31.getPosition().lat(), markerv31.getPosition().lng(), markerv32.getPosition().lat(), markerv32.getPosition().lng(), 1 );
 	});
-	if(distancesVer3[0]<distancesVer3[1]){
+	if(distancesVer3[1]-distancesVer3[0]>0){
 		var c = y2 - y1;
 		var i = 0;
-		while((dis = custom_distanceVer3(c, i++)) != -1) {
+		while((dis = custom_distanceVer3(c, i++, 1)) != -1) {
 			lines3.push(drawlines3(y1 + dis));
 			lines3.push(drawlines3(y1 - dis));
 		}
@@ -320,7 +320,7 @@ function fib_lines3(coordinates3) {
 		var diafora = distancesVer3[0] - distancesVer3[1];
 		var monada = c / diafora;
 		var i = 2;
-		while((dis = custom_distanceVer3(monada, i++)) != -1) {
+		while((dis = custom_distanceVer3(monada, i++, 2)) != -1) {
 			lines3.push(drawlines3(lastrigh + dis));
 			lines3.push(drawlines3(lastleft - dis));
 			lastrigh = lastrigh+dis;
@@ -384,10 +384,10 @@ function fib_lines32(coordinates3) {
 		document.getElementById('distHor3').value = distance( markerh31.getPosition().lat(), markerh31.getPosition().lng(), markerh32.getPosition().lat(), markerh32.getPosition().lng(), 2 );
 	});
 
-	if(distancesHor3[0]<distancesHor3[1]){
+	if(distancesHor3[1]-distancesHor3[0]>0){
 		var c = y2 - y1;
 		var i = 0;
-		while((dis = custom_distanceHor3(c, i++)) != -1) {
+		while((dis = custom_distanceHor3(c, i++, 1)) != -1) {
 			lines32.push(drawlines32(y1 + dis));
 			lines32.push(drawlines32(y1 - dis));
 		}
@@ -400,7 +400,7 @@ function fib_lines32(coordinates3) {
 		var diafora = distancesHor3[0] - distancesHor3[1];
 		var monada = c / diafora;
 		var i = 2;
-		while((dis = custom_distanceHor3(monada, i++)) != -1) {
+		while((dis = custom_distanceHor3(monada, i++, 2)) != -1) {
 			lines32.push(drawlines32(lastrigh + dis));
 			lines32.push(drawlines32(lastleft - dis));
 			lastrigh = lastrigh+dis;
@@ -561,15 +561,29 @@ function custom_distanceCircle3(initial, num) {
 		return -1;
 	return initial * distancesCircle3[num];
 }
-function custom_distanceVer3(initial, num) {
-	if(distancesVer3[num] == undefined)
-		return -1;
-	return initial * distancesVer3[num];
+function custom_distanceVer3(initial, num, type) {
+	if( type==1 ){
+		if(distancesVer3[num] == undefined)
+			return -1;
+		return initial * distancesVer3[num];
+	}else{	
+		if(distancesVer3[num] == undefined)
+			return -1;
+		var dist = initial * (distancesVer3[num-1] - distancesVer3[num]);
+		return dist;
+	}
 }
-function custom_distanceHor3(initial, num) {
-	if(distancesHor3[num] == undefined)
-		return -1;
-	return initial * distancesHor3[num];
+function custom_distanceHor3(initial, num, type) {
+	if( type==1 ){
+		if(distancesHor3[num] == undefined)
+			return -1;
+		return initial * distancesHor3[num];
+	}else{	
+		if(distancesHor3[num] == undefined)
+			return -1;
+		var dist = initial * (distancesHor3[num-1] - distancesHor3[num]);
+		return dist;
+	}
 }
 
 /* 

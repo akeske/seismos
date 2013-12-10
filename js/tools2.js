@@ -306,10 +306,10 @@ function fib_lines2(coordinates2) {
 		document.getElementById('distVer2').value = distance( markerv21.getPosition().lat(), markerv21.getPosition().lng(), markerv22.getPosition().lat(), markerv22.getPosition().lng(), 1 );
 	});
 	
-	if(distancesVer2[0]<distancesVer2[1]){
+	if(distancesVer2[1]-distancesVer2[0]>0){
 		var c = y2 - y1;
 		var i = 0;
-		while((dis = custom_distanceVer2(c, i++)) != -1) {
+		while((dis = custom_distanceVer2(c, i++, 1)) != -1) {
 			lines2.push(drawlines2(y1 + dis));
 			lines2.push(drawlines2(y1 - dis));
 		}
@@ -322,7 +322,7 @@ function fib_lines2(coordinates2) {
 		var diafora = distancesVer2[0] - distancesVer2[1];
 		var monada = c / diafora;
 		var i = 2;
-		while((dis = custom_distanceVer2(monada, i++)) != -1) {
+		while((dis = custom_distanceVer2(monada, i++, 2)) != -1) {
 			lines2.push(drawlines2(lastrigh + dis));
 			lines2.push(drawlines2(lastleft - dis));
 			lastrigh = lastrigh+dis;
@@ -386,10 +386,10 @@ function fib_lines22(coordinates2) {
 		document.getElementById('distHor2').value = distance( markerh21.getPosition().lat(), markerh21.getPosition().lng(), markerh22.getPosition().lat(), markerh22.getPosition().lng(), 2 );
 	});
 
-	if(distancesHor2[0]<distancesHor2[1]){
+	if(distancesHor2[1]-distancesHor2[0]>0){
 		var c = y2 - y1;
 		var i = 0;
-		while((dis = custom_distanceHor2(c, i++)) != -1) {
+		while((dis = custom_distanceHor2(c, i++, 1)) != -1) {
 			lines22.push(drawlines22(y1 + dis));
 			lines22.push(drawlines22(y1 - dis));
 		}
@@ -402,7 +402,7 @@ function fib_lines22(coordinates2) {
 		var diafora = distancesHor1[0] - distancesHor1[1];
 		var monada = c / diafora;
 		var i = 2;
-		while((dis = custom_distanceHor2(monada, i++)) != -1) {
+		while((dis = custom_distanceHor2(monada, i++, 2)) != -1) {
 			lines22.push(drawlines22(lastrigh + dis));
 			lines22.push(drawlines22(lastleft - dis));
 			lastrigh = lastrigh+dis;
@@ -560,15 +560,29 @@ function custom_distanceCircle2(initial, num) {
 		return -1;
 	return initial * distancesCircle2[num];
 }
-function custom_distanceVer2(initial, num) {
-	if(distancesVer2[num] == undefined)
-		return -1;
-	return initial * distancesVer2[num];
+function custom_distanceVer2(initial, num, type) {
+	if( type==1 ){
+		if(distancesVer2[num] == undefined)
+			return -1;
+		return initial * distancesVer2[num];
+	}else{	
+		if(distancesVer2[num] == undefined)
+			return -1;
+		var dist = initial * (distancesVer2[num-1] - distancesVer2[num]);
+		return dist;
+	}
 }
-function custom_distanceHor2(initial, num) {
-	if(distancesHor2[num] == undefined)
-		return -1;
-	return initial * distancesHor2[num];
+function custom_distanceHor2(initial, num, type) {
+	if( type==1 ){
+		if(distancesHor2[num] == undefined)
+			return -1;
+		return initial * distancesHor2[num];
+	}else{	
+		if(distancesHor2[num] == undefined)
+			return -1;
+		var dist = initial * (distancesHor2[num-1] - distancesHor2[num]);
+		return dist;
+	}
 }
 
 /* 

@@ -15,10 +15,10 @@
 	$la=0;
 	$row=0;
 	foreach ($lines as $line_num => $line) {
-		$line = str_replace(',', '.', $line);
+	//	$line = str_replace(',', '.', $line);
 	//	echo $line;
 		if ($line_num==0) {
-			$pieces = explode(";", $line);
+			$pieces = explode(",", $line);
 			
 			$j=0;
 			for($i=2; $i<sizeof($pieces)-1; $i++){
@@ -34,7 +34,7 @@
 			echo "<br><br>";
 			*/
 		}else{
-			$pieces = explode(";", $line);
+			$pieces = explode(",", $line);
 			$col = 0;
 			
 			if( $line_num != sizeof($lines)-1 ) {

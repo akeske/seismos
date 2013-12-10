@@ -322,10 +322,10 @@ function fib_lines1(coordinates1) {
 	google.maps.event.addListener(markerv12, 'drag', function () {
 		document.getElementById('distVer1').value = distance(markerv11.getPosition().lat(), markerv11.getPosition().lng(), markerv12.getPosition().lat(), markerv12.getPosition().lng(), 1);
 	});
-	if(distancesVer1[0]<distancesVer1[1]){
+	if(distancesVer1[1]-distancesVer1[0]>0){
 		var c = y2 - y1;
 		var i = 0;
-		while((dis = custom_distanceVer1(c, i++)) != -1) {
+		while((dis = custom_distanceVer1(c, i++, 1)) != -1) {
 			lines1.push(drawlines1(y1 + dis));
 			lines1.push(drawlines1(y1 - dis));
 		}
@@ -337,8 +337,12 @@ function fib_lines1(coordinates1) {
 		var lastleft = y1;
 		var diafora = distancesVer1[0] - distancesVer1[1];
 		var monada = c / diafora;
+	//	alert("y1  "+y1+"\n"+"y2  "+y2+"\n"+"apostasi  "+c+"\n"+"monada  "+monada);
+
 		var i = 2;
-		while((dis = custom_distanceVer1(monada, i++)) != -1) {
+		while((dis = custom_distanceVer1(monada, i++, 2)) != -1) {
+	//		var aaa=lastrigh+dis;
+	//		alert("nea thesi "+aaa);
 			lines1.push(drawlines1(lastrigh + dis));
 			lines1.push(drawlines1(lastleft - dis));
 			lastrigh = lastrigh+dis;
@@ -401,10 +405,10 @@ function fib_lines12(coordinates1) {
 		document.getElementById('distHor1').value = distance(markerh11.getPosition().lat(), markerh11.getPosition().lng(), markerh12.getPosition().lat(), markerh12.getPosition().lng(), 2);
 	});
 
-	if(distancesHor1[0]<distancesHor1[1]){
+	if(distancesVer1[1]-distancesVer1[0]>0){
 		var c = y2 - y1;
 		var i = 0;
-		while((dis = custom_distanceHor1(c, i++)) != -1) {
+		while((dis = custom_distanceHor1(c, i++,1)) != -1) {
 			lines12.push(drawlines12(y1 + dis));
 			lines12.push(drawlines12(y1 - dis));
 		}
@@ -417,7 +421,7 @@ function fib_lines12(coordinates1) {
 		var diafora = distancesHor1[0] - distancesHor1[1];
 		var monada = c / diafora;
 		var i = 2;
-		while((dis = custom_distanceHor1(monada, i++)) != -1) {
+		while((dis = custom_distanceHor1(monada, i++,2)) != -1) {
 			lines12.push(drawlines12(lastrigh + dis));
 			lines12.push(drawlines12(lastleft - dis));
 			lastrigh = lastrigh+dis;
@@ -663,16 +667,31 @@ function custom_distanceCircle1(initial, num) {
 	return initial * distancesCircle1[num];
 }
 
-function custom_distanceVer1(initial, num) {
-	if(distancesVer1[num] == undefined)
-		return -1;
-	return initial * distancesVer1[num];
+function custom_distanceVer1(initial, num, type) {
+	if( type==1 ){
+		if(distancesVer1[num] == undefined)
+			return -1;
+		return initial * distancesVer1[num];
+	}else{	
+		if(distancesVer1[num] == undefined)
+			return -1;
+		var dist = initial * (distancesVer1[num-1] - distancesVer1[num]);
+	//	alert(distancesVer1[num]);
+		return dist;
+	}
 }
 
-function custom_distanceHor1(initial, num) {
-	if(distancesHor1[num] == undefined)
-		return -1;
-	return initial * distancesHor1[num];
+function custom_distanceHor1(initial, num, type) {
+	if( type==1 ){
+		if(distancesHor1[num] == undefined)
+			return -1;
+		return initial * distancesHor1[num];
+	}else{	
+		if(distancesHor1[num] == undefined)
+			return -1;
+		var dist = initial * (distancesHor1[num-1] - distancesHor1[num]);
+		return dist;
+	}
 }
 
 /* 
