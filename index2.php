@@ -100,6 +100,36 @@ include("inc/database.php");
 	$toyear1=$parts2[0];
 	$_SESSION['todate1']=$_POST['todate1'];
 	$_SESSION['toyear1']=$toyear1;
+
+	//date 2
+	if( $_POST['fromdate2']=="" ) $_POST['fromdate2']="";
+	if( $_POST['todate2']=="" ) $_POST['todate2']="";
+	$parts3 = explode ('/' , $_POST['fromdate2']);
+	$fromday2=$parts3[2];
+	$frommonth2=$parts3[1];
+	$fromyear2=$parts3[0];
+	$_SESSION['fromdate2']=$_POST['fromdate2'];
+	$parts4 = explode ('/' , $_POST['todate2']);
+	$today2=$parts4[2];
+	$tomonth2=$parts4[1];
+	$toyear2=$parts4[0];
+	$_SESSION['todate2']=$_POST['todate2'];
+	$_SESSION['toyear2']=$toyear2;
+	
+	//date 3
+	if( $_POST['fromdate3']=="" ) $_POST['fromdate3']="";
+	if( $_POST['todate3']=="" ) $_POST['todate3']="";
+	$parts5 = explode ('/' , $_POST['fromdate3']);
+	$fromday3=$parts5[2];
+	$frommonth3=$parts5[1];
+	$fromyear3=$parts5[0];
+	$_SESSION['fromdate3']=$_POST['fromdate3'];
+	$parts6 = explode ('/' , $_POST['todate3']);
+	$today3=$parts6[2];
+	$tomonth3=$parts6[1];
+	$toyear3=$parts6[0];
+	$_SESSION['todate3']=$_POST['todate3'];
+	$_SESSION['toyear3']=$toyear3;
 		
 	$diastaseis=$_POST['diastaseis'];
 	if( $diastaseis=="" ) $diastaseis=1;
@@ -178,21 +208,41 @@ include("inc/database.php");
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Longitude:&nbsp;<input type="text" id="coordslng" value="" size="10" maxlength="10"/>
 	</div>
 	<div id="glass_bg_options">
-	<table border="0" align="center" cellspacing="20">
+	<table border="0" align="center" cellspacing="2">
 	<tr>
 	<td valign="top" height="250">
-		
-					
 			<table align="center" bgcolor="#8e8e8e" width="530">
 				<tr align="center">
 					<th>
-						Period
+						1st Period
 					</th>
 					<td>
 						from
 						<input style="font-size:13px; font-weight:bold" autocomplete="off" type="text" name="fromdate1" class="tcal" value="<?php echo $_SESSION['fromdate1']; ?>"  id="fromdate1" ondblclick="dat1()"/>
 						to
 						<input style="font-size:13px; font-weight:bold" autocomplete="off" type="text" name="todate1" class="tcal" value="<?php echo $_SESSION['todate1']; ?>"  id="todate1" ondblclick="dat2()"/>
+					</td>
+				</tr>
+				<tr align="center">
+					<th>
+						2nd Period
+					</th>
+					<td>
+						from
+						<input style="font-size:13px; font-weight:bold" autocomplete="off" type="text" name="fromdate2" class="tcal" value="<?php echo $_SESSION['fromdate2']; ?>"  id="fromdate2" ondblclick="dat3()"/>
+						to
+						<input style="font-size:13px; font-weight:bold" autocomplete="off" type="text" name="todate2" class="tcal" value="<?php echo $_SESSION['todate2']; ?>"  id="todate2" ondblclick="dat4()"/>
+					</td>
+				</tr>
+				<tr align="center">
+					<th>
+						3nd Period
+					</th>
+					<td>
+						from
+						<input style="font-size:13px; font-weight:bold" autocomplete="off" type="text" name="fromdate3" class="tcal" value="<?php echo $_SESSION['fromdate3']; ?>"  id="fromdate3" ondblclick="dat5()"/>
+						to
+						<input style="font-size:13px; font-weight:bold" autocomplete="off" type="text" name="todate3" class="tcal" value="<?php echo $_SESSION['todate3']; ?>"  id="todate3" ondblclick="dat6()"/>
 					</td>
 				</tr>
 			</table>
@@ -317,8 +367,7 @@ include("inc/database.php");
 	
 	
 	</td>
-
-	<td rowspan="3">
+	<td colspan="3">
 			<?php
 				if( isset( $_POST['subclear']) ) {
 
@@ -326,7 +375,11 @@ include("inc/database.php");
 					unset($_SESSION['toPred']);
 
 					unset($_SESSION['todate1']);
+					unset($_SESSION['todate2']);
+					unset($_SESSION['todate3']);
 					unset($_SESSION['fromdate1']);
+					unset($_SESSION['fromdate2']);
+					unset($_SESSION['fromdate3']);
 					unset($_SESSION['tomagn']);
 					unset($_SESSION['frommagn']);
 					unset($_SESSION['order']);
@@ -353,18 +406,19 @@ include("inc/database.php");
 				}
 				$fromdate1=$fromday1.$frommonth1.$fromyear1."000000";
 				$todate1=$today1.$tomonth1.$toyear1."245959";
+				$fromdate2=$fromday2.$frommonth2.$fromyear2."000000";
+				$todate2=$today2.$tomonth2.$toyear2."245959";
+				$fromdate3=$fromday3.$frommonth3.$fromyear3."000000";
+				$todate3=$today3.$tomonth3.$toyear3."245959";
 				include("agent.php");
-				include('createsql.php'); ?>
+				?>
 
-	
 	</td>
-	</tr>
-	
-	<tr>
+
 	<td valign="top">
-		<table align="center"  bgcolor="#8e8e8e" width="530" style="border: 2px solid #97AEC4;">
+		<table align="center"  bgcolor="#8e8e8e" width="400" style="border: 2px solid #97AEC4;">
 		<tr>
-			<td width="530">
+			<td width="400">
 				<img src="images/black.png" alt="some_text" width="20">&nbsp;&nbsp;&nbsp; 1 >= Magnitude < 3
 			</td>
 		</tr>
@@ -393,35 +447,39 @@ include("inc/database.php");
 				<img src="images/pink.png" alt="some_text" width="20">&nbsp;&nbsp;&nbsp; predictions
 			</td>
 		</tr>
-		</table>
-
-	</td>
-	</tr>
-	<tr>
-	<td valign="top">
-		<table align="center"  bgcolor="#8e8e8e" width="530" style="border: 2px solid #97AEC4;">
 		<tr>
 			<td>
-				<form action="index2.php" method="post"
-					enctype="multipart/form-data">
-					<label for="file">*.csv file:</label>
-					<input type="file" name="file" id="file"><br>
-					<input type="submit" name="insertcsv" value="Insert">
-				</form>
-				</td>
-			</tr>
+				<table align="center"  bgcolor="#8e8e8e" width="530" style="border: 2px solid #97AEC4;">
+				<tr>
+					<td>
+					<form action="index2.php" method="post"
+						enctype="multipart/form-data">
+						<label for="file">*.csv file:</label>
+						<input type="file" name="file" id="file"><br>
+						<input type="submit" name="insertcsv" value="Insert">
+					</form>
+					</td>
+				</tr>
+				</table>
+			</td>
+		</tr>
 		</table>
 	</td>
+</tr>
+</table>
+
+</div>
+</div>
+</div>
+
+<table align="center" width="1120" border="0">
+	<tr>
+		<td>
+		<?php include('createsql.php'); ?>
+		</td>
 	</tr>
-	</table>
+</table>
 
-			
-	</div>
-	
-	
-
-</div>
-</div>
 <div id="foot">
 	Copyright &copy; 2013 - Thanos Keskempes, Anthony C Boucouvalas, Nikos Tselikas
 </div>

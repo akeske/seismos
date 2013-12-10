@@ -32,12 +32,43 @@ $sqlcount1 = "SELECT COUNT(id) FROM seismos
 $resultcount1 = mysql_query($sqlcount1);
 $row1 = mysql_fetch_row($resultcount1); 
 $totalearth1 = $row1[0];
+//emfanisi plithos seismwn gia tin xroniki periodo 2
+$totalearth2=0;
+$sqlcount2 = "SELECT COUNT(id) FROM seismos
+	WHERE date>=$fromdate2 AND date<=$todate2 AND 
+	lat>=$fromlat AND lat<=$tolat AND 
+	lng>=$fromlng AND lng<=$tolng AND 
+	vathos>=$fromdpth AND vathos<=$todpth AND 
+	megethos>=$frommagn AND megethos<=$tomagn";	
+$resultcount2 = mysql_query($sqlcount2);
+$row2 = mysql_fetch_row($resultcount2); 
+$totalearth2 = $row2[0];
+
+//emfanisi plithos seismwn gia tin xroniki periodo 3
+$totalearth3=0;
+$sqlcount3 = "SELECT COUNT(id) FROM seismos
+	WHERE date>=$fromdate3 AND date<=$todate3 AND 
+	lat>=$fromlat AND lat<=$tolat AND 
+	lng>=$fromlng AND lng<=$tolng AND 
+	vathos>=$fromdpth AND vathos<=$todpth AND 
+	megethos>=$frommagn AND megethos<=$tomagn";	
+$resultcount3 = mysql_query($sqlcount3);
+$row3 = mysql_fetch_row($resultcount3);
+$totalearth3 = $row3[0];
 ?>
-<div style="height:580px; width:430px; overflow:auto;">
+<!--
+<div style="height:580px; width:380px; overflow:auto;">
+-->
 	<table style="border: 2px solid #97AEC4;" align="center"bgcolor="#8e8e8e">
 		<tr>
 			<td> <?php
 				echo "There have been total <b>".$totalearth1."</b> earthquakes"; ?>
+			</td>
+			<td> <?php
+			echo "There have been total <b>".$totalearth2."</b> earthquakes"; ?>
+			</td>
+			<td> <?php
+				echo "There have been total <b>".$totalearth3."</b> earthquakes"; ?>
 			</td>
 		</tr>
 		<?php
@@ -48,10 +79,20 @@ $totalearth1 = $row1[0];
 			<td>
 				<?php include('createsqlTable1.php'); ?>
 			</td>
+			<td>
+				<?php include('createsqlTable2.php'); ?>
+			</td>
+			<td>
+				<?php include('createsqlTable3.php'); ?>
+			</td>
 		</tr>
 	<?php } ?>
 	</table>
+<!--
 </div>
+-->
 <?php
 mysql_free_result($resultcount1);
+mysql_free_result($resultcount2);
+mysql_free_result($resultcount3);
 ?>

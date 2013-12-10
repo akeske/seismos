@@ -111,7 +111,7 @@ body {
 #container {
 	position:relative; 
 	margin: 0px auto 0 auto; 
-	height: 1320px;
+	height: 1010px;
 	width: 1100px; 
 	text-align:center; 
 	padding-left:0px;
@@ -182,7 +182,7 @@ p{
 #glass_bg_options {
 	position:relative;
 	width:1120px;
-	height:610px;
+	height:310px;
 	z-index:1;
 	left: 0px;
 	top: 45px;

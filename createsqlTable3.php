@@ -1,53 +1,63 @@
-
 <table align="center" border="0" style="font-size:12px;">
 	<tr>
 		<td> <?php
-			if($_SESSION['fromdate1']=="" || $_SESSION['todate1']=="") {
+			if($_SESSION['fromdate3']=="" || $_SESSION['todate3']=="") {
 				echo "From date: <b> / / </b> to date: <b> / / </b>";
 			}else{
-				echo "From date: <b>".$_SESSION['fromdate1']."</b> to date: <b>".$_SESSION['todate1']."</b>";
+				echo "From date: <b>".$_SESSION['fromdate3']."</b> to date: <b>".$_SESSION['todate3']."</b>";
 			}
 			echo "<br>"; ?>
 		</td>
 	</tr>
 	<tr>
-		<td> <?php 
+		<td> <?php
 			echo "From lat: <b>".$flat[$j]."</b> to lat: <b>".$tlat[$j]."</b>";
 			echo "<br>"; ?>
 		</td>
 	</tr>
-<?php  // echo $ua['name']; ?>
+</table>
 <table style="border: 2px solid #97AEC4;">
 	<tr>
 		<td> <?php
 		for($i=0; $i<$diastaseis; $i++) {
-			include('createsqlGraph1.php'); ?>
+		//	include('createsqlGraph1.php');
+		//	include('createsqlGraph2.php');
+			include('createsqlGraph3.php');	?>
 			<table cellpadding="4" cellspacing="4" style="font-size:12px;">
 			<tr>
 				<td>
-					<a name="<?php echo $k1."a"; ?>"><?php echo $k1+1; ?></A>
+					<a name="<?php echo $k2; ?>"><?php echo $k3+1; ?></A>
 				</td>
 				<td align="left"> <?php
 					echo "From lng: <b>".$flng[$i]."</b> to lng: <b>".$tlng[$i]."</b>";
 					echo "<br>";
-					echo "There have been <b>".$total_recordsD1."</b>  earthquakes";
+					echo "There have been <b>".$total_recordsD3."</b>  earthquakes";
 					echo "<br>";
-					echo "Calculation time <b>".$time1."</b> seconds"; unset($time1); ?>
+					echo "Calculation time <b>".$time3."</b> seconds"; unset($time3); ?>
 				</td>
-				<td width="50">
+				<td align="right" width="50">
 					<font style="font-size:12px;">
 						<form>
-						<?php
-						if ( $ua['name']=='Mozilla Firefox' ) { ?>
-							<input style="font-size:12px;" type="button" value="Graph 1" onClick="window.open('graphs1/graph.php?k1=<?php echo $k1; ?>','Graph 1',' width=1000,height=700')"/>
-							<input style="font-size:12px;" type="button" value="Graph 2" onClick="window.open('graphs1/graphMagn.php?l1=<?php echo $k1; ?>','Graph 2',' width=1000,height=700')"/>
-						<?php }else{ ?>
-							<a href="graphs1/graph.php?k1=<?php echo $k1; ?>" target="_blank" style="display:block; float:left; height:15px; width:50px; cursor:pointer;"> Graph 1 </a>
-							<a href="graphs1/graphMagn.php?l1=<?php echo $k1; ?>" target="_blank" style="display:block; float:right; height:15px; width:50px; cursor:pointer;"> Graph 2 </a>
-						<?php } ?>
-					<!--	<a onClick="window.open('graphs1/graphMagn.php?l1=<?php echo $k1; ?>','Graph 1',' width=600,height=400')" target="_blank" style="display:block; float:right; height:40px; width:100px; cursor:pointer;"> Graph 2 </a>
-							<input type="button" value="Graph 3" onClick="window.open('graphs1/graphmagnyear.php?m1=<?php echo $k1; ?>','Graph 3',' width=600,height=400')"/> -->
-					<!--	<input type="button" value="Graph 3" onClick="window.open('graphs1/graphMagnTwoYears.php?n1=<?php echo $k1; ?>','Graph 3',' width=600,height=400')"/> -->
+							<?php
+							if ( $ua['name']=='Mozilla Firefox' ) { ?>
+								<input style="font-size:12px;" type="button" value="Graph 1" onClick="window.open('graphs3/graph.php?k3=<?php echo $k3; ?>','Graph 1',' width=1000,height=700')"/>
+								<input style="font-size:12px;" type="button" value="Graph 2" onClick="window.open('graphs3/graphMagn.php?l3=<?php echo $k3; ?>','Graph 2',' width=1000,height=700')"/>
+							<?php }else{ ?>
+								<a href="graphs3/graph.php?k3=<?php echo $k3; ?>" target="_blank" style="display:block; float:left; height:15px; width:50px; cursor:pointer;"> Graph 1 </a>
+								<a href="graphs3/graphMagn.php?l3=<?php echo $k3; ?>" target="_blank" style="display:block; float:left; height:15px; width:50px; cursor:pointer;"> Graph 2 </a>
+							<?php } ?>
+						</form>
+					</font>
+				</td>
+				<td align="right" width="50">
+					<font style="font-size:12px;">
+						<form>
+							<?php
+							if ( $ua['name']=='Mozilla Firefox' ) { ?>
+								<input style="font-size:12px;" type="button" value="Graph 3" onClick="window.open('graphs3/graphMagnTwoYears.php?n3=<?php echo $k3; ?>','Graph 3',' width=900,height=600')"/>
+							<?php }else{ ?>
+								<a href="graphs3/graphMagnTwoYears.php?n3=<?php echo $k3; ?>" target="_blank" style="display:block; float:left; height:15px; width:50px; cursor:pointer;"> Graph 3 </a>
+							<?php } ?>
 						</form>
 					</font>
 				</td>
@@ -58,16 +68,15 @@
 			</table> <?php
 			
 			//for xml file
-			$k1=$k1+1;
+			$k3=$k3+1;
 			
 			//for xml file
 			if($j==0){
 				$_SESSION['flngxml'.$i]=$flng[$i];
 				$_SESSION['tlngxml'.$i]=$tlng[$i];
 			} ?>
-			<div style="height:400px; width:	; overflow:auto;">
+			<div style="height:400px; width:375px; overflow:auto;">
 			<table id="rounded-corner">
-			<thead>
 				<tr>
 					<th align="center" width="0" bgcolor="#151B54">ID</th>
 					<th align="center" width="0" bgcolor="#151B54">Latitude</th>
@@ -76,15 +85,11 @@
 					<th align="center" width="0" bgcolor="#151B54">Depth</th>
 				<!--	<th align="center" width="0" bgcolor="#151B54">Type</th> -->
 					<th align="center" width="0" bgcolor="#151B54">Date</th>
-			</thead>
-			
-			
-			<tbody>
 				</tr>
 					<?php
 					$color=0;
 					$count=1;
-					while($row = mysql_fetch_array($resultD1)) {
+					while($row = mysql_fetch_array($resultD3)) {
 					//	$id = $row['id'];
 					//	$name = $row['name'];
 					//	$info = $row['info'];
@@ -124,10 +129,9 @@
 					<td align="center">
 						<?php echo "$date"; ?>
 					</td>
-				</tr>
-			</tbody> <?php
+				</tr> <?php
 				$count=$count+1; }
-				mysql_free_result($resultD1); ?>
+				mysql_free_result($resultD3); ?>
 			</table> </div><?php
 		} ?>
 		</td>
