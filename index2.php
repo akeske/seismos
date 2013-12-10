@@ -211,43 +211,46 @@ include("inc/database.php");
 	<table border="0" align="center" cellspacing="2">
 	<tr>
 	<td valign="top" height="250">
-			<table align="center" bgcolor="#8e8e8e" width="530">
+			<table align="center" bgcolor="#8e8e8e" width="600" style="border: 2px solid #97AEC4;">
 				<tr align="center">
 					<th>
-						1st Period
+						1st&nbsp;Period
 					</th>
 					<td>
 						from
-						<input style="font-size:13px; font-weight:bold" autocomplete="off" type="text" name="fromdate1" class="tcal" value="<?php echo $_SESSION['fromdate1']; ?>"  id="fromdate1" ondblclick="dat1()"/>
+						<input style="font-size:13px; font-weight:bold" autocomplete="off" type="text" name="fromdate1" class="tcal" value="<?php echo $_SESSION['fromdate1']; ?>"  id="fromdate1" ondblclick="dat1()" size="9"/>
 						to
-						<input style="font-size:13px; font-weight:bold" autocomplete="off" type="text" name="todate1" class="tcal" value="<?php echo $_SESSION['todate1']; ?>"  id="todate1" ondblclick="dat2()"/>
+						<input style="font-size:13px; font-weight:bold" autocomplete="off" type="text" name="todate1" class="tcal" value="<?php echo $_SESSION['todate1']; ?>"  id="todate1" ondblclick="dat2()" size="9"/>
 					</td>
+					<td align="center">Display<input id="color" onclick="markerdisp1('1')" type="checkbox" checked></td>
 				</tr>
 				<tr align="center">
 					<th>
-						2nd Period
+						2nd&nbsp;Period
 					</th>
 					<td>
 						from
-						<input style="font-size:13px; font-weight:bold" autocomplete="off" type="text" name="fromdate2" class="tcal" value="<?php echo $_SESSION['fromdate2']; ?>"  id="fromdate2" ondblclick="dat3()"/>
+						<input style="font-size:13px; font-weight:bold" autocomplete="off" type="text" name="fromdate2" class="tcal" value="<?php echo $_SESSION['fromdate2']; ?>"  id="fromdate2" ondblclick="dat3()" size="9"/>
 						to
-						<input style="font-size:13px; font-weight:bold" autocomplete="off" type="text" name="todate2" class="tcal" value="<?php echo $_SESSION['todate2']; ?>"  id="todate2" ondblclick="dat4()"/>
+						<input style="font-size:13px; font-weight:bold" autocomplete="off" type="text" name="todate2" class="tcal" value="<?php echo $_SESSION['todate2']; ?>"  id="todate2" ondblclick="dat4()" size="9"/>
 					</td>
+					<td align="center">Display<input id="2" onclick="markerdisp2('2')" type="checkbox" checked></td>
 				</tr>
 				<tr align="center">
 					<th>
-						3nd Period
+						3nd&nbsp;Period
 					</th>
 					<td>
 						from
-						<input style="font-size:13px; font-weight:bold" autocomplete="off" type="text" name="fromdate3" class="tcal" value="<?php echo $_SESSION['fromdate3']; ?>"  id="fromdate3" ondblclick="dat5()"/>
+						<input style="font-size:13px; font-weight:bold" autocomplete="off" type="text" name="fromdate3" class="tcal" value="<?php echo $_SESSION['fromdate3']; ?>"  id="fromdate3" ondblclick="dat5()" size="9"/>
 						to
-						<input style="font-size:13px; font-weight:bold" autocomplete="off" type="text" name="todate3" class="tcal" value="<?php echo $_SESSION['todate3']; ?>"  id="todate3" ondblclick="dat6()"/>
+						<input style="font-size:13px; font-weight:bold" autocomplete="off" type="text" name="todate3" class="tcal" value="<?php echo $_SESSION['todate3']; ?>"  id="todate3" ondblclick="dat6()" size="9"/>
 					</td>
+					<td align="center">Display<input id="3" onclick="markerdisp3('3')" type="checkbox" checked></td>
 				</tr>
 			</table>
-			
-			<table align="center" bgcolor="#8e8e8e" width="530">
+
+			<table align="center" bgcolor="#8e8e8e" width="530" >
 				<tr align="center">
 					<td>
 						<input value="<?php echo $_SESSION['fromlat']; ?>" type="text" name="fromlat" id="fromlat" maxlength="6" size="16" onkeyup="latitude()"/>
@@ -416,9 +419,9 @@ include("inc/database.php");
 	</td>
 
 	<td valign="top">
-		<table align="center"  bgcolor="#8e8e8e" width="400" style="border: 2px solid #97AEC4;">
+		<table align="center"  bgcolor="#8e8e8e" width="450" style="border: 2px solid #97AEC4;">
 		<tr>
-			<td width="400">
+			<td width="300">
 				<img src="images/black.png" alt="some_text" width="20">&nbsp;&nbsp;&nbsp; 1 >= Magnitude < 3
 			</td>
 		</tr>
@@ -449,7 +452,7 @@ include("inc/database.php");
 		</tr>
 		<tr>
 			<td>
-				<table align="center"  bgcolor="#8e8e8e" width="530" style="border: 2px solid #97AEC4;">
+				<table align="center"  bgcolor="#8e8e8e" width="440" style="border: 2px solid #97AEC4;">
 				<tr>
 					<td>
 					<form action="index2.php" method="post"

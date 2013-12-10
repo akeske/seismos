@@ -28,11 +28,11 @@
 					<a name="<?php echo $k1."a"; ?>"><?php echo $k1+1; ?></A>
 				</td>
 				<td align="left"> <?php
-					echo "From lng: <b>".$flng[$i]."</b> to lng: <b>".$tlng[$i]."</b>";
+					echo "lng: <b>".$flng[$i]."</b> - <b>".$tlng[$i]."</b>";
 					echo "<br>";
-					echo "There have been <b>".$total_recordsD1."</b>  earthquakes";
+					echo "<b>".$total_recordsD1."</b>  earthquakes";
 					echo "<br>";
-					echo "Calculation time <b>".$time1."</b> seconds"; unset($time1); ?>
+					echo "Calc time <b>".$time1."</b> sec"; unset($time1); ?>
 				</td>
 				<td width="50">
 					<font style="font-size:12px;">

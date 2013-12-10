@@ -1,6 +1,6 @@
 <?php
 	//for results date 2
-	$sqlD2 = "SELECT date, lat, lng, vathos, megethos, type FROM seismos
+	$sqlD2 = "SELECT date, lat, lng, vathos, megethos, type, typeSize FROM seismos
 		WHERE date>=$fromdate2 AND date<=$todate2 AND 
 		lat>=$flat[$j] AND lat<=$tlat[$j] AND 
 		lng>=$flng[$i] AND lng<=$tlng[$i] AND 

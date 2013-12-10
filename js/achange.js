@@ -312,7 +312,9 @@ var infowindow;
 
 var markerstart;
 var markerfin;
-var markers = [];
+var markersPeriod1 = [];
+var markersPeriod2 = [];
+var markersPeriod3 = [];
 var markersPredictions = [];
 var counter = 0;
 var counterPredictions = 0;
@@ -467,14 +469,71 @@ function load() {
 					parseFloat(markersXML[i].getAttribute("lng")));
 
 				var marker = createMarker(id, latlng, megethos, vathos, type, typeSize, date, l, lat, lng);
-				markers.push( marker );
-				counter = markers.length;
+				markersPeriod1.push( marker );
+				counter = markersPeriod1.length;
 				k++;
 				
 			}
 		}
 	});
 
+	downloadUrl("phpsqlajax_xmlD2.php", function (data) {
+		size = data.documentElement.getElementsByTagName("size");
+		l = 1;
+		var k = 0;
+		size = parseFloat(size[0].getAttribute("size"));
+
+		for(j = 0; j < size * size; j++) {
+			var markersXML = data.documentElement.getElementsByTagName("marker" + j);
+			for(i = 0; i < markersXML.length; i++) {
+				var id = markersXML[i].getAttribute("id");
+				var type = markersXML[i].getAttribute("type");
+				var typeSize = markersXML[i].getAttribute("typeSize");
+				var date = markersXML[i].getAttribute("date");
+				var megethos = markersXML[i].getAttribute("megethos");
+				var vathos = markersXML[i].getAttribute("vathos");
+				var lat = markersXML[i].getAttribute("lat");
+				var lng = markersXML[i].getAttribute("lng");
+				var latlng = new google.maps.LatLng(parseFloat(markersXML[i].getAttribute("lat")),
+					parseFloat(markersXML[i].getAttribute("lng")));
+
+				var marker = createMarker(id, latlng, megethos, vathos, type, typeSize, date, l, lat, lng);
+				markersPeriod2.push( marker );
+				counter = markersPeriod2.length;
+				k++;
+				
+			}
+		}
+	});
+
+	downloadUrl("phpsqlajax_xmlD3.php", function (data) {
+		size = data.documentElement.getElementsByTagName("size");
+		l = 1;
+		var k = 0;
+		size = parseFloat(size[0].getAttribute("size"));
+
+		for(j = 0; j < size * size; j++) {
+			var markersXML = data.documentElement.getElementsByTagName("marker" + j);
+			for(i = 0; i < markersXML.length; i++) {
+				var id = markersXML[i].getAttribute("id");
+				var type = markersXML[i].getAttribute("type");
+				var typeSize = markersXML[i].getAttribute("typeSize");
+				var date = markersXML[i].getAttribute("date");
+				var megethos = markersXML[i].getAttribute("megethos");
+				var vathos = markersXML[i].getAttribute("vathos");
+				var lat = markersXML[i].getAttribute("lat");
+				var lng = markersXML[i].getAttribute("lng");
+				var latlng = new google.maps.LatLng(parseFloat(markersXML[i].getAttribute("lat")),
+					parseFloat(markersXML[i].getAttribute("lng")));
+
+				var marker = createMarker(id, latlng, megethos, vathos, type, typeSize, date, l, lat, lng);
+				markersPeriod3.push( marker );
+				counter = markersPeriod3.length;
+				k++;
+				
+			}
+		}
+	});
 
 	var max=-999;
 	var min=999;
@@ -632,7 +691,7 @@ function predictionsDisplay(){
 }
 function setAllMapPred(map) {
   for (var i = 0; i < markersPredictions.length; i++) {
-    markersPredictions[i].setMap(map);
+	markersPredictions[i].setMap(map);
   }
 }
 
@@ -691,37 +750,31 @@ function createMarker(id, latlng, megethos, vathos, type, typeSize, date, l, lat
 }
 
 function markerdisp1(type) {
-	for(i = 0; i < markerGroups1[type].length; i++) {
-		if(markerGroups1[type][i].isHidden()) {
-			markerGroups1[type][i].show();
-			markerGroups1[type][i].hidden = false;
+	for(i = 0; i < markersPeriod1.length; i++) {
+		if( markersPeriod1[i].getVisible()==true ) {
+			markersPeriod1[i].setVisible(false);
 		} else {
-			markerGroups1[type][i].hide();
-			markerGroups1[type][i].hidden = true;
+			markersPeriod1[i].setVisible(true);
 		}
 	}
 }
 
 function markerdisp2(type) {
-	for(i = 0; i < markerGroups2[type].length; i++) {
-		if(markerGroups2[type][i].isHidden()) {
-			markerGroups2[type][i].show();
-			markerGroups2[type][i].hidden = false;
+	for(i = 0; i < markersPeriod2.length; i++) {
+		if( markersPeriod2[i].getVisible()==true ) {
+			markersPeriod2[i].setVisible(false);
 		} else {
-			markerGroups2[type][i].hide();
-			markerGroups2[type][i].hidden = true;
+			markersPeriod2[i].setVisible(true);
 		}
 	}
 }
 
 function markerdisp3(type) {
-	for(i = 0; i < markerGroups3[type].length; i++) {
-		if(markerGroups3[type][i].isHidden()) {
-			markerGroups3[type][i].show();
-			markerGroups3[type][i].hidden = false;
+	for(i = 0; i < markersPeriod3.length; i++) {
+		if( markersPeriod3[i].getVisible()==true ) {
+			markersPeriod3[i].setVisible(false);
 		} else {
-			markerGroups3[type][i].hide();
-			markerGroups3[type][i].hidden = true;
+			markersPeriod3[i].setVisible(true);
 		}
 	}
 }

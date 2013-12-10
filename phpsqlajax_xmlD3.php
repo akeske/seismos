@@ -2,17 +2,16 @@
 session_start();
 include("inc/database.php");
 
-function parseToXML($htmlStr) 
-{
-$xmlStr=str_replace('<','&lt;',$htmlStr); 
-$xmlStr=str_replace('>','&gt;',$xmlStr); 
-$xmlStr=str_replace('"','&quot;',$xmlStr); 
-$xmlStr=str_replace("'",'&#39;',$xmlStr); 
-$xmlStr=str_replace("&",'&amp;',$xmlStr); 
-return $xmlStr; 
+function parseToXML($htmlStr) {
+	$xmlStr=str_replace('<','&lt;',$htmlStr); 
+	$xmlStr=str_replace('>','&gt;',$xmlStr); 
+	$xmlStr=str_replace('"','&quot;',$xmlStr); 
+	$xmlStr=str_replace("'",'&#39;',$xmlStr); 
+	$xmlStr=str_replace("&",'&amp;',$xmlStr); 
+	return $xmlStr; 
 }
 
-//header("Content-type: text/xml; charset=iso-8859-7");
+header("Content-type: text/xml; charset=iso-8859-7");
 
 $size=$_SESSION['diastaseis']*$_SESSION['diastaseis'];
 // Start XML file, echo parent node
@@ -34,7 +33,7 @@ for($i=0; $i<$_SESSION['diastaseis']; $i++) {
 $x=$i-1;
 echo '<lng lng="' . $_SESSION['tlngxml'.$x] . '" />';
 
-
+$j=1;
 for($i=0; $i<$size; $i++) {
 	$query = $_SESSION['sqlD3'.$i];
 	$result = mysql_query($query);
@@ -44,13 +43,17 @@ for($i=0; $i<$size; $i++) {
 		echo '<marker' . $i . ' ';
 	//	echo 'name="' . parseToXML($row['name']) . '" ';
 	//	echo 'info="' . parseToXML($row['info']) . '" ';
+		echo 'id="' . $j . '" ';
 		echo 'lat="' . $row['lat'] . '" ';
 		echo 'lng="' . $row['lng'] . '" ';
 		echo 'megethos="' . $row['megethos'] . '" ';
 		echo 'vathos="' . $row['vathos'] . '" ';
 		echo 'type="' . $row['type'] . '" ';
+		echo 'typeSize="' . $row['typeSize'] . '" ';
 		echo 'date="' . $row['date'] . '" ';
 		echo '/>';
+
+		$j++;
 	}
 }
 // End XML file

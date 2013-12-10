@@ -65,7 +65,7 @@ $totalearth3 = $row3[0];
 				echo "There have been total <b>".$totalearth1."</b> earthquakes"; ?>
 			</td>
 			<td> <?php
-			echo "There have been total <b>".$totalearth2."</b> earthquakes"; ?>
+				echo "There have been total <b>".$totalearth2."</b> earthquakes"; ?>
 			</td>
 			<td> <?php
 				echo "There have been total <b>".$totalearth3."</b> earthquakes"; ?>
