@@ -483,22 +483,19 @@ function load() {
 		for(i = 0; i < markersXML.length; i++) {
 			var id = markersXML[i].getAttribute("id");
 			var num = markersXML[i].getAttribute("num");
-			if( num=="" ){
-				num=0;
-			}
 			var lat = markersXML[i].getAttribute("lat");
 			var lng = markersXML[i].getAttribute("lng");
 			var latlng = new google.maps.LatLng(parseFloat(markersXML[i].getAttribute("lat")),
 					parseFloat(markersXML[i].getAttribute("lng")));
 
-			var fromPred = document.getElementById('fromPred').value;
-			var toPred = document.getElementById('toPred').value;
-			
-			if( num>=fromPred && num<=toPred ){
+			var fromPred = parseInt( document.getElementById('fromPred').value );
+			var toPred = parseInt( document.getElementById('toPred').value );
+
+			if( num>=fromPred && num<=toPred){
 				var marker = createMarkerPred(id, latlng, num);
 				markersPredictions.push( marker );
-				counterPredictions = markersPredictions.length;
 			}
+			num = parseInt( num );
 			if( num>max ){
 				max = num;
 			}
@@ -506,8 +503,10 @@ function load() {
 				min = num;
 			}
 		}
-		
+		counterPredictions = markersPredictions.length;
 		document.getElementById("predInfo").innerHTML = min+"&nbsp;->&nbsp;"+max+"&nbsp;&nbsp;";
+	//	document.getElementById("fromPred").value = min;
+	//	document.getElementById("toPred").value = max;
 	
 	});
 

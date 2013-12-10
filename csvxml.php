@@ -15,6 +15,8 @@
 	$la=0;
 	$row=0;
 	foreach ($lines as $line_num => $line) {
+		$line = str_replace(',', '.', $line);
+	//	echo $line;
 		if ($line_num==0) {
 			$pieces = explode(";", $line);
 			
@@ -40,6 +42,7 @@
 				$la++;
 			
 				for($i=2; $i<sizeof($pieces)-1; $i++){
+					if( $pieces[$i]=="" ) $pieces[$i]=0;
 					$data[$row][$col] = $pieces[$i];
 					$col++;
 				}

@@ -119,8 +119,8 @@ include("inc/database.php");
 	$fibVer4 =  $_POST['fibVer4'];
 	$fibHor4 =  $_POST['fibHor4'];
 	$fibCircle4 =  $_POST['fibCircle4'];
-	if( $fromPred == "" ) $fromPred = "5";
-	if( $toPred == "" ) $toPred = "9";
+	if( $fromPred == "" ) $fromPred = "1";
+	if( $toPred == "" ) $toPred = "20";
 	if( $fibVer1 == "" ) $fibVer1 = "0,1,2,3,5,8";
 	if( $fibHor1 == "" ) $fibHor1 = "0,1,2,3,5,8";
 	if( $fibCircle1 == "" ) $fibCircle1 = "0,1,2,3,5,8";
@@ -423,7 +423,7 @@ include("inc/database.php");
 </div>
 </div>
 <div id="foot">
-	Copyright &copy; 2013 - Thanos Keskempes
+	Copyright &copy; 2013 - Thanos Keskempes, Anthony C Boucouvalas, Nikos Tselikas
 </div>
 </body>
 
