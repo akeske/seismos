@@ -211,7 +211,7 @@ include("inc/database.php");
 	<table border="0" align="center" cellspacing="2">
 	<tr>
 	<td valign="top" height="250">
-			<table align="center" bgcolor="#8e8e8e" width="600" style="border: 2px solid #97AEC4;">
+			<table align="center" bgcolor="#8e8e8e" width="530" style="border: 2px solid #97AEC4; height:80px;">
 				<tr align="center">
 					<th>
 						1st&nbsp;Period
@@ -222,7 +222,8 @@ include("inc/database.php");
 						to
 						<input style="font-size:13px; font-weight:bold" autocomplete="off" type="text" name="todate1" class="tcal" value="<?php echo $_SESSION['todate1']; ?>"  id="todate1" ondblclick="dat2()" size="9"/>
 					</td>
-					<td align="center">Display<input id="color" onclick="markerdisp1('1')" type="checkbox" checked></td>
+				<!--	<td align="center">Display<input id="color" onclick="markerdisp1('1')" type="checkbox" checked></td>
+				-->
 				</tr>
 				<tr align="center">
 					<th>
@@ -234,7 +235,8 @@ include("inc/database.php");
 						to
 						<input style="font-size:13px; font-weight:bold" autocomplete="off" type="text" name="todate2" class="tcal" value="<?php echo $_SESSION['todate2']; ?>"  id="todate2" ondblclick="dat4()" size="9"/>
 					</td>
-					<td align="center">Display<input id="2" onclick="markerdisp2('2')" type="checkbox" checked></td>
+				<!--	<td align="center">Display<input id="2" onclick="markerdisp2('2')" type="checkbox" checked></td>
+				-->
 				</tr>
 				<tr align="center">
 					<th>
@@ -246,10 +248,11 @@ include("inc/database.php");
 						to
 						<input style="font-size:13px; font-weight:bold" autocomplete="off" type="text" name="todate3" class="tcal" value="<?php echo $_SESSION['todate3']; ?>"  id="todate3" ondblclick="dat6()" size="9"/>
 					</td>
-					<td align="center">Display<input id="3" onclick="markerdisp3('3')" type="checkbox" checked></td>
+			<!--		<td align="center">Display<input id="3" onclick="markerdisp3('3')" type="checkbox" checked></td>
+			-->
 				</tr>
 			</table>
-
+		<br>
 			<table align="center" bgcolor="#8e8e8e" width="530" >
 				<tr align="center">
 					<td>
@@ -419,6 +422,63 @@ include("inc/database.php");
 	</td>
 
 	<td valign="top">
+		<table id="earth" style="position:relative;">
+			<tr>
+				<th width="50">Period 1</th>
+				<td align="center">
+					<label for="1"><span></span>< 3 R</label>
+					<input id="1" onclick="markerdisp1('1')" type="checkbox" checked></td>
+				<td align="center">
+					<label for="2"><span></span>3 - 3.9 R</label>
+					<input id="2" onclick="markerdisp1('2')" type="checkbox" checked></td>
+				<td align="center">
+					<label for="3"><span></span>4 - 4.9 R</label>
+					<input id="3" onclick="markerdisp1('3')" type="checkbox" checked></td>
+				<td align="center">
+					<label for="4"><span></span>5 - 5.9 R</label>
+					<input id="4" onclick="markerdisp1('4')" type="checkbox" checked></td>
+				<td align="center">
+					<label for="5"><span></span>>6 R</label>
+					<input id="5" onclick="markerdisp1('5')" type="checkbox" checked></td>
+			</tr>
+			<tr>
+				<th>Period 2</th>
+				<td align="center">
+					<label for="6"><span></span>< 3 R</label>
+					<input id="6" onclick="markerdisp2('1')" type="checkbox" checked></td>
+				<td align="center">
+					<label for="7"><span></span>3 - 3.9 R</label>
+					<input id="7" onclick="markerdisp2('2')" type="checkbox" checked></td>
+				<td align="center">
+					<label for="8"><span></span>4 - 4.9 R</label>
+					<input id="8" onclick="markerdisp2('3')" type="checkbox" checked></td>
+				<td align="center">
+					<label for="9"><span></span>5 - 5.9 R</label>
+					<input id="9" onclick="markerdisp2('4')" type="checkbox" checked></td>
+				<td align="center">
+					<label for="10"><span></span>>6 R</label>
+					<input id="10" onclick="markerdisp2('5')" type="checkbox" checked></td>
+			</tr>
+			<tr>
+				<th>Period 3</th>
+				<td align="center">
+					<label for="11"><span></span>< 3 R</label>
+					<input id="11" onclick="markerdisp3('1')" type="checkbox" checked></td>
+				<td align="center">
+					<label for="12"><span></span>3 - 3.9 R</label>
+					<input id="12" onclick="markerdisp3('2')" type="checkbox" checked></td>
+				<td align="center">
+					<label for="13"><span></span>4 - 4.9 R</label>
+					<input id="13" onclick="markerdisp3('3')" type="checkbox" checked></td>
+				<td align="center">
+					<label for="14"><span></span>5 - 5.9 R</label>
+					<input id="14" onclick="markerdisp3('4')" type="checkbox" checked></td>
+				<td align="center">
+					<label for="15"><span></span>>6 R</label>
+					<input id="15" onclick="markerdisp3('5')" type="checkbox" checked></td>
+			</tr>
+		</table>
+	<br>
 		<table align="center"  bgcolor="#8e8e8e" width="450" style="border: 2px solid #97AEC4;">
 		<tr>
 			<td width="300">

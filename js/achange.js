@@ -1,3 +1,61 @@
+
+// Define the overlay, derived from google.maps.OverlayView
+function Label(opt_options) {
+	// Initialization
+	this.setValues(opt_options);
+
+	// Label specific
+	var span = this.span_ = document.createElement('span');
+	span.style.cssText = 'position: relative; left: -45%; top: -20px; ' +
+		'white-space: nowrap; border: 1px solid blue; ' +
+		'padding: 2px; background-color: white; z-index: 0; font-size:14px;';
+
+	var div = this.div_ = document.createElement('div');
+	div.appendChild(span);
+	div.style.cssText = 'position: absolute; display: none';
+}
+Label.prototype = new google.maps.OverlayView;
+// Implement onAdd
+Label.prototype.onAdd = function () {
+	var pane = this.getPanes().overlayLayer;
+	pane.appendChild(this.div_);
+
+	// Ensures the label is redrawn if the text or position is changed.
+	var me = this;
+	this.listeners_ = [
+		google.maps.event.addListener(this, 'position_changed',
+			function () {
+				me.draw();
+			}),
+		google.maps.event.addListener(this, 'text_changed',
+			function () {
+				me.draw();
+			})
+	];
+};
+// Implement onRemove
+Label.prototype.onRemove = function () {
+	this.div_.parentNode.removeChild(this.div_);
+
+	//    Label is removed from the map, stop updating its position/text.
+	for(var i = 0, I = this.listeners_.length; i < I; ++i) {
+		google.maps.event.removeListener(this.listeners_[i]);
+	}
+};
+
+// Implement draw
+Label.prototype.draw = function () {
+	var projection = this.getProjection();
+	var position = projection.fromLatLngToDivPixel(this.get('position'));
+
+	var div = this.div_;
+	div.style.left = position.x + 'px';
+	div.style.top = position.y + 'px';
+	div.style.display = 'block';
+
+	this.span_.innerHTML = this.get('text').toString();
+};
+
 // 0 - 15
 var iconM0 = new google.maps.MarkerImage('images/blue.png',
 	null,
@@ -204,48 +262,7 @@ customIcons["17"] = iconM17;
 customIcons["18"] = iconM18;
 customIcons["19"] = iconM19;
 */
-var markerGroups1 = {
-	"1": [],
-	"2": [],
-	"3": [],
-	"4": [],
-	"5": [],
-	"6": [],
-	"7": []
-};
-var markerGroups2 = {
-	"1": [],
-	"2": [],
-	"3": [],
-	"4": [],
-	"5": [],
-	"6": [],
-	"7": []
-};
-var markerGroups3 = {
-	"1": [],
-	"2": [],
-	"3": [],
-	"4": [],
-	"5": [],
-	"6": [],
-	"7": []
-};
-var polyline = {
-	"1": [],
-	"2": [],
-	"3": []
-};
-var polylinemarkers1 = [];
-var polylinemarkers2 = [];
-var polylinemarkers3 = [];
 
-var markers1 = {
-	"1": [],
-	"2": [],
-	"3": []
-};
-var lab = [];
 
 var colorIndex_ = 0;
 var COLORS = [
@@ -315,9 +332,31 @@ var markerfin;
 var markersPeriod1 = [];
 var markersPeriod2 = [];
 var markersPeriod3 = [];
+var markerGroups1 = {
+	"1": [],
+	"2": [],
+	"3": [],
+	"4": [],
+	"5": []
+};
+var markerGroups2 = {
+	"1": [],
+	"2": [],
+	"3": [],
+	"4": [],
+	"5": []
+};
+var markerGroups3 = {
+	"1": [],
+	"2": [],
+	"3": [],
+	"4": [],
+	"5": []
+};
 var markersPredictions = [];
 var counter = 0;
 var counterPredictions = 0;
+var lab = [];
 
 
 function load() {
@@ -388,7 +427,7 @@ function load() {
 	var i;
 	var j;
 	var size;
-	var l;
+	var cat;
 
 	downloadUrl("phpsqlajax_xmlD1.php", function (data) {
 		var latchess = [];
@@ -450,7 +489,7 @@ function load() {
 
 	downloadUrl("phpsqlajax_xmlD1.php", function (data) {
 		size = data.documentElement.getElementsByTagName("size");
-		l = 1;
+		cat = 1;
 		var k = 0;
 		size = parseFloat(size[0].getAttribute("size"));
 
@@ -468,7 +507,7 @@ function load() {
 				var latlng = new google.maps.LatLng(parseFloat(markersXML[i].getAttribute("lat")),
 					parseFloat(markersXML[i].getAttribute("lng")));
 
-				var marker = createMarker(id, latlng, megethos, vathos, type, typeSize, date, l, lat, lng);
+				var marker = createMarker(id, latlng, megethos, vathos, type, typeSize, date, cat, lat, lng);
 				markersPeriod1.push( marker );
 				counter = markersPeriod1.length;
 				k++;
@@ -479,7 +518,7 @@ function load() {
 
 	downloadUrl("phpsqlajax_xmlD2.php", function (data) {
 		size = data.documentElement.getElementsByTagName("size");
-		l = 1;
+		cat = 2;
 		var k = 0;
 		size = parseFloat(size[0].getAttribute("size"));
 
@@ -497,7 +536,7 @@ function load() {
 				var latlng = new google.maps.LatLng(parseFloat(markersXML[i].getAttribute("lat")),
 					parseFloat(markersXML[i].getAttribute("lng")));
 
-				var marker = createMarker(id, latlng, megethos, vathos, type, typeSize, date, l, lat, lng);
+				var marker = createMarker(id, latlng, megethos, vathos, type, typeSize, date, cat, lat, lng);
 				markersPeriod2.push( marker );
 				counter = markersPeriod2.length;
 				k++;
@@ -508,7 +547,7 @@ function load() {
 
 	downloadUrl("phpsqlajax_xmlD3.php", function (data) {
 		size = data.documentElement.getElementsByTagName("size");
-		l = 1;
+		cat = 3;
 		var k = 0;
 		size = parseFloat(size[0].getAttribute("size"));
 
@@ -526,7 +565,7 @@ function load() {
 				var latlng = new google.maps.LatLng(parseFloat(markersXML[i].getAttribute("lat")),
 					parseFloat(markersXML[i].getAttribute("lng")));
 
-				var marker = createMarker(id, latlng, megethos, vathos, type, typeSize, date, l, lat, lng);
+				var marker = createMarker(id, latlng, megethos, vathos, type, typeSize, date, cat, lat, lng);
 				markersPeriod3.push( marker );
 				counter = markersPeriod3.length;
 				k++;
@@ -572,8 +611,8 @@ function load() {
 }
 var counter = 0;
 function setAllMap(map) {
-  for (var i = 0; i < markers.length; i++) {
-    markers[i].setMap(map);
+  for (var i = 0; i < markersPeriod1.length; i++) {
+    markersPeriod1[i].setMap(map);
   }
 }
 function markersShowHide() {
@@ -585,16 +624,16 @@ function markersShowHide() {
 	}else{
 		document.getElementById("showmarkersHidden").value = 0;
 		document.getElementById("showmarkers").innerHTML = "Hide";
-		 counter = markers.length;
+		counter = markersPeriod1.length;
 		setAllMap(map);
 	}
 }
 function nextMarker() {
-	if( counter<markers.length ){
-		markers[counter].setMap(map);
+	if( counter<markersPeriod1.length ){
+		markersPeriod1[counter].setMap(map);
 		counter++;
 	}
-	if( counter==markers.length){
+	if( counter==markersPeriod1.length){
 		document.getElementById("showmarkersHidden").value = 0;
 		document.getElementById("showmarkers").innerHTML = "Hide";
 	}
@@ -602,69 +641,13 @@ function nextMarker() {
 function prevMarker() {
 	if( counter>0 ){
 		counter--;
-		markers[counter].setMap(null);
+		markersPeriod1[counter].setMap(null);
 	}
 	if( counter==0 ){
 		document.getElementById("showmarkersHidden").value = 1;
 		document.getElementById("showmarkers").innerHTML = "Show";
 	}
 }
-// Define the overlay, derived from google.maps.OverlayView
-function Label(opt_options) {
-	// Initialization
-	this.setValues(opt_options);
-
-	// Label specific
-	var span = this.span_ = document.createElement('span');
-	span.style.cssText = 'position: relative; left: -45%; top: -20px; ' +
-		'white-space: nowrap; border: 1px solid blue; ' +
-		'padding: 2px; background-color: white; z-index: 0; font-size:14px;';
-
-	var div = this.div_ = document.createElement('div');
-	div.appendChild(span);
-	div.style.cssText = 'position: absolute; display: none';
-}
-Label.prototype = new google.maps.OverlayView;
-// Implement onAdd
-Label.prototype.onAdd = function () {
-	var pane = this.getPanes().overlayLayer;
-	pane.appendChild(this.div_);
-
-	// Ensures the label is redrawn if the text or position is changed.
-	var me = this;
-	this.listeners_ = [
-		google.maps.event.addListener(this, 'position_changed',
-			function () {
-				me.draw();
-			}),
-		google.maps.event.addListener(this, 'text_changed',
-			function () {
-				me.draw();
-			})
-	];
-};
-// Implement onRemove
-Label.prototype.onRemove = function () {
-	this.div_.parentNode.removeChild(this.div_);
-
-	//    Label is removed from the map, stop updating its position/text.
-	for(var i = 0, I = this.listeners_.length; i < I; ++i) {
-		google.maps.event.removeListener(this.listeners_[i]);
-	}
-};
-
-// Implement draw
-Label.prototype.draw = function () {
-	var projection = this.getProjection();
-	var position = projection.fromLatLngToDivPixel(this.get('position'));
-
-	var div = this.div_;
-	div.style.left = position.x + 'px';
-	div.style.top = position.y + 'px';
-	div.style.display = 'block';
-
-	this.span_.innerHTML = this.get('text').toString();
-};
 
 function createMarkerPred(id, latlng, num) {
 	var marker = new google.maps.Marker({
@@ -695,7 +678,7 @@ function setAllMapPred(map) {
   }
 }
 
-function createMarker(id, latlng, megethos, vathos, type, typeSize, date, l, lat, lng) {
+function createMarker(id, latlng, megethos, vathos, type, typeSize, date, cat, lat, lng) {
 	var marker = new google.maps.Marker({
 		position: latlng,
 		map: map,
@@ -703,6 +686,15 @@ function createMarker(id, latlng, megethos, vathos, type, typeSize, date, l, lat
 		clickable: true,
 		icon: customIcons[typeSize]
 	});
+	if (cat == 1) {
+		markerGroups1[typeSize].push(marker);
+	}
+	else if (cat == 2) {
+		markerGroups2[typeSize].push(marker);
+	}
+	else {
+		markerGroups3[typeSize].push(marker);
+	}
 	var arr = date.split("-");
 	var time = arr[2].split(":");
 	var day = time[0].split(" ");
@@ -750,31 +742,31 @@ function createMarker(id, latlng, megethos, vathos, type, typeSize, date, l, lat
 }
 
 function markerdisp1(type) {
-	for(i = 0; i < markersPeriod1.length; i++) {
-		if( markersPeriod1[i].getVisible()==true ) {
-			markersPeriod1[i].setVisible(false);
+	for(i = 0; i < markerGroups1[type].length; i++) {
+		if( markerGroups1[type][i].getVisible()==true ) {
+			markerGroups1[type][i].setVisible(false);
 		} else {
-			markersPeriod1[i].setVisible(true);
+			markerGroups1[type][i].setVisible(true);
 		}
 	}
 }
 
 function markerdisp2(type) {
-	for(i = 0; i < markersPeriod2.length; i++) {
-		if( markersPeriod2[i].getVisible()==true ) {
-			markersPeriod2[i].setVisible(false);
+	for(i = 0; i < markerGroups2[type].length; i++) {
+		if( markerGroups2[type][i].getVisible()==true ) {
+			markerGroups2[type][i].setVisible(false);
 		} else {
-			markersPeriod2[i].setVisible(true);
+			markerGroups2[type][i].setVisible(true);
 		}
 	}
 }
 
 function markerdisp3(type) {
-	for(i = 0; i < markersPeriod3.length; i++) {
-		if( markersPeriod3[i].getVisible()==true ) {
-			markersPeriod3[i].setVisible(false);
+	for(i = 0; i < markerGroups3[type].length; i++) {
+		if( markerGroups3[type][i].getVisible()==true ) {
+			markerGroups3[type][i].setVisible(false);
 		} else {
-			markersPeriod3[i].setVisible(true);
+			markerGroups3[type][i].setVisible(true);
 		}
 	}
 }
@@ -787,37 +779,6 @@ function datedisp(type) {
 		} else {
 			markers1[type][i].hide();
 			markers1[type][i].hidden = true;
-		}
-	}
-}
-
-function polylinedisp(pertype) {
-	var pertyp = parseInt(pertype);
-	if(pertype == 1) {
-		for(j = 0; j < size * size; j++) {
-			if(polylinemarkers1[j].isHidden()) {
-				polylinemarkers1[j].show();
-			} else {
-				polylinemarkers1[j].hide();
-			}
-		}
-	}
-	if(pertype == 2) {
-		for(j = 0; j < size * size; j++) {
-			if(polylinemarkers2[j].isHidden()) {
-				polylinemarkers2[j].show();
-			} else {
-				polylinemarkers2[j].hide();
-			}
-		}
-	}
-	if(pertype == 3) {
-		for(j = 0; j < size * size; j++) {
-			if(polylinemarkers3[j].isHidden()) {
-				polylinemarkers3[j].show();
-			} else {
-				polylinemarkers3[j].hide();
-			}
 		}
 	}
 }
