@@ -33,7 +33,11 @@
 					echo "<br>";
 					echo "<b>".$total_recordsD3."</b>  earthquakes";
 					echo "<br>";
-					echo "Calc time <b>".$time3."</b> sec"; unset($time3); ?>
+					echo "Calc time <b>".$time3."</b> sec"; unset($time3);
+					echo "<br>"; ?>
+					<font style="font-size:14px;"> Energy = </font> <font style="font-size:10px;"> <b id="<?php echo 'energy3'.$k3; ?>">0 J</b> </font>
+					<?php echo "<br>"; ?>
+					<font style="font-size:14px;"> b = <b id="<?php echo 'b3'.$k3; ?>"></b> </font>
 				</td>
 				<td align="right" width="50">
 					<font style="font-size:12px;">

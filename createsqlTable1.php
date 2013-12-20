@@ -1,4 +1,4 @@
-
+	
 <table align="center" border="0" style="font-size:12px;">
 	<tr>
 		<td> <?php
@@ -16,13 +16,14 @@
 			echo "<br>"; ?>
 		</td>
 	</tr>
+
 <?php  // echo $ua['name']; ?>
 <table style="border: 2px solid #97AEC4;">
 	<tr>
 		<td> <?php
 		for($i=0; $i<$diastaseis; $i++) {
 			include('createsqlGraph1.php'); ?>
-			<table cellpadding="4" cellspacing="4" style="font-size:12px;">
+			<table border="0" cellpadding="4" cellspacing="4" style="font-size:12px;">
 			<tr>
 				<td>
 					<a name="<?php echo $k1."a"; ?>"><?php echo $k1+1; ?></A>
@@ -32,7 +33,11 @@
 					echo "<br>";
 					echo "<b>".$total_recordsD1."</b>  earthquakes";
 					echo "<br>";
-					echo "Calc time <b>".$time1."</b> sec"; unset($time1); ?>
+					echo "Calc time <b>".$time1."</b> sec"; unset($time1);
+					echo "<br>"; ?>
+					<font style="font-size:14px;"> Energy = <b id="<?php echo 'energy1'.$k1; ?>">0 J</b> </font>
+					<?php echo "<br>"; ?>
+					<font style="font-size:14px;"> b = <b id="<?php echo 'b1'.$k1; ?>">0.000</b> </font>
 				</td>
 				<td width="50">
 					<font style="font-size:12px;">

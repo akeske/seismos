@@ -5,15 +5,14 @@ include('dataGraphMagnTwoYears.php');
 $datay1 = $_SESSION['sendgraphmagnyear1D3'];
 $datay2 = $_SESSION['sendgraphmagnyear2D3'];
 $datay3 = $_SESSION['sendgraphmagnyear3D3'];
-
+$a = $_GET['n3']+1;
 // Setup the graph
 $graph = new Graph(900,600);
 $graph->SetScale("textlin");
 $graph->SetShadow();
 $graph->img->SetAntiAliasing(true);
-$graph->title->Set('Cumulative rate/year');
+$graph->title->Set('Cumulative rate/year - Area '.$a);
 $graph->SetBox(false);
-$graph->img->SetAntiAliasing();
 $graph->yaxis->HideZeroLabel();
 $graph->yaxis->HideLine(false);
 $graph->yaxis->HideTicks(false,false);
@@ -27,7 +26,7 @@ $graph->img->SetMargin(40,110,20,50);
 $graph->title->SetFont(FF_FONT1,FS_BOLD);
 $graph->yaxis->title->SetFont(FF_FONT1,FS_BOLD);
 $graph->xaxis->title->SetFont(FF_FONT1,FS_BOLD);
-
+$graph->xaxis->SetLabelAngle(30);
 // Create the first line
 $p1 = new LinePlot($datay1);
 $graph->Add($p1);

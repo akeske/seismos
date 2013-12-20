@@ -4,13 +4,13 @@ require_once ('../jpgraph/jpgraph_line.php');
 include('dataGraph.php');
 $datay1 = $_SESSION['sendD2'];
 $datay2 = array(0);
-
+$a = $_GET['k2']+1;
 // Setup the graph
 $graph = new Graph(900,600);
 $graph->SetScale("textlin");
 $graph->SetShadow();
 $graph->img->SetAntiAliasing(false);
-$graph->title->Set('Cumulative Number / Time in years');
+$graph->title->Set('Cumulative Number / Time in years - Area '.$a);
 $graph->subtitle->Set('');
 $graph->xaxis->title->Set('');
 $graph->yaxis->title->Set('');
@@ -30,6 +30,7 @@ $graph->title->SetFont(FF_FONT1,FS_BOLD);
 $graph->yaxis->title->SetFont(FF_FONT1,FS_BOLD);
 $graph->xaxis->title->SetFont(FF_FONT1,FS_BOLD);
 $graph->xaxis->SetTextLabelInterval(1);
+$graph->xaxis->SetLabelAngle(30);
 // Create the first line
 $p1 = new LinePlot($datay1);
 $p1->value->Show();

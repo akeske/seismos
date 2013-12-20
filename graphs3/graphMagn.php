@@ -3,12 +3,13 @@ require_once ('../jpgraph/jpgraph.php');
 require_once ('../jpgraph/jpgraph_line.php');
 include('dataGraphMagn.php');
 $datay1 = $_SESSION['sendgraphmagnD3'];
+$a = $_GET['l3']+1;
 // Setup the graph
 $graph = new Graph(900,600);
 $graph->SetScale("textlin");
 $graph->SetShadow();
 $graph->img->SetAntiAliasing(false);
-$graph->title->Set('Cumulative rate/year');
+$graph->title->Set('Cumulative rate/year - Area '.$a);
 $graph->SetBox(false);
 $graph->img->SetAntiAliasing();
 $graph->yaxis->HideZeroLabel();
@@ -24,6 +25,7 @@ $graph->title->SetFont(FF_FONT1,FS_BOLD);
 $graph->yaxis->title->SetFont(FF_FONT1,FS_BOLD);
 $graph->xaxis->title->SetFont(FF_FONT1,FS_BOLD);
 $graph->xaxis->title->Set('Magnitude (R)');
+$graph->xaxis->SetLabelAngle(30);
 // Create the first line
 $p1 = new LinePlot($datay1);
 $graph->Add($p1);

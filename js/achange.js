@@ -487,6 +487,15 @@ function load() {
 
 	});
 
+	function addCommas(n){
+		var rx=  /(\d+)(\d{3})/;
+		return String(n).replace(/^\d+/, function(w){
+			while(rx.test(w)){
+				w= w.replace(rx, '$1.$2');
+			}
+			return w;
+		});
+	}
 	downloadUrl("phpsqlajax_xmlD1.php", function (data) {
 		size = data.documentElement.getElementsByTagName("size");
 		cat = 1;
@@ -494,6 +503,7 @@ function load() {
 		size = parseFloat(size[0].getAttribute("size"));
 
 		for(j = 0; j < size * size; j++) {
+			var energy1 = 0;
 			var markersXML = data.documentElement.getElementsByTagName("marker" + j);
 			for(i = 0; i < markersXML.length; i++) {
 				var id = markersXML[i].getAttribute("id");
@@ -510,11 +520,42 @@ function load() {
 				var marker = createMarker(id, latlng, megethos, vathos, type, typeSize, date, cat, lat, lng);
 				markersPeriod1.push( marker );
 				counter = markersPeriod1.length;
+
+				var meg = parseFloat(megethos);
+				var logenergy1 = 1.5*meg+4.7;
+				var ener1 = Math.pow(10, logenergy1);
+				var ener = Math.pow(ener1, 2/3);
+				energy1 += ener;
+				var energyRound1 = Math.round( energy1 );
+				var energyRoundComma1 = addCommas(energyRound1);
 				k++;
-				
+				document.getElementById('energy1'+j).innerHTML = energyRoundComma1+" J";
+
 			}
 		}
 	});
+/*
+	
+Magnitude	   Released Energy (to the nearest integer)
+1	   794,328 J
+1.5	   4,466,836 J
+2	   25,118,864 J
+2.5	   141,253,754 J
+3	   794,328,235 J
+3.5	   4,466,835,922 J
+4	   25,118,864,315 J
+4.5	   141,253,754,462 J
+5	   794,328,234,724 J
+5.5	   4,466,835,921,510 J
+6	   25,118,864,315,096 J
+6.5	   141,253,754,462,275 J
+7	   794,328,234,724,282 J
+7.5	   4,466,835,921,509,631 J
+8	   25,118,864,315,095,801 J
+8.5	   141,253,754,62,275,430 J
+9	   794,328,234,724,281,502 J
+
+*/
 
 	downloadUrl("phpsqlajax_xmlD2.php", function (data) {
 		size = data.documentElement.getElementsByTagName("size");
@@ -523,6 +564,7 @@ function load() {
 		size = parseFloat(size[0].getAttribute("size"));
 
 		for(j = 0; j < size * size; j++) {
+			var energy2 = 0;
 			var markersXML = data.documentElement.getElementsByTagName("marker" + j);
 			for(i = 0; i < markersXML.length; i++) {
 				var id = markersXML[i].getAttribute("id");
@@ -539,12 +581,20 @@ function load() {
 				var marker = createMarker(id, latlng, megethos, vathos, type, typeSize, date, cat, lat, lng);
 				markersPeriod2.push( marker );
 				counter = markersPeriod2.length;
+
+				var meg = parseFloat(megethos);
+				var logenergy2 = 1.5*meg+4.7;
+				var ener2 = Math.pow(10, logenergy2);
+				var ener = Math.pow(ener2, 2/3);
+				energy2 += ener;
+				var energyRound2 = Math.round( energy2 );
+				var energyRoundComma2 = addCommas(energyRound2);
 				k++;
-				
+				document.getElementById('energy2'+j).innerHTML = energyRoundComma2+" J";
 			}
 		}
 	});
-
+	
 	downloadUrl("phpsqlajax_xmlD3.php", function (data) {
 		size = data.documentElement.getElementsByTagName("size");
 		cat = 3;
@@ -552,6 +602,7 @@ function load() {
 		size = parseFloat(size[0].getAttribute("size"));
 
 		for(j = 0; j < size * size; j++) {
+			var energy3 = 0;
 			var markersXML = data.documentElement.getElementsByTagName("marker" + j);
 			for(i = 0; i < markersXML.length; i++) {
 				var id = markersXML[i].getAttribute("id");
@@ -568,15 +619,23 @@ function load() {
 				var marker = createMarker(id, latlng, megethos, vathos, type, typeSize, date, cat, lat, lng);
 				markersPeriod3.push( marker );
 				counter = markersPeriod3.length;
-				k++;
 				
+				var meg = parseFloat(megethos);
+				var logenergy3 = 1.5*meg+4.7;
+				var ener3 = Math.pow(10, logenergy3);
+				var ener = Math.pow(ener3, 2/3);
+				energy3 += ener;
+				var energyRound3 = Math.round( energy3 );
+				var energyRoundComma3 = addCommas(energyRound3);
+				k++;
+				document.getElementById('energy3'+j).innerHTML = energyRoundComma3+" J";
 			}
 		}
 	});
 
-	var max=-999;
-	var min=999;
 	downloadUrl("csvxml.php", function (data) {
+		var max=-999;
+		var min=999;
 		var markersXML = data.documentElement.getElementsByTagName("marker");
 		for(i = 0; i < markersXML.length; i++) {
 			var id = markersXML[i].getAttribute("id");
@@ -606,6 +665,124 @@ function load() {
 	//	document.getElementById("fromPred").value = min;
 	//	document.getElementById("toPred").value = max;
 	
+	});
+
+	downloadUrl("phpsqlajax_xmlD1.php", function (data) {
+		var max=-999;
+		var min=999;
+		size = data.documentElement.getElementsByTagName("size");
+		size = parseFloat(size[0].getAttribute("size"));
+
+		for(j = 0; j < size * size; j++) {
+			var markersXML = data.documentElement.getElementsByTagName("marker" + j);
+			var max = 0;
+			var min = 10;
+			var megethos=new Array();
+			for(i = 0; i < markersXML.length; i++) {
+				megethos[i] = markersXML[i].getAttribute("megethos");
+				if(megethos[i]>max){
+					max = megethos[i];
+				}
+				if(megethos[i]<min){
+					min = megethos[i];
+				}
+			}
+			var diafora = max-min;
+			var DM = 0.2;
+			var totalSteps = Math.round( diafora/DM );
+			var sumParanomastis = 0;
+			for(j2=1; j2<totalSteps; j2++){
+				var tempMax = min + j2*DM;
+				var counterMagn = 0;
+				for(i=0; i<megethos.length; i++){
+					if(megethos[i]>=min && megethos[i]<=tempMax){
+						counterMagn++;
+					}
+				}
+				sumParanomastis += j2*counterMagn;
+			}
+			var logarithmos = 1 + megethos.length/sumParanomastis;
+			var b1 = Math.round( Math.log(logarithmos)/DM *10000 ) / 10000;
+			document.getElementById('b1'+j).innerHTML = b1;
+		}
+	});
+
+	downloadUrl("phpsqlajax_xmlD2.php", function (data) {
+		var max=-999;
+		var min=999;
+		size = data.documentElement.getElementsByTagName("size");
+		size = parseFloat(size[0].getAttribute("size"));
+
+		for(j = 0; j < size * size; j++) {
+			var markersXML = data.documentElement.getElementsByTagName("marker" + j);
+			var max = 0;
+			var min = 10;
+			var megethos=new Array();
+			for(i = 0; i < markersXML.length; i++) {
+				megethos[i] = markersXML[i].getAttribute("megethos");
+				if(megethos[i]>max){
+					max = megethos[i];
+				}
+				if(megethos[i]<min){
+					min = megethos[i];
+				}
+			}
+			var diafora = max-min;
+			var DM = 0.2;
+			var totalSteps = Math.round( diafora/DM );
+			var sumParanomastis = 0;
+			for(j2=1; j2<totalSteps; j2++){
+				var tempMax = min + j2*DM;
+				var counterMagn = 0;
+				for(i=0; i<megethos.length; i++){
+					if(megethos[i]>=min && megethos[i]<=tempMax){
+						counterMagn++;
+					}
+				}
+				sumParanomastis += j2*counterMagn;
+			}
+			var logarithmos = 1 + megethos.length/sumParanomastis;
+			var b2 = Math.round( Math.log(logarithmos)/DM *10000 ) / 10000;
+			document.getElementById('b2'+j).innerHTML = b2;
+		}
+	});
+
+	downloadUrl("phpsqlajax_xmlD3.php", function (data) {
+		size = data.documentElement.getElementsByTagName("size");
+		size = parseFloat(size[0].getAttribute("size"));
+
+		for(j = 0; j < size * size; j++) {
+			var markersXML = data.documentElement.getElementsByTagName("marker" + j);
+			var max = 0;
+			var min = 10;
+			var megethos=new Array();
+			for(i = 0; i < markersXML.length; i++) {
+				megethos[i] = markersXML[i].getAttribute("megethos");
+				if(megethos[i]>max){
+					max = megethos[i];
+				}
+				if(megethos[i]<min){
+					min = megethos[i];
+				}
+			}
+			var diafora = max-min;
+			var DM = 0.2;
+			var totalSteps = Math.round( diafora/DM );
+			var sumParanomastis = 0;
+			for(j2=1; j2<totalSteps; j2++){
+				var tempMax = min + j2*DM;
+				var counterMagn = 0;
+				for(i=0; i<megethos.length; i++){
+					if(megethos[i]>=min && megethos[i]<=tempMax){
+						counterMagn++;
+					}
+				}
+				sumParanomastis += j2*counterMagn;
+			}
+			var logarithmos = 1 + megethos.length/sumParanomastis;
+			var b3 = Math.round( Math.log(logarithmos)/DM *10000 ) / 10000;
+			document.getElementById('b3'+j).innerHTML = b3;
+		}
 	});
 
 }

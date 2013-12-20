@@ -32,7 +32,11 @@
 					echo "<br>";
 					echo "<b>".$total_recordsD2."</b>  earthquakes";
 					echo "<br>";
-					echo "Calc time <b>".$time2."</b> sec";unset($time2); ?>
+					echo "Calc time <b>".$time2."</b> sec";unset($time2);
+					echo "<br>"; ?>
+					<font style="font-size:14px;"> Energy = <b id="<?php echo 'energy2'.$k2; ?>">0 J</b> </font>
+					<?php echo "<br>"; ?>
+					<font style="font-size:14px;"> b = <b id="<?php echo 'b2'.$k2; ?>">0.000</b> </font>
 				</td>
 				<td width="50">
 					<font style="font-size:12px;">
@@ -51,6 +55,8 @@
 				<td>
 					<a href="#top"> <img src="images/hand.png" alt="Go up" width="20" heihght="228" >  </a>
 				</td>
+				<td>
+					</td>
 			</tr>
 			</table> <?php
 			

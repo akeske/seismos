@@ -58,6 +58,10 @@
 	}
 	
 	$_SESSION['sendgraphmagnyear1D3']=$ymagn1;
+	for($i=0; $i<10; $i++) {
+		
+//	echo $ymagn1[$i];
+}
 	$_SESSION['sendgraphmagnyear2D3']=$ymagn2;
 	$_SESSION['sendgraphmagnyear3D3']=$ymagn3;
 	mysql_free_result($resultgraphmagn1);
