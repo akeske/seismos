@@ -6,9 +6,9 @@ function Label(opt_options) {
 
 	// Label specific
 	var span = this.span_ = document.createElement('span');
-	span.style.cssText = 'position: relative; left: -45%; top: -20px; ' +
+	span.style.cssText = 'position: relative; left: -50%; top: -25px; ' +
 		'white-space: nowrap; border: 1px solid blue; ' +
-		'padding: 2px; background-color: white; z-index: 0; font-size:14px;';
+		'padding: 1px; background-color: white; z-index: 0; font-size:14px;';
 
 	var div = this.div_ = document.createElement('div');
 	div.appendChild(span);
@@ -55,6 +55,127 @@ Label.prototype.draw = function () {
 
 	this.span_.innerHTML = this.get('text').toString();
 };
+
+
+
+// Define the overlay, derived from google.maps.OverlayView
+function LabelX(opt_options) {
+	// Initialization
+	this.setValues(opt_options);
+
+	// Label specific
+	var span = this.span_ = document.createElement('span');
+	span.style.cssText = 'position: relative; left: -50%; top: -25px; ' +
+		'white-space: nowrap; border: 1px solid blue; ' +
+		'padding: 2px; background-color: white; z-index: 0; font-size:14px;';
+
+	var div = this.div_ = document.createElement('div');
+	div.appendChild(span);
+	div.style.cssText = 'position: absolute; display: none';
+}
+LabelX.prototype = new google.maps.OverlayView;
+// Implement onAdd
+LabelX.prototype.onAdd = function () {
+	var pane = this.getPanes().overlayLayer;
+	pane.appendChild(this.div_);
+
+	// Ensures the label is redrawn if the text or position is changed.
+	var me = this;
+	this.listeners_ = [
+		google.maps.event.addListener(this, 'position_changed',
+			function () {
+				me.draw();
+			}),
+		google.maps.event.addListener(this, 'text_changed',
+			function () {
+				me.draw();
+			})
+	];
+};
+// Implement onRemove
+LabelX.prototype.onRemove = function () {
+	this.div_.parentNode.removeChild(this.div_);
+
+	//    Label is removed from the map, stop updating its position/text.
+	for(var i = 0, I = this.listeners_.length; i < I; ++i) {
+		google.maps.event.removeListener(this.listeners_[i]);
+	}
+};
+
+// Implement draw
+LabelX.prototype.draw = function () {
+	var projection = this.getProjection();
+	var position = projection.fromLatLngToDivPixel(this.get('position'));
+
+	var div = this.div_;
+	div.style.left = position.x + 'px';
+	div.style.top = position.y + 'px';
+	div.style.display = 'block';
+
+	this.span_.innerHTML = this.get('text').toString();
+};
+
+
+
+
+
+// Define the overlay, derived from google.maps.OverlayView
+function LabelY(opt_options) {
+	// Initialization
+	this.setValues(opt_options);
+
+	// Label specific
+	var span = this.span_ = document.createElement('span');
+	span.style.cssText = 'position: relative; left: -110%; top: -10px; ' +
+		'white-space: nowrap; border: 1px solid blue; ' +
+		'padding: 2px; background-color: white; z-index: 0; font-size:14px;';
+
+	var div = this.div_ = document.createElement('div');
+	div.appendChild(span);
+	div.style.cssText = 'position: absolute; display: none';
+}
+LabelY.prototype = new google.maps.OverlayView;
+// Implement onAdd
+LabelY.prototype.onAdd = function () {
+	var pane = this.getPanes().overlayLayer;
+	pane.appendChild(this.div_);
+
+	// Ensures the label is redrawn if the text or position is changed.
+	var me = this;
+	this.listeners_ = [
+		google.maps.event.addListener(this, 'position_changed',
+			function () {
+				me.draw();
+			}),
+		google.maps.event.addListener(this, 'text_changed',
+			function () {
+				me.draw();
+			})
+	];
+};
+// Implement onRemove
+LabelY.prototype.onRemove = function () {
+	this.div_.parentNode.removeChild(this.div_);
+
+	//    Label is removed from the map, stop updating its position/text.
+	for(var i = 0, I = this.listeners_.length; i < I; ++i) {
+		google.maps.event.removeListener(this.listeners_[i]);
+	}
+};
+// Implement draw
+LabelY.prototype.draw = function () {
+	var projection = this.getProjection();
+	var position = projection.fromLatLngToDivPixel(this.get('position'));
+
+	var div = this.div_;
+	div.style.left = position.x + 'px';
+	div.style.top = position.y + 'px';
+	div.style.display = 'block';
+
+	this.span_.innerHTML = this.get('text').toString();
+};
+
+
 
 // 0 - 15
 var iconM0 = new google.maps.MarkerImage('images/blue.png',
@@ -453,14 +574,45 @@ function load() {
 		for(i = 0; i < lng.length; i++) {
 			lngchess[i] = lng[i].getAttribute("lng");
 		}
+		
 		for(j = 0; j < lng.length + 1; j++) {
 			for(var i = 0; i < 2; i++) {
 				if(i == 0) {
 					var latlng1 = new google.maps.LatLng(latchess[0], lngchess[j]);
 					var latlng2 = new google.maps.LatLng(latchess[j], lngchess[0]);
+					if(j!=lng.length){	
+						var markerY = new google.maps.Marker({
+							position: latlng2,
+							map: null,
+							title: 'pointsgrid',
+							clickable: false,
+							icon: customIcons["1"],
+							//	icon: startYellow,
+							draggable: false
+						});
+						var gridlabelY = new LabelY();
+						gridlabelY.bindTo('position', markerY, 'position');
+						gridlabelY.set('text', latlng2.lat().toFixed(2)+"  -  "+latlng2.lng().toFixed(2));
+						gridlabelY.setMap(map);
+					}
 				} else {
 					latlng1 = new google.maps.LatLng(latchess[size], lngchess[j]);
 					latlng2 = new google.maps.LatLng(latchess[j], lngchess[size]);
+					if(j!=lng.length && j!=0){	
+						var markerX = new google.maps.Marker({
+							position: latlng1,
+							map: null,
+							title: 'pointsgrid',
+							clickable: false,
+							icon: customIcons["1"],
+							//	icon: startYellow,
+							draggable: false
+						});
+						var gridlabelX = new LabelX();
+						gridlabelX.bindTo('position', markerX, 'position');
+						gridlabelX.set('text', latlng1.lat().toFixed(2)+"  -  "+latlng1.lng().toFixed(2));
+						gridlabelX.setMap(map);
+					}
 				}
 				line1.push(latlng1);
 				line2.push(latlng2);
@@ -679,7 +831,7 @@ Magnitude	   Released Energy (to the nearest integer)
 			var min = 10;
 			var megethos=new Array();
 			for(i = 0; i < markersXML.length; i++) {
-				megethos[i] = markersXML[i].getAttribute("megethos");
+				megethos[i] = parseFloat( markersXML[i].getAttribute("megethos") );
 				if(megethos[i]>max){
 					max = megethos[i];
 				}
@@ -689,9 +841,9 @@ Magnitude	   Released Energy (to the nearest integer)
 			}
 			var diafora = max-min;
 			var DM = 0.2;
-			var totalSteps = Math.round( diafora/DM );
+			var totalSteps = Math.ceil( diafora/DM );
 			var sumParanomastis = 0;
-			for(j2=1; j2<totalSteps; j2++){
+			for(j2=1; j2<=totalSteps; j2++){
 				var tempMax = min + j2*DM;
 				var counterMagn = 0;
 				for(i=0; i<megethos.length; i++){
@@ -700,9 +852,12 @@ Magnitude	   Released Energy (to the nearest integer)
 					}
 				}
 				sumParanomastis += j2*counterMagn;
+			//	alert(tempMax);
 			}
+
 			var logarithmos = 1 + megethos.length/sumParanomastis;
-			var b1 = Math.round( Math.log(logarithmos)/DM *10000 ) / 10000;
+			var logbase10 = Math.log(logarithmos)/Math.log(10);
+			var b1 = Math.round( logbase10/DM *10000 ) / 10000;
 			document.getElementById('b1'+j).innerHTML = b1;
 		}
 	});
@@ -719,7 +874,7 @@ Magnitude	   Released Energy (to the nearest integer)
 			var min = 10;
 			var megethos=new Array();
 			for(i = 0; i < markersXML.length; i++) {
-				megethos[i] = markersXML[i].getAttribute("megethos");
+				megethos[i] = parseFloat( markersXML[i].getAttribute("megethos") );
 				if(megethos[i]>max){
 					max = megethos[i];
 				}
@@ -729,9 +884,9 @@ Magnitude	   Released Energy (to the nearest integer)
 			}
 			var diafora = max-min;
 			var DM = 0.2;
-			var totalSteps = Math.round( diafora/DM );
+			var totalSteps = Math.ceil( diafora/DM );
 			var sumParanomastis = 0;
-			for(j2=1; j2<totalSteps; j2++){
+			for(j2=1; j2<=totalSteps; j2++){
 				var tempMax = min + j2*DM;
 				var counterMagn = 0;
 				for(i=0; i<megethos.length; i++){
@@ -742,7 +897,8 @@ Magnitude	   Released Energy (to the nearest integer)
 				sumParanomastis += j2*counterMagn;
 			}
 			var logarithmos = 1 + megethos.length/sumParanomastis;
-			var b2 = Math.round( Math.log(logarithmos)/DM *10000 ) / 10000;
+			var logbase10 = Math.log(logarithmos)/Math.log(10);
+			var b2 = Math.round( logbase10/DM *10000 ) / 10000;
 			document.getElementById('b2'+j).innerHTML = b2;
 		}
 	});
@@ -757,7 +913,7 @@ Magnitude	   Released Energy (to the nearest integer)
 			var min = 10;
 			var megethos=new Array();
 			for(i = 0; i < markersXML.length; i++) {
-				megethos[i] = markersXML[i].getAttribute("megethos");
+				megethos[i] = parseFloat( markersXML[i].getAttribute("megethos") );
 				if(megethos[i]>max){
 					max = megethos[i];
 				}
@@ -767,9 +923,9 @@ Magnitude	   Released Energy (to the nearest integer)
 			}
 			var diafora = max-min;
 			var DM = 0.2;
-			var totalSteps = Math.round( diafora/DM );
+			var totalSteps = Math.ceil( diafora/DM );
 			var sumParanomastis = 0;
-			for(j2=1; j2<totalSteps; j2++){
+			for(j2=1; j2<=totalSteps; j2++){
 				var tempMax = min + j2*DM;
 				var counterMagn = 0;
 				for(i=0; i<megethos.length; i++){
@@ -780,7 +936,8 @@ Magnitude	   Released Energy (to the nearest integer)
 				sumParanomastis += j2*counterMagn;
 			}
 			var logarithmos = 1 + megethos.length/sumParanomastis;
-			var b3 = Math.round( Math.log(logarithmos)/DM *10000 ) / 10000;
+			var logbase10 = Math.log(logarithmos)/Math.log(10);
+			var b3 = Math.round( logbase10/DM *10000 ) / 10000;
 			document.getElementById('b3'+j).innerHTML = b3;
 		}
 	});

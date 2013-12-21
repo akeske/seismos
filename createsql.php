@@ -55,6 +55,7 @@ $sqlcount3 = "SELECT COUNT(id) FROM seismos
 $resultcount3 = mysql_query($sqlcount3);
 $row3 = mysql_fetch_row($resultcount3);
 $totalearth3 = $row3[0];
+
 ?>
 <!--
 <div style="height:580px; width:380px; overflow:auto;">

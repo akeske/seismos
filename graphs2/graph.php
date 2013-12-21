@@ -33,19 +33,16 @@ $graph->xaxis->SetTextLabelInterval(1);
 $graph->xaxis->SetLabelAngle(30);
 // Create the first line
 $p1 = new LinePlot($datay1);
-$p1->value->Show();
-$p1->value->SetFont(FF_ARIAL,FS_BOLD,9);
-$p1->value->SetAngle(45);
-$p1->value->SetColor('darkred');
+$graph->Add($p1);
 $p1->value->SetFormat('%d');
-$p1->SetCenter();
+$p1->value->Show();
 $p1->SetColor("#6495ED");
 $p1->SetWeight(12);
-$p1->SetFillColor('orange@0.5');
+$p1->SetCenter();
+$p1->SetFillColor('orange@0.7');
+
 // Create the second line
 $p2 = new LinePlot($datay2);
-
-$graph->Add($p1);
 $graph->Add($p2);
 
 // Output line

@@ -45,7 +45,28 @@
 		megethos>=$frommagn AND megethos<=$tomagn
 		ORDER BY date";	
 	$_SESSION['sqlgrmgnyearD1'.$k1]=$sqlgrmgnyearD1;
-	
+
+	//calculation of b
+	$sqlb1 = "SELECT year, megethos FROM seismos
+		WHERE date>=$fromdate1 AND date<=$todate1 AND 
+		lat>=$flat[$j] AND lat<=$tlat[$j] AND 
+		lng>=$flng[$i] AND lng<=$tlng[$i] AND 
+		vathos>=$fromdpth AND vathos<=$todpth AND 
+		megethos>=$frommagn AND megethos<=$tomagn
+		ORDER BY year, megethos";	
+	$_SESSION['sqlb1'.$k1]=$sqlb1;
+	$sqlbyear1 = "SELECT year, COUNT(*) AS totalearthquakes,
+		MAX(megethos) AS maxMagn, MIN(megethos) AS minMagn,
+		( MAX( megethos ) - MIN( megethos ) ) / 0.2 AS steps FROM seismos
+		WHERE date>=$fromdate1 AND date<=$todate1 AND 
+		lat>=$flat[$j] AND lat<=$tlat[$j] AND 
+		lng>=$flng[$i] AND lng<=$tlng[$i] AND 
+		vathos>=$fromdpth AND vathos<=$todpth AND 
+		megethos>=$frommagn AND megethos<=$tomagn
+		GROUP BY year
+		ORDER BY year, megethos";	
+	$_SESSION['sqlbyear1'.$k1]=$sqlbyear1;
+
 	//counter per grid
 	$total_recordsD1=mysql_num_rows($resultD1);
 ?>

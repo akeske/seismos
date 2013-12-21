@@ -29,12 +29,14 @@ $graph->xaxis->SetLabelAngle(30);
 // Create the first line
 $p1 = new LinePlot($datay1);
 $graph->Add($p1);
+$p1->value->SetFormat('%d');
 $p1->mark->SetType(MARK_FILLEDCIRCLE,'',0.5);
 $p1->mark->SetColor('#55bbdd');
 $p1->mark->SetFillColor('#55bbdd');
 $p1->SetColor("#6495ED");
 $p1->SetLegend($_SESSION['fromdate1']." - ".$_SESSION['todate1']);
 $p1->SetCenter();
+$p1->value->Show();
 
 $graph->legend->SetFrameWeight(1);
 

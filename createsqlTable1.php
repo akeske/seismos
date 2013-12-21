@@ -1,4 +1,6 @@
-	
+<?php
+
+	?>
 <table align="center" border="0" style="font-size:12px;">
 	<tr>
 		<td> <?php
@@ -22,7 +24,7 @@
 	<tr>
 		<td> <?php
 		for($i=0; $i<$diastaseis; $i++) {
-			include('createsqlGraph1.php'); ?>
+			include('createsqlGraph1.php');	?>
 			<table border="0" cellpadding="4" cellspacing="4" style="font-size:12px;">
 			<tr>
 				<td>
@@ -53,6 +55,18 @@
 					<!--	<a onClick="window.open('graphs1/graphMagn.php?l1=<?php echo $k1; ?>','Graph 1',' width=600,height=400')" target="_blank" style="display:block; float:right; height:40px; width:100px; cursor:pointer;"> Graph 2 </a>
 							<input type="button" value="Graph 3" onClick="window.open('graphs1/graphmagnyear.php?m1=<?php echo $k1; ?>','Graph 3',' width=600,height=400')"/> -->
 					<!--	<input type="button" value="Graph 3" onClick="window.open('graphs1/graphMagnTwoYears.php?n1=<?php echo $k1; ?>','Graph 3',' width=600,height=400')"/> -->
+						</form>
+					</font>
+				</td>
+				<td align="right" width="50">
+					<font style="font-size:10px;">
+						<form>
+							<?php
+							if ( $ua['name']=='Mozilla Firefox' ) { ?>
+								<input style="font-size:10px;" type="button" value="Graph of b" onClick="window.open('graphs1/graphB.php?b1=<?php echo $k1; ?>','Graph for b',' width=900,height=600')"/>
+							<?php }else{ ?>
+								<a href="graphs1/graphB.php?b1=<?php echo $k1; ?>" target="_blank" style="display:block; float:left; height:15px; width:50px; cursor:pointer;"> Graph for b </a>
+							<?php } ?>
 						</form>
 					</font>
 				</td>

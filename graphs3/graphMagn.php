@@ -35,6 +35,8 @@ $p1->mark->SetFillColor('#55bbdd');
 $p1->SetColor("#6495ED");
 $p1->SetLegend($_SESSION['fromdate1']." - ".$_SESSION['todate1']);
 $p1->SetCenter();
+$p1->value->SetFormat('%d');
+$p1->value->Show();
 
 $graph->legend->SetFrameWeight(1);
 
