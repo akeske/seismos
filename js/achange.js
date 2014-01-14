@@ -318,8 +318,20 @@ var icon1 = new google.maps.MarkerImage('images/black.png',
 	new google.maps.Point(3, 3),
 	new google.maps.Size(6, 6)
 );
+var icon1Last = new google.maps.MarkerImage('images/redGif.gif',
+	null,
+	null,
+	new google.maps.Point(3, 3),
+	new google.maps.Size(6, 6)
+);
 // 3 - 4
 var icon2 = new google.maps.MarkerImage('images/blue.png',
+	null,
+	null,
+	new google.maps.Point(3, 3),
+	new google.maps.Size(6, 6)
+);
+var icon2Last = new google.maps.MarkerImage('images/redGif.gif',
 	null,
 	null,
 	new google.maps.Point(3, 3),
@@ -332,6 +344,12 @@ var icon3 = new google.maps.MarkerImage('images/green.png',
 	new google.maps.Point(3, 3),
 	new google.maps.Size(6, 6)
 );
+var icon3Last = new google.maps.MarkerImage('images/greenGif.gif',
+	null,
+	null,
+	new google.maps.Point(6, 6),
+	new google.maps.Size(12, 12)
+);
 // 5 - 6
 var icon4 = new google.maps.MarkerImage('images/red.png',
 	null,
@@ -339,12 +357,24 @@ var icon4 = new google.maps.MarkerImage('images/red.png',
 	new google.maps.Point(3, 3),
 	new google.maps.Size(6, 6)
 );
+var icon4Last = new google.maps.MarkerImage('images/redGif.gif',
+	null,
+	null,
+	new google.maps.Point(6, 6),
+	new google.maps.Size(12, 12)
+);
 // 6 - 
 var icon5 = new google.maps.MarkerImage('images/yellow.png',
 	null,
 	null,
 	new google.maps.Point(3, 3),
 	new google.maps.Size(6, 6)
+);
+var icon5Last = new google.maps.MarkerImage('images/yellowGif.gif',
+	null,
+	null,
+	new google.maps.Point(6, 6),
+	new google.maps.Size(12, 12)
 );
 // prediction
 var icon6 = new google.maps.MarkerImage('images/pink.png',
@@ -360,6 +390,12 @@ customIcons["3"] = icon3;
 customIcons["4"] = icon4;
 customIcons["5"] = icon5;
 customIcons["6"] = icon6;
+
+customIcons["7"] = icon1Last;
+customIcons["8"] = icon2Last;
+customIcons["9"] = icon3Last;
+customIcons["10"] = icon4Last;
+customIcons["11"] = icon5Last;
 /*
 var customIcons = [];
 customIcons["0"] = iconM0;
@@ -592,13 +628,14 @@ function load() {
 						});
 						var gridlabelY = new LabelY();
 						gridlabelY.bindTo('position', markerY, 'position');
-						gridlabelY.set('text', latlng2.lat().toFixed(2)+"  -  "+latlng2.lng().toFixed(2));
+						gridlabelY.set('text', latlng2.lat().toFixed(2));
 						gridlabelY.setMap(map);
 					}
 				} else {
 					latlng1 = new google.maps.LatLng(latchess[size], lngchess[j]);
 					latlng2 = new google.maps.LatLng(latchess[j], lngchess[size]);
-					if(j!=lng.length && j!=0){	
+					// && j!=0
+					if(j!=lng.length){	
 						var markerX = new google.maps.Marker({
 							position: latlng1,
 							map: null,
@@ -610,7 +647,7 @@ function load() {
 						});
 						var gridlabelX = new LabelX();
 						gridlabelX.bindTo('position', markerX, 'position');
-						gridlabelX.set('text', latlng1.lat().toFixed(2)+"  -  "+latlng1.lng().toFixed(2));
+						gridlabelX.set('text', latlng1.lng().toFixed(2));
 						gridlabelX.setMap(map);
 					}
 				}
@@ -656,7 +693,9 @@ function load() {
 
 		for(j = 0; j < size * size; j++) {
 			var energy1 = 0;
+
 			var markersXML = data.documentElement.getElementsByTagName("marker" + j);
+			var qntMarkers = markersXML.length-1;
 			for(i = 0; i < markersXML.length; i++) {
 				var id = markersXML[i].getAttribute("id");
 				var type = markersXML[i].getAttribute("type");
@@ -669,7 +708,7 @@ function load() {
 				var latlng = new google.maps.LatLng(parseFloat(markersXML[i].getAttribute("lat")),
 					parseFloat(markersXML[i].getAttribute("lng")));
 
-				var marker = createMarker(id, latlng, megethos, vathos, type, typeSize, date, cat, lat, lng);
+				var marker = createMarker(id, latlng, megethos, vathos, type, typeSize, date, cat, lat, lng, qntMarkers);
 				markersPeriod1.push( marker );
 				counter = markersPeriod1.length;
 
@@ -852,7 +891,6 @@ Magnitude	   Released Energy (to the nearest integer)
 					}
 				}
 				sumParanomastis += j2*counterMagn;
-			//	alert(tempMax);
 			}
 
 			var logarithmos = 1 + megethos.length/sumParanomastis;
@@ -945,8 +983,19 @@ Magnitude	   Released Energy (to the nearest integer)
 }
 var counter = 0;
 function setAllMap(map) {
+	var tempType = 0;
   for (var i = 0; i < markersPeriod1.length; i++) {
-    markersPeriod1[i].setMap(map);
+  	var max = markersPeriod1.length-1;
+  	if( i==max ){
+		tempType = parseInt( markersPeriod1[i].getTitle() );
+		tempType += 6;
+		markersPeriod1[i].setIcon( customIcons[tempType] );
+	    markersPeriod1[i].setMap(map);
+  	}else{
+		tempType = parseInt( markersPeriod1[i].getTitle() );
+		markersPeriod1[i].setIcon( customIcons[tempType] );
+	    markersPeriod1[i].setMap(map);
+	}
   }
 }
 function markersShowHide() {
@@ -964,18 +1013,43 @@ function markersShowHide() {
 }
 function nextMarker() {
 	if( counter<markersPeriod1.length ){
-		markersPeriod1[counter].setMap(map);
-		counter++;
+		var tempType = 0;
+		if( counter==0 ){
+			tempType = parseInt( markersPeriod1[counter].getTitle() );
+			tempType = tempType + 6;
+			markersPeriod1[counter].setIcon( customIcons[tempType] );
+			markersPeriod1[counter].setMap(map);
+			counter++;
+		}else{
+			counter--;
+			tempType = parseInt( markersPeriod1[counter].getTitle() );
+			markersPeriod1[counter].setIcon( customIcons[tempType] );
+			markersPeriod1[counter].setMap(map);
+			counter++;
+			tempType = parseInt( markersPeriod1[counter].getTitle() );
+			tempType = tempType + 6;
+			markersPeriod1[counter].setIcon( customIcons[tempType] );
+			markersPeriod1[counter].setMap(map);
+			counter++;
+		}
 	}
-	if( counter==markersPeriod1.length){
+	if( counter==markersPeriod1.length ){
 		document.getElementById("showmarkersHidden").value = 0;
 		document.getElementById("showmarkers").innerHTML = "Hide";
 	}
 }
 function prevMarker() {
+	var tempType = 0;
 	if( counter>0 ){
 		counter--;
 		markersPeriod1[counter].setMap(null);
+		counter--;
+		markersPeriod1[counter].setMap(null);
+		tempType = parseInt( markersPeriod1[counter].getTitle() );
+		tempType = tempType + 6;
+		markersPeriod1[counter].setIcon( customIcons[tempType] );
+		markersPeriod1[counter].setMap(map);
+		counter++;
 	}
 	if( counter==0 ){
 		document.getElementById("showmarkersHidden").value = 1;
@@ -1012,13 +1086,19 @@ function setAllMapPred(map) {
   }
 }
 
-function createMarker(id, latlng, megethos, vathos, type, typeSize, date, cat, lat, lng) {
+function createMarker(id, latlng, megethos, vathos, type, typeSize, date, cat, lat, lng, qntMarkers) {
+	var tempTypeSize = parseInt(typeSize);
+	if(id==qntMarkers+1){
+		tempTypeSize = parseInt(typeSize);
+		tempTypeSize += 6;
+	}
 	var marker = new google.maps.Marker({
 		position: latlng,
 		map: map,
-		title: id,
+		title: typeSize,
 		clickable: true,
-		icon: customIcons[typeSize]
+		icon: customIcons[tempTypeSize],
+		optimized: false
 	});
 	if (cat == 1) {
 		markerGroups1[typeSize].push(marker);

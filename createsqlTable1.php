@@ -37,7 +37,7 @@
 					echo "<br>";
 					echo "Calc time <b>".$time1."</b> sec"; unset($time1);
 					echo "<br>"; ?>
-					<font style="font-size:14px;"> Energy = <b id="<?php echo 'energy1'.$k1; ?>">0 J</b> </font>
+					<font style="font-size:14px;"> Energy = </font> <font style="font-size:12px;"> <b id="<?php echo 'energy1'.$k1; ?>">0 J</b> </font>
 					<?php echo "<br>"; ?>
 					<font style="font-size:14px;"> b = <b id="<?php echo 'b1'.$k1; ?>">0.000</b> </font>
 				</td>
