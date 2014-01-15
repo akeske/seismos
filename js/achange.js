@@ -511,7 +511,9 @@ var markerGroups3 = {
 	"5": []
 };
 var markersPredictions = [];
-var counter = 0;
+var counter1 = 0;
+var counter2 = 0;
+var counter3 = 0;
 var counterPredictions = 0;
 var lab = [];
 
@@ -710,8 +712,15 @@ function load() {
 
 				var marker = createMarker(id, latlng, megethos, vathos, type, typeSize, date, cat, lat, lng, qntMarkers);
 				markersPeriod1.push( marker );
-				counter = markersPeriod1.length;
+				counter1 = markersPeriod1.length;
 
+				// orizei tin metavliti counter me to plithos twn markers
+				variable();
+
+				if( i==qntMarkers ){
+					document.getElementById('coordslatlast').value = parseFloat(lat).toFixed(2);
+					document.getElementById('coordslnglast').value = parseFloat(lng).toFixed(2);
+				}
 				var meg = parseFloat(megethos);
 				var logenergy1 = 1.5*meg+4.7;
 				var ener1 = Math.pow(10, logenergy1);
@@ -771,7 +780,7 @@ Magnitude	   Released Energy (to the nearest integer)
 
 				var marker = createMarker(id, latlng, megethos, vathos, type, typeSize, date, cat, lat, lng);
 				markersPeriod2.push( marker );
-				counter = markersPeriod2.length;
+				counter2 = markersPeriod2.length;
 
 				var meg = parseFloat(megethos);
 				var logenergy2 = 1.5*meg+4.7;
@@ -809,7 +818,7 @@ Magnitude	   Released Energy (to the nearest integer)
 
 				var marker = createMarker(id, latlng, megethos, vathos, type, typeSize, date, cat, lat, lng);
 				markersPeriod3.push( marker );
-				counter = markersPeriod3.length;
+				counter3 = markersPeriod3.length;
 				
 				var meg = parseFloat(megethos);
 				var logenergy3 = 1.5*meg+4.7;
@@ -981,33 +990,42 @@ Magnitude	   Released Energy (to the nearest integer)
 	});
 
 }
+
 var counter = 0;
+function variable(){
+	//alert(markersPeriod1.length);
+	counter = markersPeriod1.length;
+}
 function setAllMap(map) {
 	var tempType = 0;
-  for (var i = 0; i < markersPeriod1.length; i++) {
-  	var max = markersPeriod1.length-1;
-  	if( i==max ){
-		tempType = parseInt( markersPeriod1[i].getTitle() );
-		tempType += 6;
-		markersPeriod1[i].setIcon( customIcons[tempType] );
-	    markersPeriod1[i].setMap(map);
-  	}else{
-		tempType = parseInt( markersPeriod1[i].getTitle() );
-		markersPeriod1[i].setIcon( customIcons[tempType] );
-	    markersPeriod1[i].setMap(map);
+	for (var i = 0; i < markersPeriod1.length; i++) {
+		var max = markersPeriod1.length-1;
+	  	if( i==max ){
+			tempType = parseInt( markersPeriod1[i].getTitle() );
+			tempType += 6;
+			markersPeriod1[i].setIcon( customIcons[tempType] );
+			markersPeriod1[i].setMap(map);
+		}else{
+			tempType = parseInt( markersPeriod1[i].getTitle() );
+			markersPeriod1[i].setIcon( customIcons[tempType] );
+			markersPeriod1[i].setMap(map);
+		}
 	}
-  }
 }
 function markersShowHide() {
 	if( document.getElementById("showmarkersHidden").value==0 ){
 		document.getElementById("showmarkersHidden").value = 1;
 		document.getElementById("showmarkers").innerHTML = "Show";
 		counter = 0;
+		document.getElementById('coordslatlast').value = "";
+		document.getElementById('coordslnglast').value = "";
 		setAllMap(null);
 	}else{
 		document.getElementById("showmarkersHidden").value = 0;
 		document.getElementById("showmarkers").innerHTML = "Hide";
 		counter = markersPeriod1.length;
+		document.getElementById('coordslatlast').value = markersPeriod1[counter-1].getPosition().lat().toFixed(2);
+		document.getElementById('coordslnglast').value = markersPeriod1[counter-1].getPosition().lng().toFixed(2);
 		setAllMap(map);
 	}
 }
@@ -1019,6 +1037,8 @@ function nextMarker() {
 			tempType = tempType + 6;
 			markersPeriod1[counter].setIcon( customIcons[tempType] );
 			markersPeriod1[counter].setMap(map);
+			document.getElementById('coordslatlast').value = markersPeriod1[counter].getPosition().lat().toFixed(2);
+			document.getElementById('coordslnglast').value = markersPeriod1[counter].getPosition().lng().toFixed(2);
 			counter++;
 		}else{
 			counter--;
@@ -1030,6 +1050,8 @@ function nextMarker() {
 			tempType = tempType + 6;
 			markersPeriod1[counter].setIcon( customIcons[tempType] );
 			markersPeriod1[counter].setMap(map);
+			document.getElementById('coordslatlast').value = markersPeriod1[counter].getPosition().lat().toFixed(2);
+			document.getElementById('coordslnglast').value = markersPeriod1[counter].getPosition().lng().toFixed(2);
 			counter++;
 		}
 	}
@@ -1040,7 +1062,9 @@ function nextMarker() {
 }
 function prevMarker() {
 	var tempType = 0;
-	if( counter>0 ){
+	// eksafanizw to teleutaio
+	// kanw to neo teleutaio na anavosvinei
+	if( counter>1 ){
 		counter--;
 		markersPeriod1[counter].setMap(null);
 		counter--;
@@ -1049,9 +1073,19 @@ function prevMarker() {
 		tempType = tempType + 6;
 		markersPeriod1[counter].setIcon( customIcons[tempType] );
 		markersPeriod1[counter].setMap(map);
+		document.getElementById('coordslatlast').value = markersPeriod1[counter].getPosition().lat().toFixed(2);
+		document.getElementById('coordslnglast').value = markersPeriod1[counter].getPosition().lng().toFixed(2);
 		counter++;
+	// gia na mi paei -1, eksafanizw apla to teleytaio
+	}else if(counter==1){
+		counter--;
+		markersPeriod1[counter].setMap(null);
+		document.getElementById('coordslatlast').value = markersPeriod1[counter].getPosition().lat().toFixed(2);
+		document.getElementById('coordslnglast').value = markersPeriod1[counter].getPosition().lng().toFixed(2);
 	}
 	if( counter==0 ){
+		document.getElementById('coordslatlast').value = "";
+		document.getElementById('coordslnglast').value = "";
 		document.getElementById("showmarkersHidden").value = 1;
 		document.getElementById("showmarkers").innerHTML = "Show";
 	}

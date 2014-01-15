@@ -193,8 +193,8 @@ include("inc/database.php");
 		<tr>
 			<td>
 				<div id="map" style="position:relative;
-					top:0px;
-					height:550px;
+					top:-5px;
+					height:555px;
 					width:1100px;
 					margin-right:10px;
 					z-index:4;">
@@ -203,24 +203,32 @@ include("inc/database.php");
 			</td>
 		</tr>	
 	</table>  
-	<div id="menu">
+
+	<div id="latlng">
 		Latitude:&nbsp;<input type="text" id="coordslat" value="" size="10" maxlength="10"/>&nbsp;&nbsp;&nbsp;
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Longitude:&nbsp;<input type="text" id="coordslng" value="" size="10" maxlength="10"/>
 	</div>
+
+	<div id="latlng2">
+		Last&nbsp;earthquake&nbsp;-&nbsp;
+		Lat:&nbsp;<input type="text" id="coordslatlast" value="" size="7" maxlength="7"/>&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;Long:&nbsp;<input type="text" id="coordslnglast" value="" size="7" maxlength="7"/>
+	</div>
+
 	<div id="glass_bg_options">
 	<table border="0" align="center" cellspacing="2">
 	<tr>
-	<td valign="top" height="250">
-			<table align="center" bgcolor="#8e8e8e" width="530" style="border: 2px solid #97AEC4; height:80px;">
+		<td valign="top" height="120">
+			<table align="center" bgcolor="#8e8e8e" width="530" height="120" style="border: 2px solid #97AEC4; height:80px;">
 				<tr align="center">
 					<th>
 						1st&nbsp;Period
 					</th>
 					<td>
 						from
-						<input style="font-size:13px; font-weight:bold" autocomplete="off" type="text" name="fromdate1" class="tcal" value="<?php echo $_SESSION['fromdate1']; ?>"  id="fromdate1" ondblclick="dat1()" size="9"/>
+						<input style="font-size:13px; font-weight:bold" autocomplete="off" type="text" name="fromdate1" class="tcal" value="<?php echo $_SESSION['fromdate1']; ?>"  id="fromdate1" ondblclick="dat1()" size="10"/>
 						to
-						<input style="font-size:13px; font-weight:bold" autocomplete="off" type="text" name="todate1" class="tcal" value="<?php echo $_SESSION['todate1']; ?>"  id="todate1" ondblclick="dat2()" size="9"/>
+						<input style="font-size:13px; font-weight:bold" autocomplete="off" type="text" name="todate1" class="tcal" value="<?php echo $_SESSION['todate1']; ?>"  id="todate1" ondblclick="dat2()" size="10"/>
 					</td>
 				<!--	<td align="center">Display<input id="color" onclick="markerdisp1('1')" type="checkbox" checked></td>
 				-->
@@ -231,9 +239,9 @@ include("inc/database.php");
 					</th>
 					<td>
 						from
-						<input style="font-size:13px; font-weight:bold" autocomplete="off" type="text" name="fromdate2" class="tcal" value="<?php echo $_SESSION['fromdate2']; ?>"  id="fromdate2" ondblclick="dat3()" size="9"/>
+						<input style="font-size:13px; font-weight:bold" autocomplete="off" type="text" name="fromdate2" class="tcal" value="<?php echo $_SESSION['fromdate2']; ?>"  id="fromdate2" ondblclick="dat3()" size="10"/>
 						to
-						<input style="font-size:13px; font-weight:bold" autocomplete="off" type="text" name="todate2" class="tcal" value="<?php echo $_SESSION['todate2']; ?>"  id="todate2" ondblclick="dat4()" size="9"/>
+						<input style="font-size:13px; font-weight:bold" autocomplete="off" type="text" name="todate2" class="tcal" value="<?php echo $_SESSION['todate2']; ?>"  id="todate2" ondblclick="dat4()" size="10"/>
 					</td>
 				<!--	<td align="center">Display<input id="2" onclick="markerdisp2('2')" type="checkbox" checked></td>
 				-->
@@ -244,187 +252,19 @@ include("inc/database.php");
 					</th>
 					<td>
 						from
-						<input style="font-size:13px; font-weight:bold" autocomplete="off" type="text" name="fromdate3" class="tcal" value="<?php echo $_SESSION['fromdate3']; ?>"  id="fromdate3" ondblclick="dat5()" size="9"/>
+						<input style="font-size:13px; font-weight:bold" autocomplete="off" type="text" name="fromdate3" class="tcal" value="<?php echo $_SESSION['fromdate3']; ?>"  id="fromdate3" ondblclick="dat5()" size="10"/>
 						to
-						<input style="font-size:13px; font-weight:bold" autocomplete="off" type="text" name="todate3" class="tcal" value="<?php echo $_SESSION['todate3']; ?>"  id="todate3" ondblclick="dat6()" size="9"/>
+						<input style="font-size:13px; font-weight:bold" autocomplete="off" type="text" name="todate3" class="tcal" value="<?php echo $_SESSION['todate3']; ?>"  id="todate3" ondblclick="dat6()" size="10"/>
 					</td>
 			<!--		<td align="center">Display<input id="3" onclick="markerdisp3('3')" type="checkbox" checked></td>
 			-->
 				</tr>
 			</table>
-		<br>
-			<table align="center" bgcolor="#8e8e8e" width="530" >
-				<tr align="center">
-					<td>
-						<input value="<?php echo $_SESSION['fromlat']; ?>" type="text" name="fromlat" id="fromlat" maxlength="6" size="16" onkeyup="latitude()"/>
-					</td>
-					<th width="110">
-						<=Latitude<=
-					</th>
-					<td>
-						<input value="<?php echo $_SESSION['tolat']; ?>" type="text" name="tolat" id="tolat" maxlength="6" size="16" onkeyup="latitude()"/>
-					</td>
-				</tr>
-			</table>
-			
-			<table align="center" bgcolor="#8e8e8e" width="530">
-				<tr align="center">
-					<td>
-						<input value="<?php echo $_SESSION['fromlng']; ?>" type="text" name="fromlng" id="fromlng" maxlength="6" size="16" onkeyup="longitude()"/>
-					</td>
-					<th width="110">
-						<=Longitude<=
-					</th>
-					<td>
-						<input value="<?php echo $_SESSION['tolng']; ?>" type="text" name="tolng" id="tolng" maxlength="6" size="16" onkeyup="longitude()"/>
-					</td>
-				</tr>
-			</table>
-			
-			<table align="center" bgcolor="#8e8e8e" width="530">
-				<tr align="center">
-					<td>
-						<input value="<?php echo $_SESSION['fromdpth']; ?>" type="text" name="fromdpth" id="fromdpth" maxlength="4" size="4" onkeyup="depth()"/>
-					</td>
-					<th width="110">
-						<=Depth<=
-					</th>
-					<td>
-						<input value="<?php echo $_SESSION['todpth']; ?>" type="text" name="todpth" id="todpth" maxlength="4" size="4" onkeyup="depth()"/>
-					</td>
-				</tr>
-			</table>
-			
-			<table align="center" bgcolor="#8e8e8e" width="530">
-				<tr align="center">
-					<td>
-						<input value="<?php echo $_SESSION['frommagn']; ?>" type="text" name="frommagn" id="frommagn" maxlength="3" size="3" onkeyup="magnitude()"/>
-					</td>
-					<th width="110">
-						<=Magnitude<=
-					</th>
-					<td>
-						<input value="<?php echo $_SESSION['tomagn']; ?>" type="text" name="tomagn" id="tomagn" maxlength="3" size="3" onkeyup="magnitude()"/>
-					</td>
-				</tr>
-			</table>
-			
-			<table align="center" bgcolor="#8e8e8e" width="530">
-				<tr align="center">
-					<th width="200">
-						Grid dimensions
-					</th>
-					<td width="50">
-						<input value="<?php echo $_SESSION['diastaseis']; ?>" type="text" name="diastaseis" id="diastaseis" maxlength="1" size="1" onkeyup = "diastaseisfun()"/>
-					</td>
-					<td width="50">
-						<input value="<?php echo $_SESSION['diastaseis']; ?>" type="text" name="diastaseis2" id="diastaseis2" maxlength="1" size="1" READONLY/>
-					</td>
-				</tr>
-			</table>
-			
-			<table align="center" bgcolor="#8e8e8e" width="530">
-				<tr align="center">
-					<th width="200">
-						Order by
-					</th>
-					<td width="170">
-						<select name="order" value="<?php echo $_SESSION['order']; ?>">
-							<option <?php if($_SESSION['order'] == "date"){ echo 'selected'; } ?> value="date">date</option>
-							<option <?php if($_SESSION['order'] == "lng"){ echo 'selected'; } ?> value="lng">lng</option>
-							<option <?php if($_SESSION['order'] == "lat"){ echo 'selected'; } ?> value="lat">lat</option>
-							<option <?php if($_SESSION['order'] == "megethos"){ echo 'selected'; } ?> value="megethos">magnitude</option>
-							<option <?php if($_SESSION['order'] == "vathos"){ echo 'selected'; } ?> value="vathos">depth</option>
-						</select>
-						<select name="orderby" value="<?php echo $_SESSION['orderby']; ?>">
-							<option <?php if($_SESSION['orderby'] == "ASC"){ echo 'selected'; } ?> value="ASC">ascending</option>
-							<option <?php if($_SESSION['orderby'] == "DESC"){ echo 'selected'; } ?> value="DESC">descending</option>
-						</select>
-					</td>
-				</tr>
-			</table>
-
-			<table align="center">
-				<tr>
-					<td>
-						<div class="buttons">
-							<button type="submit" class="positive" onclick="check()">
-								<img src="images/tick.png" alt=""/> 
-								Search
-							</button>
-						</div>
-					</td>
-				
-			</form>
-					<form action="" method="post" align="center">	
-						<td>
-							<div class="buttons">
-								<button type="submit" class="s" name="subclear">
-							<!		<img src="images/tick.png" alt=""/> 
-									Clear
-								</button>
-							</div>
-						</td>
-					</form>
-
-					
-				</tr>
-			</table>
-	
-	
-	</td>
-	<td colspan="3">
-			<?php
-				if( isset( $_POST['subclear']) ) {
-
-					unset($_SESSION['fromPred']);
-					unset($_SESSION['toPred']);
-
-					unset($_SESSION['todate1']);
-					unset($_SESSION['todate2']);
-					unset($_SESSION['todate3']);
-					unset($_SESSION['fromdate1']);
-					unset($_SESSION['fromdate2']);
-					unset($_SESSION['fromdate3']);
-					unset($_SESSION['tomagn']);
-					unset($_SESSION['frommagn']);
-					unset($_SESSION['order']);
-					unset($_SESSION['orderby']);
-					unset($_SESSION['tolat']);
-					unset($_SESSION['tolng']);
-					unset($_SESSION['fromlat']);
-					unset($_SESSION['fromlng']);
-					unset($_SESSION['todpth']);
-					unset($_SESSION['fromdpth']);
-						
-					unset($_SESSION['fibVer1']);
-					unset($_SESSION['fibHor1']);
-					unset($_SESSION['fibCircle1']);
-					unset($_SESSION['fibVer2'] );
-					unset($_SESSION['fibHor2'] );
-					unset($_SESSION['fibCircle2'] );
-					unset($_SESSION['fibVer3']);
-					unset($_SESSION['fibHor3'] );
-					unset($_SESSION['fibCircle3'] );
-					unset($_SESSION['fibVer4'] );
-					unset($_SESSION['fibHor4']);
-					unset($_SESSION['fibCircle4'] );
-				}
-				$fromdate1=$fromday1.$frommonth1.$fromyear1."000000";
-				$todate1=$today1.$tomonth1.$toyear1."245959";
-				$fromdate2=$fromday2.$frommonth2.$fromyear2."000000";
-				$todate2=$today2.$tomonth2.$toyear2."245959";
-				$fromdate3=$fromday3.$frommonth3.$fromyear3."000000";
-				$todate3=$today3.$tomonth3.$toyear3."245959";
-				include("agent.php");
-				?>
-
-	</td>
-
-	<td valign="top">
-		<table id="earth" style="position:relative;">
+		</td>
+		<td valign="top">
+			<table id="earth" style="position:relative;">
 			<tr>
-				<th width="50">Period 1</th>
+				<th width="50">Period&nbsp;1</th>
 				<td align="center">
 					<label for="1"><span></span>< 3 R</label>
 					<input id="1" onclick="markerdisp1('1')" type="checkbox" checked></td>
@@ -442,7 +282,7 @@ include("inc/database.php");
 					<input id="5" onclick="markerdisp1('5')" type="checkbox" checked></td>
 			</tr>
 			<tr>
-				<th>Period 2</th>
+				<th>Period&nbsp;2</th>
 				<td align="center">
 					<label for="6"><span></span>< 3 R</label>
 					<input id="6" onclick="markerdisp2('1')" type="checkbox" checked></td>
@@ -460,7 +300,7 @@ include("inc/database.php");
 					<input id="10" onclick="markerdisp2('5')" type="checkbox" checked></td>
 			</tr>
 			<tr>
-				<th>Period 3</th>
+				<th>Period&nbsp;3</th>
 				<td align="center">
 					<label for="11"><span></span>< 3 R</label>
 					<input id="11" onclick="markerdisp3('1')" type="checkbox" checked></td>
@@ -477,64 +317,221 @@ include("inc/database.php");
 					<label for="15"><span></span>>6 R</label>
 					<input id="15" onclick="markerdisp3('5')" type="checkbox" checked></td>
 			</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+	<td valign="top" height="250">
+		<table align="center" bgcolor="#8e8e8e" width="530" style="border-top:2px solid #97AEC4; border-right:2px solid #97AEC4; border-left:2px solid #97AEC4;">
+			<tr align="center">
+				<td>
+					<input value="<?php echo $_SESSION['fromlat']; ?>" type="text" name="fromlat" id="fromlat" maxlength="6" size="16" onkeyup="latitude()"/>
+				</td>
+				<th width="110">
+					<=Latitude<=
+				</th>
+				<td>
+					<input value="<?php echo $_SESSION['tolat']; ?>" type="text" name="tolat" id="tolat" maxlength="6" size="16" onkeyup="latitude()"/>
+				</td>
+			</tr>
 		</table>
-	<br>
-		<table align="center"  bgcolor="#8e8e8e" width="450" style="border: 2px solid #97AEC4;">
-		<tr>
-			<td width="300">
-				<img src="images/black.png" alt="some_text" width="20">&nbsp;&nbsp;&nbsp; 1 >= Magnitude < 3
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<img src="images/blue.png" alt="some_text" width="20">&nbsp;&nbsp;&nbsp; 3 >= Magnitude < 4
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<img src="images/green.png" alt="some_text" width="20">&nbsp;&nbsp;&nbsp; 4 >= Magnitude < 5
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<img src="images/red.png" alt="some_text" width="20">&nbsp;&nbsp;&nbsp; 5 >= Magnitude < 6
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<img src="images/yellow.png" alt="some_text" width="20">&nbsp;&nbsp;&nbsp; 6 >= Magnitude
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<img src="images/pink.png" alt="some_text" width="20">&nbsp;&nbsp;&nbsp; predictions
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<table align="center"  bgcolor="#8e8e8e" width="440" style="border: 2px solid #97AEC4;">
-				<tr>
+		<table align="center" bgcolor="#8e8e8e" width="530" style="border-right:2px solid #97AEC4; border-left:2px solid #97AEC4;">
+			<tr align="center">
+				<td>
+					<input value="<?php echo $_SESSION['fromlng']; ?>" type="text" name="fromlng" id="fromlng" maxlength="6" size="16" onkeyup="longitude()"/>
+				</td>
+				<th width="110">
+					<=Longitude<=
+				</th>
+				<td>
+					<input value="<?php echo $_SESSION['tolng']; ?>" type="text" name="tolng" id="tolng" maxlength="6" size="16" onkeyup="longitude()"/>
+				</td>
+			</tr>
+		</table>	
+		<table align="center" bgcolor="#8e8e8e" width="530" style="border-right:2px solid #97AEC4; border-left:2px solid #97AEC4;">
+			<tr align="center">
+				<td>
+					<input value="<?php echo $_SESSION['fromdpth']; ?>" type="text" name="fromdpth" id="fromdpth" maxlength="4" size="4" onkeyup="depth()"/>
+				</td>
+				<th width="110">
+					<=Depth<=
+				</th>
+				<td>
+					<input value="<?php echo $_SESSION['todpth']; ?>" type="text" name="todpth" id="todpth" maxlength="4" size="4" onkeyup="depth()"/>
+				</td>
+			</tr>
+		</table>
+		<table align="center" bgcolor="#8e8e8e" width="530" style="border-right:2px solid #97AEC4; border-left:2px solid #97AEC4;">
+			<tr align="center">
+				<td>
+					<input value="<?php echo $_SESSION['frommagn']; ?>" type="text" name="frommagn" id="frommagn" maxlength="3" size="3" onkeyup="magnitude()"/>
+				</td>
+				<th width="110">
+					<=Magnitude<=
+				</th>
+				<td>
+					<input value="<?php echo $_SESSION['tomagn']; ?>" type="text" name="tomagn" id="tomagn" maxlength="3" size="3" onkeyup="magnitude()"/>
+				</td>
+			</tr>
+		</table>
+		<table align="center" bgcolor="#8e8e8e" width="530" style="border-right:2px solid #97AEC4; border-left:2px solid #97AEC4;">
+			<tr align="center">
+				<th width="200">
+					Grid dimensions
+				</th>
+				<td width="50">
+					<input value="<?php echo $_SESSION['diastaseis']; ?>" type="text" name="diastaseis" id="diastaseis" maxlength="1" size="1" onkeyup = "diastaseisfun()"/>
+				</td>
+				<td width="50">
+					<input value="<?php echo $_SESSION['diastaseis']; ?>" type="text" name="diastaseis2" id="diastaseis2" maxlength="1" size="1" READONLY/>
+				</td>
+			</tr>
+		</table>
+		<table align="center" bgcolor="#8e8e8e" width="530" style="border-bottom:2px solid #97AEC4; border-right:2px solid #97AEC4; border-left:2px solid #97AEC4;">
+			<tr align="center">
+				<th width="200">
+					Order by
+				</th>
+				<td width="170">
+					<select name="order" value="<?php echo $_SESSION['order']; ?>">
+						<option <?php if($_SESSION['order'] == "date"){ echo 'selected'; } ?> value="date">date</option>
+						<option <?php if($_SESSION['order'] == "lng"){ echo 'selected'; } ?> value="lng">lng</option>
+						<option <?php if($_SESSION['order'] == "lat"){ echo 'selected'; } ?> value="lat">lat</option>
+						<option <?php if($_SESSION['order'] == "megethos"){ echo 'selected'; } ?> value="megethos">magnitude</option>
+						<option <?php if($_SESSION['order'] == "vathos"){ echo 'selected'; } ?> value="vathos">depth</option>
+					</select>
+					<select name="orderby" value="<?php echo $_SESSION['orderby']; ?>">
+						<option <?php if($_SESSION['orderby'] == "ASC"){ echo 'selected'; } ?> value="ASC">ascending</option>
+						<option <?php if($_SESSION['orderby'] == "DESC"){ echo 'selected'; } ?> value="DESC">descending</option>
+					</select>
+				</td>
+			</tr>
+		</table>
+		<table align="center">
+			<tr>
+				<td>
+					<div class="buttons">
+						<button type="submit" class="positive" onclick="check()">
+							<img src="images/tick.png" alt=""/> 
+							Search
+						</button>
+					</div>
+				</td>
+		</form>
+				<form action="" method="post" align="center">	
 					<td>
-					<form action="index2.php" method="post"
-						enctype="multipart/form-data">
-						<label for="file">*.csv file:</label>
-						<input type="file" name="file" id="file"><br>
-						<input type="submit" name="insertcsv" value="Insert">
-					</form>
+						<div class="buttons">
+							<button type="submit" class="s" name="subclear">
+						<!		<img src="images/tick.png" alt=""/> 
+								Clear
+							</button>
+						</div>
 					</td>
-				</tr>
-				</table>
-			</td>
-		</tr>
+				</form>	
+			</tr>
 		</table>
 	</td>
-</tr>
-</table>
+
+	<td>
+		<table align="center"  bgcolor="#8e8e8e" width="450" style="border: 2px solid #97AEC4;">
+			<tr>
+				<td width="300">
+					<img src="images/black.png" alt="some_text" width="20">&nbsp;&nbsp;&nbsp; 1 >= Magnitude < 3
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<img src="images/blue.png" alt="some_text" width="20">&nbsp;&nbsp;&nbsp; 3 >= Magnitude < 4
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<img src="images/green.png" alt="some_text" width="20">&nbsp;&nbsp;&nbsp; 4 >= Magnitude < 5
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<img src="images/red.png" alt="some_text" width="20">&nbsp;&nbsp;&nbsp; 5 >= Magnitude < 6
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<img src="images/yellow.png" alt="some_text" width="20">&nbsp;&nbsp;&nbsp; 6 >= Magnitude
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<img src="images/pink.png" alt="some_text" width="20">&nbsp;&nbsp;&nbsp; predictions
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<table align="center"  bgcolor="#8e8e8e" width="440" style="border: 2px solid #97AEC4;">
+					<tr>
+						<td>
+						<form action="index2.php" method="post"
+							enctype="multipart/form-data">
+							<label for="file">*.csv file:</label>
+							<input type="file" name="file" id="file"><br>
+							<input type="submit" name="insertcsv" value="Insert">
+						</form>
+						</td>
+					</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</td>	
+	</tr>
+	</table>
 
 </div>
 </div>
 </div>
 
+<?php
+	if( isset( $_POST['subclear']) ) {
+		unset($_SESSION['fromPred']);
+		unset($_SESSION['toPred']);
+
+		unset($_SESSION['todate1']);
+		unset($_SESSION['todate2']);
+		unset($_SESSION['todate3']);
+		unset($_SESSION['fromdate1']);
+		unset($_SESSION['fromdate2']);
+		unset($_SESSION['fromdate3']);
+		unset($_SESSION['tomagn']);
+		unset($_SESSION['frommagn']);
+		unset($_SESSION['order']);
+		unset($_SESSION['orderby']);
+		unset($_SESSION['tolat']);
+		unset($_SESSION['tolng']);
+		unset($_SESSION['fromlat']);
+		unset($_SESSION['fromlng']);
+		unset($_SESSION['todpth']);
+		unset($_SESSION['fromdpth']);
+
+		unset($_SESSION['fibVer1']);
+		unset($_SESSION['fibHor1']);
+		unset($_SESSION['fibCircle1']);
+		unset($_SESSION['fibVer2'] );
+		unset($_SESSION['fibHor2'] );
+		unset($_SESSION['fibCircle2'] );
+		unset($_SESSION['fibVer3']);
+		unset($_SESSION['fibHor3'] );
+		unset($_SESSION['fibCircle3'] );
+		unset($_SESSION['fibVer4'] );
+		unset($_SESSION['fibHor4']);
+		unset($_SESSION['fibCircle4'] );
+	}
+	$fromdate1=$fromday1.$frommonth1.$fromyear1."000000";
+	$todate1=$today1.$tomonth1.$toyear1."245959";
+	$fromdate2=$fromday2.$frommonth2.$fromyear2."000000";
+	$todate2=$today2.$tomonth2.$toyear2."245959";
+	$fromdate3=$fromday3.$frommonth3.$fromyear3."000000";
+	$todate3=$today3.$tomonth3.$toyear3."245959";
+	include("agent.php");
+?>
 <table align="center" width="1120" border="0">
 	<tr>
 		<td>
@@ -549,7 +546,6 @@ include("inc/database.php");
 </body>
 
 </html>
-
 <?php
 	if( isset( $_POST['insertcsv']) ) {
 		move_uploaded_file($_FILES["file"]["tmp_name"],"pred.csv");

@@ -39,7 +39,7 @@
 .marker3Drag{
   display:none;
 }
-#menu{
+#latlng{
 	height: auto;
 	z-index: 100;
 	position: absolute;
@@ -56,38 +56,23 @@
 	width: 400px;
 	color: #fff;
 }
-
-#menu .info{
-  display:none;
+#latlng2{
+	height: auto;
+	z-index: 100;
+	position: absolute;
+	left: 750px;
+	top: 630px;
+	background-color:rgb(0,0,0); /* Fallback */
+	background-color:rgba(0,0,0,0.5);
+	border-radius: 26px; 
+	-moz-border-radius: 26px; 
+	-webkit-border-radius: 26px;
+	border: 4px solid rgb(0,0,0); /* Fallback */
+	border: 4px solid rgba(0,0,0,0.2);
+	padding: 0px;
+	width: 350px;
+	color: #fff;
 }
-
-#custom {
-  text-align:right;
-}
-#menu h2{
- 	width:100%;
-	margin: 2% 0;
-	font: bold 26px 'Droid Serif', sans-serif;
-	letter-spacing: -3px;
-	text-align: center;
-	text-shadow: 0 1px 0 #777;
-	display:block;
-}
-
-#menu ul{
-  list-style: none; list-style-image: none; margin: 0; padding: 0;
-}
-
-#menu li a{
-  margin: 0px; display: block; width: 100%; height: 100%; 
-}
-
-#menu a { color: #ffc875; }
-#menu a:visited { color: #ffc875; }
-#menu a:hover { color: #b28c51; background:transparent; }
-#menu a:focus { outline: thin dotted; }
-#menu a:hover, a:active { outline: 0; }
-
 
 
 body {
@@ -115,14 +100,6 @@ body {
 	width: 1130px; 
 	text-align:center; 
 	padding-left:0px;
-}
-p{
-	text-align: justify;
-	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-	font-size: 15px;
-	padding-top: 3px;
-	padding-left: 3px;
-	padding-right: 3px;
 }
 #glass_bg_map {
 	position:absolute;
@@ -199,7 +176,6 @@ p{
 	-webkit-border-top-left-radius: 10px;
 	-webkit-border-top-right-radius: 10px;
 }
-
 #glass_bg_dataa{
 	position:relative;
 	z-index:1;
@@ -392,7 +368,7 @@ color: #333333;
 	font-family:"Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
 	font-size:11px;
 	width:450px;
-	height: 90px;
+	height:100px;
 	text-align:left;
 	border-collapse:collapse;
 	border:2px solid #97AEC4;
@@ -467,7 +443,6 @@ color: #333333;
 }
 
 #rounded-corner{
-
 	font-family:"Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
 	font-size:10px;
 	width:360px;
