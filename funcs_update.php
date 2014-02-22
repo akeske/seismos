@@ -187,7 +187,7 @@ for ($k=2013;$k<=2013;$k++){
 	unset($char);
 	$totalseismoi+=$counter;
 	
-	echo "Έχουν γίνει ".$counter." επιπλέον σεισμοί το έτος 2013<br>";
+	echo "Έχουν γίνει <b>".$counter."</b> επιπλέον σεισμοί το έτος 2014<br>";
 }
 $time_end = microtime(true);
 $time = $time_end - $time_start;

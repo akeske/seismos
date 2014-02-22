@@ -518,6 +518,33 @@ var counterPredictions = 0;
 var lab = [];
 
 
+var coordinatesSpecialMarker;
+function specialMarkers(){
+	var specMarker;
+	
+	var listenSpecial = google.maps.event.addListener(map, 'click', function (event) {
+		
+		coordinatesSpecialMarker = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
+		alert(coordinatesSpecialMarker);
+		
+	});
+var point1 = new google.maps.LatLng(44, 19);
+alert(coordinatesSpecialMarker);
+//	google.maps.event.removeListener(listenSpecial);
+	specMarker = new google.maps.Marker({
+		position: point1,
+		map: map,
+		title: 'scecialMarker',
+		clickable: false,
+		//	icon: startYellow,
+		draggable: true
+	});
+
+	google.maps.event.addListener(specMarker, 'dragend', function () {
+		
+	});
+}
+google.maps.event.addDomListener(window, 'load', specialMarkers);
 function load() {
 	var latlng = new google.maps.LatLng(37.8, 26.7);
 	var settings = {
@@ -834,8 +861,8 @@ Magnitude	   Released Energy (to the nearest integer)
 	});
 
 	downloadUrl("csvxml.php", function (data) {
-		var max=-999;
-		var min=999;
+		var max=-9999;
+		var min=9999;
 		var markersXML = data.documentElement.getElementsByTagName("marker");
 		for(i = 0; i < markersXML.length; i++) {
 			var id = markersXML[i].getAttribute("id");

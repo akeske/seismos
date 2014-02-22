@@ -6,9 +6,11 @@ var lines12 = [];
 var line1 = [];
 var line11 = [];
 var sgmline1 = [];
+var side1 = [];
 var distancesCircle1 = [];
 var distancesVer1 = [];
 var distancesHor1 = [];
+var distancesSide1 = [];
 var markerc11;
 var markerc12;
 var markerv11;
@@ -21,6 +23,9 @@ var markerl111;
 var markerl121;
 var markersgml11;
 var markersgml12;
+var markersi11;
+var markersi12;
+var markersi13;
 
 var iconline1 = new google.maps.MarkerImage('markers/tool1/line.png',
 	null,
@@ -37,8 +42,8 @@ var iconline11 = new google.maps.MarkerImage('markers/tool1/line1.png',
 var iconver1 = new google.maps.MarkerImage('markers/tool1/ver.png',
 	null,
 	null,
-	new google.maps.Point(8, 26),
-	new google.maps.Size(16, 26)
+	new google.maps.Point(0, 8),
+	new google.maps.Size(26, 16)
 );
 var iconhor1 = new google.maps.MarkerImage('markers/tool1/hor.png',
 	null,
@@ -52,6 +57,12 @@ var iconcir1 = new google.maps.MarkerImage('markers/tool1/cir.png',
 	new google.maps.Point(8, 26),
 	new google.maps.Size(16, 26)
 );
+var iconside1 = new google.maps.MarkerImage('markers/tool1/side.png',
+	null,
+	null,
+	new google.maps.Point(8, 26),
+	new google.maps.Size(16, 26)
+);
 
 function initialize1() {
 	var verCol1 = "#c11196";
@@ -59,15 +70,18 @@ function initialize1() {
 	var cirCol1 = "#1143c1";
 	var lineCol1 = "#ff0000";
 	var lineCol11 = "#ff0000";
+	var sideCol1 = "#bc0047";
 	document.getElementById('ver1').style.color = verCol1;
 	document.getElementById('hor1').style.color = horCol1;
 	document.getElementById('cir1').style.color = cirCol1;
 	document.getElementById('line1').style.color = lineCol1;
 	document.getElementById('line11').style.color = lineCol1;
+	document.getElementById('side1').style.color = sideCol1;
 
 	getdistancesCircle1();
 	getdistancesVer1();
 	getdistancesHor1();
+	getdistancesSide1();
 	$('#fibCircle1').keyup(function (event) {
 		getdistancesCircle1();
 	});
@@ -76,6 +90,9 @@ function initialize1() {
 	});
 	$('#fibHor1').keyup(function (event) {
 		getdistancesHor1();
+	});
+	$('#fibSide1').keyup(function (event) {
+		getdistancesSide1();
 	});
 	$(".marker1Tip1").hide();
 	$(".marker1Tip2").hide();
@@ -150,18 +167,30 @@ function selectTool1(id) {
 		if(clicks1 == 1)
 			clicks1 = 0;
 		break;
+	case 8:
+		clearTool1(side1, 0);
+		$(".marker1Tip1").show();
+		$(".marker1Tip2").hide();
+		$(".marker1Drag").hide();
+		$(".select1").hide();
+		document.getElementById('distSide1').value = "";
+		if(clicks1 == 1)
+			clicks1 = 0;
+		break;
 	case 4:
 		clearTool1(circles1, 0);
 		clearTool1(lines1, 0);
 		clearTool1(lines12, 0);
 		clearTool1(line1, 0);
 		clearTool1(line11, 0);
+		clearTool1(side1, 0);
 		document.getElementById('distCircle1').value = "";
 		document.getElementById('distVer1').value = "";
 		document.getElementById('distHor1').value = "";
 		document.getElementById('distLine1').value = "";
 		document.getElementById('distLine11').value = "";
-		if(clicks1 == 1)
+		document.getElementById('distSide1').value = "";
+		if(clicks1 == 1 || clicks1 == 2)
 			clicks1 = 0;
 		$(".marker1Tip1").hide();
 		$(".marker1Tip2").hide();
@@ -175,36 +204,55 @@ function selectTool1(id) {
 		clicks1++;
 
 		if(clicks1 == 2) {
-			google.maps.event.removeListener(listen1);
 			$(".marker1Tip1").hide();
 			$(".marker1Tip2").hide();
 			$(".select1").hide();
 			$(".marker1Drag").show();
-			clicks1 = 0;
 			switch(id) {
 			case 1: //call circles1
 				document.getElementById('distCircle1').value = distance(coordinates1[0].lat(), coordinates1[0].lng(), coordinates1[1].lat(), coordinates1[1].lng(), 0);
 				fib_circles1(coordinates1);
+				google.maps.event.removeListener(listen1);
+				clicks1 = 0;
 				break;
 			case 2: //call vertical lines1
-				document.getElementById('distVer1').value = distance(coordinates1[0].lat(), coordinates1[0].lng(), coordinates1[1].lat(), coordinates1[1].lng(), 1);
+				document.getElementById('distVer1').value = distance(coordinates1[0].lat(), coordinates1[0].lng(), coordinates1[1].lat(), coordinates1[1].lng(), 0);
 				fib_lines1(coordinates1);
+				google.maps.event.removeListener(listen1);
+				clicks1 = 0;
 				break;
 			case 3: //call horizontal lines1
-				document.getElementById('distHor1').value = distance(coordinates1[0].lat(), coordinates1[0].lng(), coordinates1[1].lat(), coordinates1[1].lng(), 2);
+				document.getElementById('distHor1').value = distance(coordinates1[0].lat(), coordinates1[0].lng(), coordinates1[1].lat(), coordinates1[1].lng(), 0);
 				fib_lines12(coordinates1);
+				google.maps.event.removeListener(listen1);
+				clicks1 = 0;
 				break;
 			case 5: //call line
-				document.getElementById('distLine1').value = distance(coordinates1[0].lat(), coordinates1[0].lng(), coordinates1[1].lat(), coordinates1[1].lng(), 3);
+				document.getElementById('distLine1').value = distance(coordinates1[0].lat(), coordinates1[0].lng(), coordinates1[1].lat(), coordinates1[1].lng(), 0);
 				lin1(coordinates1);
+				google.maps.event.removeListener(listen1);
+				clicks1 = 0;
 				break;
 			case 7: //call line 2
-				document.getElementById('distLine11').value = distance(coordinates1[0].lat(), coordinates1[0].lng(), coordinates1[1].lat(), coordinates1[1].lng(), 3);
+				document.getElementById('distLine11').value = distance(coordinates1[0].lat(), coordinates1[0].lng(), coordinates1[1].lat(), coordinates1[1].lng(), 0);
 				lin11(coordinates1);
+				google.maps.event.removeListener(listen1);
+				clicks1 = 0;
 				break;
 			case 6: //call line
-				document.getElementById('distsgmLine1').value = distance(coordinates1[0].lat(), coordinates1[0].lng(), coordinates1[1].lat(), coordinates1[1].lng(), 3);
+				document.getElementById('distsgmLine1').value = distance(coordinates1[0].lat(), coordinates1[0].lng(), coordinates1[1].lat(), coordinates1[1].lng(), 0);
 				sgmlin1(coordinates1);
+				google.maps.event.removeListener(listen1);
+				clicks1 = 0;
+				break;
+			}
+		}
+		if(clicks1 == 3){
+			google.maps.event.removeListener(listen1);
+			clicks1 = 0;
+			switch(id) {
+				case 8: //side line
+				fib_side1(coordinates1);
 				break;
 			}
 		}
@@ -217,6 +265,147 @@ function selectTool1(id) {
 	});
 	
 }
+function fib_side1(coordinates1) {
+	var x1 = coordinates1[0].lat();
+	var y1 = coordinates1[0].lng();
+	var x2 = coordinates1[1].lat();
+	var y2 = coordinates1[1].lng();
+	var x3 = coordinates1[2].lat();
+	var y3 = coordinates1[2].lng();
+
+	markersi11 = new google.maps.Marker({
+		position: coordinates1[0],
+		map: map,
+		title: "Click Point",
+		icon: iconside1,
+		draggable: true
+	});
+	side1.push(markersi11);
+
+	markersi12 = new google.maps.Marker({
+		position: coordinates1[1],
+		map: map,
+		title: "Second Point",
+		icon: iconside1,
+		draggable: true
+	});
+	side1.push(markersi12);
+
+	markersi13 = new google.maps.Marker({
+		position: coordinates1[2],
+		map: map,
+		title: "Third Point",
+		icon: iconside1,
+		draggable: true
+	});
+	side1.push(markersi13);
+
+	google.maps.event.addListener(markersi11, 'dragend', function () {
+		coordinates1[0] = markersi11.getPosition();
+		clearTool1(side1, 1);
+		fib_side1(coordinates1);
+	});
+	google.maps.event.addListener(markersi12, 'dragend', function () {
+		coordinates1[1] = markersi12.getPosition();
+		clearTool1(side1, 1);
+		fib_side1(coordinates1);
+	});
+	google.maps.event.addListener(markersi13, 'dragend', function () {
+		coordinates1[2] = markersi13.getPosition();
+		clearTool1(side1, 1);
+		fib_side1(coordinates1);
+	});
+
+/*
+	google.maps.event.addListener(markersi11, 'drag', function () {
+		var l = Math.sqrt( (x2-x1)*(x2-x1)+(y2-y1)*(y2-y1) );
+		var s = ((y1-y3)*(x2-x1)-(x1-x3)*(y2-y1))/l;
+		var dista = Math.abs(s)*l;
+	//	alert(dista);
+		document.getElementById('distSide1').value = dista;
+	});
+	google.maps.event.addListener(markersi12, 'drag', function () {
+		var l = Math.sqrt( (x2-x1)*(x2-x1)+(y2-y1)*(y2-y1) );
+		var s = ((y1-y3)*(x2-x1)-(x1-x3)*(y2-y1))/l;
+		var dista = Math.abs(s)*l;
+	//	alert(dista);
+		document.getElementById('distSide1').value = dista;
+	});
+	google.maps.event.addListener(markersi13, 'dragend', function () {
+		var l = (markersi12.getPosition().lat()-markersi11.getPosition().lat())*(markersi12.getPosition().lat()-markersi11.getPosition().lat())+(markersi12.getPosition().lng()-markersi11.getPosition().lng())*(markersi12.getPosition().lng()-markersi11.getPosition().lng());
+		var r_numerator = (markersi13.getPosition().lat()-markersi11.getPosition().lat())*(markersi12.getPosition().lat()-markersi11.getPosition().lat())+(markersi13.getPosition().lng()-markersi11.getPosition().lng())*(y2-markersi11.getPosition().lng());
+		var r = r_numerator/l;
+		var px = markersi11.getPosition().lat() + r*(markersi12.getPosition().lat()-markersi11.getPosition().lat());
+		var py = markersi11.getPosition().lng() + r*(markersi12.getPosition().lng()-markersi11.getPosition().lng());
+		document.getElementById('distSide1').value = distance(markersi13.getPosition().lat(), markersi13.getPosition().lng(), px, py, 0);	
+	});
+*/
+
+//	if(distancesSide1[1]-distancesSide1[0]>0){
+		var l = (x2-x1)*(x2-x1)+(y2-y1)*(y2-y1);
+		var r_numerator = (x3-x1)*(x2-x1)+(y3-y1)*(y2-y1);
+		var r = r_numerator/l;
+		var px = x1 + r*(x2-x1);
+		var py = y1 + r*(y2-y1);
+		var s = ((y1-y3)*(x2-x1)-(x1-x3)*(y2-y1))/l;
+		var distance = Math.abs(s)*Math.sqrt(l);
+
+		var xx = Math.abs(px-x3);
+		var yy = Math.abs(py-y3);
+
+		var dy = (y2-y1)/(x2-x1);
+
+		var i = 0;
+		side1.push( drawSides1(x1, y1, x2, y2) );
+		while((dis = custom_distanceSide1(distance, i++, 1)) != -1) {
+			if(dy<=0){
+				side1.push(drawSides1(x1 + xx*distancesSide1[i], y1 + yy*distancesSide1[i], x2 + xx*distancesSide1[i], y2 + yy*distancesSide1[i] ));
+				side1.push(drawSides1(x1 - xx*distancesSide1[i], y1 - yy*distancesSide1[i], x2 - xx*distancesSide1[i], y2 - yy*distancesSide1[i] ));
+			}else{
+				side1.push(drawSides1(x1 - xx*distancesSide1[i], y1 + yy*distancesSide1[i], x2 - xx*distancesSide1[i], y2 + yy*distancesSide1[i] ));
+				side1.push(drawSides1(x1 + xx*distancesSide1[i], y1 - yy*distancesSide1[i], x2 + xx*distancesSide1[i], y2 - yy*distancesSide1[i] ));				
+			}
+		}
+/*	}else{
+		lines1.push(drawlines1(y1));
+		lines1.push(drawlines1(y2));
+		var c = y2 - y1;
+		var lastrigh = y2;
+		var lastleft = y1;
+		var diafora = distancesVer1[0] - distancesVer1[1];
+		var monada = c / diafora;
+	//	alert("y1  "+y1+"\n"+"y2  "+y2+"\n"+"apostasi  "+c+"\n"+"monada  "+monada);
+
+		var i = 2;
+		while((dis = custom_distanceVer1(monada, i++, 2)) != -1) {
+	//		var aaa=lastrigh+dis;
+	//		alert("nea thesi "+aaa);
+			lines1.push(drawlines1(lastrigh + dis));
+			lines1.push(drawlines1(lastleft - dis));
+			lastrigh = lastrigh+dis;
+			lastleft = lastleft-dis;
+		}
+	}
+	*/
+}
+function drawSides1(x1, y1, x2, y2) {
+	var side1coordinates1 = [
+		new google.maps.LatLng(x1, y1),
+		new google.maps.LatLng(x2, y2)
+	];
+
+	var sidePath = new google.maps.Polyline({
+		path: side1coordinates1,
+		strokeColor: "#bc0047",
+		strokeOpacity: 1,
+		//	geodesic: true,
+		strokeWeight: 1
+	});
+	sidePath.setMap(map);
+	return sidePath;
+}
+
+
 
 function fib_circles1(coordinates1) {
 	// Get the center point
@@ -254,6 +443,7 @@ function fib_circles1(coordinates1) {
 		clearTool1(circles1, 1);
 		fib_circles1(coordinates1);
 	});
+
 	google.maps.event.addListener(markerc11, 'drag', function () {
 		document.getElementById('distCircle1').value = distance(markerc11.getPosition().lat(), markerc11.getPosition().lng(), markerc12.getPosition().lat(), markerc12.getPosition().lng(), 0);
 	});
@@ -273,7 +463,7 @@ function fib_circles1(coordinates1) {
 function drawCircle1(x, y, radius) {
 	var options = {
 		strokeColor: "#1143c1",
-		strokeOpacity: 0.8,
+		strokeOpacity: 1,
 		strokeWeight: 1,
 		fillOpacity: 0.0,
 		map: map,
@@ -317,10 +507,10 @@ function fib_lines1(coordinates1) {
 	});
 
 	google.maps.event.addListener(markerv11, 'drag', function () {
-		document.getElementById('distVer1').value = distance(markerv11.getPosition().lat(), markerv11.getPosition().lng(), markerv12.getPosition().lat(), markerv12.getPosition().lng(), 1);
+		document.getElementById('distVer1').value = distance(markerv11.getPosition().lat(), markerv11.getPosition().lng(), markerv12.getPosition().lat(), markerv12.getPosition().lng(), 0);
 	});
 	google.maps.event.addListener(markerv12, 'drag', function () {
-		document.getElementById('distVer1').value = distance(markerv11.getPosition().lat(), markerv11.getPosition().lng(), markerv12.getPosition().lat(), markerv12.getPosition().lng(), 1);
+		document.getElementById('distVer1').value = distance(markerv11.getPosition().lat(), markerv11.getPosition().lng(), markerv12.getPosition().lat(), markerv12.getPosition().lng(), 0);
 	});
 	if(distancesVer1[1]-distancesVer1[0]>0){
 		var c = y2 - y1;
@@ -359,7 +549,7 @@ function drawlines1(y1) {
 	var linePath = new google.maps.Polyline({
 		path: lines1coordinates1,
 		strokeColor: "#c11196",
-		strokeOpacity: 0.8,
+		strokeOpacity: 1,
 		//	geodesic: true,
 		strokeWeight: 1
 	});
@@ -399,10 +589,10 @@ function fib_lines12(coordinates1) {
 		fib_lines12(coordinates1);
 	});
 	google.maps.event.addListener(markerh11, 'drag', function () {
-		document.getElementById('distHor1').value = distance(markerh11.getPosition().lat(), markerh11.getPosition().lng(), markerh12.getPosition().lat(), markerh12.getPosition().lng(), 2);
+		document.getElementById('distHor1').value = distance(markerh11.getPosition().lat(), markerh11.getPosition().lng(), markerh12.getPosition().lat(), markerh12.getPosition().lng(), 0);
 	});
 	google.maps.event.addListener(markerh12, 'drag', function () {
-		document.getElementById('distHor1').value = distance(markerh11.getPosition().lat(), markerh11.getPosition().lng(), markerh12.getPosition().lat(), markerh12.getPosition().lng(), 2);
+		document.getElementById('distHor1').value = distance(markerh11.getPosition().lat(), markerh11.getPosition().lng(), markerh12.getPosition().lat(), markerh12.getPosition().lng(), 0);
 	});
 
 	if(distancesVer1[1]-distancesVer1[0]>0){
@@ -438,7 +628,7 @@ function drawlines12(y1) {
 	var linePath = new google.maps.Polyline({
 		path: lines1coordinates1,
 		strokeColor: "#f0ff00",
-		strokeOpacity: 0.8,
+		strokeOpacity: 1,
 	//		geodesic: true,
 		strokeWeight: 1
 	});
@@ -483,10 +673,10 @@ function lin1(coordinates1) {
 	});
 
 	google.maps.event.addListener(markerl11, 'drag', function () {
-		document.getElementById('distLine1').value = distance(markerl11.getPosition().lat(), markerl11.getPosition().lng(), markerl12.getPosition().lat(), markerl12.getPosition().lng(), 3);
+		document.getElementById('distLine1').value = distance(markerl11.getPosition().lat(), markerl11.getPosition().lng(), markerl12.getPosition().lat(), markerl12.getPosition().lng(), 0);
 	});
 	google.maps.event.addListener(markerl12, 'drag', function () {
-		document.getElementById('distLine1').value = distance(markerl11.getPosition().lat(), markerl11.getPosition().lng(), markerl12.getPosition().lat(), markerl12.getPosition().lng(), 3);
+		document.getElementById('distLine1').value = distance(markerl11.getPosition().lat(), markerl11.getPosition().lng(), markerl12.getPosition().lat(), markerl12.getPosition().lng(), 0);
 	});
 
 	line1.push(drawline1(x1, y1, x2, y2));
@@ -501,7 +691,7 @@ function drawline1(x1, y1, x2, y2) {
 	var linePath = new google.maps.Polyline({
 		path: lines1coordinates1,
 		strokeColor: "#ff0000",
-		strokeOpacity: 0.8,
+		strokeOpacity: 1,
 		//	geodesic: true,
 		strokeWeight: 1
 	});
@@ -546,10 +736,10 @@ function lin11(coordinates1) {
 	});
 
 	google.maps.event.addListener(markerl111, 'drag', function () {
-		document.getElementById('distLine11').value = distance(markerl111.getPosition().lat(), markerl111.getPosition().lng(), markerl121.getPosition().lat(), markerl121.getPosition().lng(), 3);
+		document.getElementById('distLine11').value = distance(markerl111.getPosition().lat(), markerl111.getPosition().lng(), markerl121.getPosition().lat(), markerl121.getPosition().lng(), 0);
 	});
 	google.maps.event.addListener(markerl121, 'drag', function () {
-		document.getElementById('distLine11').value = distance(markerl111.getPosition().lat(), markerl111.getPosition().lng(), markerl121.getPosition().lat(), markerl121.getPosition().lng(), 3);
+		document.getElementById('distLine11').value = distance(markerl111.getPosition().lat(), markerl111.getPosition().lng(), markerl121.getPosition().lat(), markerl121.getPosition().lng(), 0);
 	});
 
 	line11.push(drawline11(x1, y1, x2, y2));
@@ -564,7 +754,7 @@ function drawline11(x1, y1, x2, y2) {
 	var linePath = new google.maps.Polyline({
 		path: lines1coordinates1,
 		strokeColor: "#ff0000",
-		strokeOpacity: 0.8,
+		strokeOpacity: 1,
 		//	geodesic: true,
 		strokeWeight: 1
 	});
@@ -608,11 +798,11 @@ function sgmlin1(coordinates1) {
 
 	google.maps.event.addListener(markersgml11, 'drag', function () {
 		//	document.getElementById('fibVer1').value = markersgml11.getPosition();
-		document.getElementById('distLine1').value = distance(markersgml11.getPosition().lat(), markersgml11.getPosition().lng(), markersgml12.getPosition().lat(), markersgml12.getPosition().lng(), 3);
+		document.getElementById('distLine1').value = distance(markersgml11.getPosition().lat(), markersgml11.getPosition().lng(), markersgml12.getPosition().lat(), markersgml12.getPosition().lng(), 0);
 	});
 	google.maps.event.addListener(markersgml12, 'drag', function () {
 		//	document.getElementById('fibVer2').value = markersgml12.getPosition();
-		document.getElementById('distLine1').value = distance(markersgml11.getPosition().lat(), markersgml11.getPosition().lng(), markersgml12.getPosition().lat(), markersgml12.getPosition().lng(), 3);
+		document.getElementById('distLine1').value = distance(markersgml11.getPosition().lat(), markersgml11.getPosition().lng(), markersgml12.getPosition().lat(), markersgml12.getPosition().lng(), 0);
 	});
 
 	if((x2 - x1) != 0) {
@@ -649,7 +839,7 @@ function drawsgmline1(x1, y1, x2, y2) {
 	var linePath = new google.maps.Polyline({
 		path: lines1coordinates1,
 		strokeColor: "#ff0000",
-		strokeOpacity: 0.8,
+		strokeOpacity: 1,
 		//	geodesic: true,
 		strokeWeight: 1
 	});
@@ -694,6 +884,19 @@ function custom_distanceHor1(initial, num, type) {
 	}
 }
 
+function custom_distanceSide1(initial, num, type) {
+	if( type==1 ){
+		if(distancesSide1[num] == undefined)
+			return -1;
+		return initial * distancesSide1[num];
+	}else{	
+		if(distancesSide1[num] == undefined)
+			return -1;
+		var dist = initial * (distancesSide1[num-1] - distancesSide1[num]);
+		return dist;
+	}
+}
+
 /* 
   toggle all lines1 from maps
 */
@@ -702,7 +905,7 @@ function clearTool1(tool, val) {
 	for(var i = 0; i < tool.length; i++) {
 		tool[i].setMap(null);
 		if(val == 0) {
-if ( tool[i] instanceof google.maps.Marker  ) {
+		if ( tool[i] instanceof google.maps.Marker  ) {
 			if( markerc11==tool[i] )
 				markerc11 = null;
 			if( markerc12==tool[i] )
@@ -727,6 +930,13 @@ if ( tool[i] instanceof google.maps.Marker  ) {
 				markerl111 = null;
 			if( markerl121==tool[i] )
 				markerl121 = null;
+
+			if( markersi11==tool[i] )
+				markersi11 = null;
+			if( markersi12==tool[i] )
+				markersi12 = null;
+			if( markersi13==tool[i] )
+				markersi13 = null;
 
 				//tool2
 			if( markerc21==tool[i] )
@@ -753,6 +963,13 @@ if ( tool[i] instanceof google.maps.Marker  ) {
 				markerl211 = null;
 			if( markerl221==tool[i] )
 				markerl221 = null;
+
+			if( markersi21==tool[i] )
+				markersi21 = null;
+			if( markersi22==tool[i] )
+				markersi22 = null;
+			if( markersi23==tool[i] )
+				markersi23 = null;
 				
 				//tool3
 			if( markerc31==tool[i] )
@@ -780,6 +997,13 @@ if ( tool[i] instanceof google.maps.Marker  ) {
 			if( markerl321==tool[i] )
 				markerl321 = null;
 
+			if( markersi31==tool[i] )
+				markersi31 = null;
+			if( markersi32==tool[i] )
+				markersi32 = null;
+			if( markersi33==tool[i] )
+				markersi33 = null;
+
 				//tool4
 			if( markerc41==tool[i] )
 				markerc41 = null;
@@ -805,6 +1029,13 @@ if ( tool[i] instanceof google.maps.Marker  ) {
 				markerl411 = null;
 			if( markerl421==tool[i] )
 				markerl421 = null;
+
+			if( markersi41==tool[i] )
+				markersi41 = null;
+			if( markersi42==tool[i] )
+				markersi42 = null;
+			if( markersi43==tool[i] )
+				markersi43 = null;
 			}
 		}
 	}
@@ -821,6 +1052,10 @@ function getdistancesVer1() {
 
 function getdistancesHor1() {
 	distancesHor1 = ($("#fibHor1").val()).split(",");
+}
+
+function getdistancesSide1() {
+	distancesSide1 = ($("#fibSide1").val()).split(",");
 }
 
 function hidemarkers1() {
@@ -851,6 +1086,12 @@ function hidemarkers1() {
 			markersgml11.setvisible(false);
 		if(markersgml12 != undefined)
 			markersgml12.setvisible(false);
+		if(markersi11 != undefined)
+			markersi11.setvisible(false);
+		if(markersi12 != undefined)
+			markersi12.setvisible(false);
+		if(markersi13 != undefined)
+			markersi13.setvisible(false);
 		markerstart.setvisible(false);
 		markerfin.setvisible(false);
 	} else {
@@ -880,6 +1121,12 @@ function hidemarkers1() {
 			markersgml11.setvisible(true);
 		if(markersgml12 != undefined)
 			markersgml12.setvisible(true);
+		if(markersi11 != undefined)
+			markersi11.setvisible(true);
+		if(markersi12 != undefined)
+			markersi12.setvisible(true);
+		if(markersi13 != undefined)
+			markersi13.setvisible(true);
 		markerstart.setvisible(true);
 		markerfin.setvisible(true);
 	}

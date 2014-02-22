@@ -69,6 +69,15 @@
 		<li>
 			<table>
 			<tr>
+				<td width="130"> <a href='#' id="side1" onclick="selectTool1(8)"><span>Side&nbsp;lines</span></a>	</td>
+				<td>Numbers:&nbsp;<input type="text" id="fibSide1"name="fibSide1"  value="<?php echo $_SESSION['fibSide1']; ?>" size="14"/></td>
+				<td>Distance:&nbsp;<input type="text" id="distSide1"name="distSide1" value="" size="5"/> </td>
+			</tr>
+			</table>
+		</li>
+		<li>
+			<table>
+			<tr>
 				<td width="130"> <a href='#' id="cir1" onclick="selectTool1(1)"><span>Circles</span></a>	</td>
 				<td>Numbers:&nbsp;<input type="text" id="fibCircle1"name="fibCircle1"  value="<?php echo $_SESSION['fibCircle1']; ?>" size="14"/></td>
 				<td>Distance:&nbsp;<input type="text" id="distCircle1" name="distCircle1" value="" size="5"/> </td>
@@ -118,6 +127,15 @@
 				<td width="130"> <a href='#' id="hor2" onclick="selectTool2(3)"><span>Horizontal&nbsp;lines</span></a>	</td>
 				<td>Numbers:&nbsp;<input type="text" id="fibHor2" name="fibHor2" value="<?php echo $_SESSION['fibHor2']; ?>" size="14"/></td>
 				<td>Distance:&nbsp;<input type="text" id="distHor2"  name="distHor2" value="" size="5"/> </td>
+			</tr>
+			</table>
+		</li>
+		<li>
+			<table>
+			<tr>
+				<td width="130"> <a href='#' id="side2" onclick="selectTool2(8)"><span>Side&nbsp;lines</span></a>	</td>
+				<td>Numbers:&nbsp;<input type="text" id="fibSide2" name="fibSide2"  value="<?php echo $_SESSION['fibSide2']; ?>" size="14"/></td>
+				<td>Distance:&nbsp;<input type="text" id="distSide2" name="distSide2" value="" size="5"/> </td>
 			</tr>
 			</table>
 		</li>
@@ -178,6 +196,15 @@
 		<li>
 			<table>
 			<tr>
+				<td width="130"> <a href='#' id="side3" onclick="selectTool3(8)"><span>Side&nbsp;lines</span></a>	</td>
+				<td>Numbers:&nbsp;<input type="text" id="fibSide3"name="fibSide3"  value="<?php echo $_SESSION['fibSide3']; ?>" size="14"/></td>
+				<td>Distance:&nbsp;<input type="text" id="distSide3"name="distSide3" value="" size="5"/> </td>
+			</tr>
+			</table>
+		</li>
+		<li>
+			<table>
+			<tr>
 				<td width="130"> <a href='#' id="cir3" onclick="selectTool3(1)"><span>Circles</span></a>	</td>
 				<td>Numbers:&nbsp;<input type="text" id="fibCircle3"name="fibCircle3"  value="<?php echo $_SESSION['fibCircle3']; ?>" size="14"/></td>
 				<td>Distance:&nbsp;<input type="text" id="distCircle3" name="distCircle3" value="" size="5"/> </td>
@@ -226,6 +253,15 @@
 				<td width="130"> <a href='#' id="hor4" onclick="selectTool4(3)"><span>Horizontal&nbsp;lines</span></a>	</td>
 				<td>Numbers:&nbsp;<input type="text" id="fibHor4" name="fibHor4" value="<?php echo $_SESSION['fibHor4']; ?>" size="14"/></td>
 				<td>Distance:&nbsp;<input type="text" id="distHor4" name="distHor4" value="" size="5"/> </td>
+			</tr>
+			</table>
+		</li>
+		<li>
+			<table>
+			<tr>
+				<td width="130"> <a href='#' id="side4" onclick="selectTool4(8)"><span>Side&nbsp;lines</span></a>	</td>
+				<td>Numbers:&nbsp;<input type="text" id="fibSide4"name="fibSide4"  value="<?php echo $_SESSION['fibSide4']; ?>" size="14"/></td>
+				<td>Distance:&nbsp;<input type="text" id="distSide4"name="distSide4" value="" size="5"/> </td>
 			</tr>
 			</table>
 		</li>
@@ -306,7 +342,9 @@
 	</li>
 	<li class=''><a href='#' id="prevmarker" onclick="prevMarker()"><span>Prev</span></a></li>
 	<li class=''><a href='#' id="nextmarker" onclick="nextMarker()"><span>Next</span></a></li>
-<!--
+
+<!--	<li class=''><a href='#' id="specialMarker" onclick="specialMarkers()"><span>Note</span></a></li>
+
    <li class='has-sub last'>
 	<div class="select1" >Select utility</div>
 	<div class="marker1Tip1" >Add <b>1st</b> marker</div>

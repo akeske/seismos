@@ -64,7 +64,9 @@
 		vathos>=$fromdpth AND vathos<=$todpth AND 
 		megethos>=$frommagn AND megethos<=$tomagn
 		GROUP BY year
-		ORDER BY year, megethos";	
+		ORDER BY year, megethos";
+	//	echo $sqlb1;
+	//	echo $sqlbyear1;
 	$_SESSION['sqlbyear1'.$k1]=$sqlbyear1;
 
 	//counter per grid

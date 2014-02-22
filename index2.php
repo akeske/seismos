@@ -139,44 +139,56 @@ include("inc/database.php");
 	$toPred = $_POST['toPred'];
 	$fibVer1 = $_POST['fibVer1'];
 	$fibHor1 =  $_POST['fibHor1'];
-	$fibCircle1 =  $_POST['fibCircle1'];
+	$fibCircle1 = $_POST['fibCircle1'];
+	$fibSide1 = $_POST['fibSide1'];
 	$fibVer2 =  $_POST['fibVer2'];
 	$fibHor2 =  $_POST['fibHor2'];
 	$fibCircle2 =  $_POST['fibCircle2'];
+	$fibSide2 = $_POST['fibSide2'];
 	$fibVer3 =  $_POST['fibVer3'];
 	$fibHor3 =  $_POST['fibHor3'];
 	$fibCircle3 =  $_POST['fibCircle3'];
+	$fibSide3 = $_POST['fibSide3'];
 	$fibVer4 =  $_POST['fibVer4'];
 	$fibHor4 =  $_POST['fibHor4'];
 	$fibCircle4 =  $_POST['fibCircle4'];
+	$fibSide4 = $_POST['fibSide4'];
 	if( $fromPred == "" ) $fromPred = "1";
 	if( $toPred == "" ) $toPred = "20";
 	if( $fibVer1 == "" ) $fibVer1 = "0,1,2,3,5,8";
 	if( $fibHor1 == "" ) $fibHor1 = "0,1,2,3,5,8";
+	if( $fibSide1 == "" ) $fibSide1 = "0,1,2,3,5,8";
 	if( $fibCircle1 == "" ) $fibCircle1 = "0,1,2,3,5,8";
 	if( $fibVer2 == "" ) $fibVer2 = "0,1,2,3,5,8";
 	if( $fibHor2 == "" ) $fibHor2 = "0,1,2,3,5,8";
+	if( $fibSide2 == "" ) $fibSide2 = "0,1,2,3,5,8";
 	if( $fibCircle2 == "" ) $fibCircle2 = "0,1,2,3,5,8";
 	if( $fibVer3 == "" ) $fibVer3 = "0,1,2,3,5,8";
 	if( $fibHor3 == "" ) $fibHor3 = "0,1,2,3,5,8";
+	if( $fibSide3 == "" ) $fibSide3 = "0,1,2,3,5,8";
 	if( $fibCircle3 == "" ) $fibCircle3 = "0,1,2,3,5,8";
 	if( $fibVer4 == "" ) $fibVer4 = "0,1,2,3,5,8";
 	if( $fibHor4 == "" ) $fibHor4 = "0,1,2,3,5,8";
+	if( $fibSide4 == "" ) $fibSide4 = "0,1,2,3,5,8";
 	if( $fibCircle4 == "" ) $fibCircle4 = "0,1,2,3,5,8";
 	$_SESSION['fromPred'] = $fromPred;
 	$_SESSION['toPred'] = $toPred;
 	$_SESSION['fibVer1'] = $fibVer1;
 	$_SESSION['fibHor1'] = $fibHor1;
 	$_SESSION['fibCircle1'] = $fibCircle1;
+	$_SESSION['fibSide1'] = $fibSide1;
 	$_SESSION['fibVer2'] = $fibVer2;
 	$_SESSION['fibHor2'] = $fibHor2;
 	$_SESSION['fibCircle2'] = $fibCircle2;
+	$_SESSION['fibSide2'] = $fibSide2;
 	$_SESSION['fibVer3'] = $fibVer3;
 	$_SESSION['fibHor3'] = $fibHor3;
 	$_SESSION['fibCircle3'] = $fibCircle3;
+	$_SESSION['fibSide3'] = $fibSide3;
 	$_SESSION['fibVer4'] = $fibVer4;
 	$_SESSION['fibHor4'] = $fibHor4;
 	$_SESSION['fibCircle4'] = $fibCircle4;
+	$_SESSION['fibSide4'] = $fibSide4;
 	?>
 <div id="header">
 	<h3>Earthquake Prediction - Greece</h3>
@@ -212,7 +224,7 @@ include("inc/database.php");
 	<div id="latlng2">
 		Last&nbsp;earthquake&nbsp;-&nbsp;
 		Lat:&nbsp;<input type="text" id="coordslatlast" value="" size="7" maxlength="7"/>&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;Long:&nbsp;<input type="text" id="coordslnglast" value="" size="7" maxlength="7"/>
+		Long:&nbsp;<input type="text" id="coordslnglast" value="" size="7" maxlength="7"/>
 	</div>
 
 	<div id="glass_bg_options">
@@ -488,7 +500,7 @@ include("inc/database.php");
 </div>
 </div>
 </div>
-
+<br>
 <?php
 	if( isset( $_POST['subclear']) ) {
 		unset($_SESSION['fromPred']);
@@ -514,15 +526,19 @@ include("inc/database.php");
 		unset($_SESSION['fibVer1']);
 		unset($_SESSION['fibHor1']);
 		unset($_SESSION['fibCircle1']);
+		unset($_SESSION['fibSide1']);
 		unset($_SESSION['fibVer2'] );
 		unset($_SESSION['fibHor2'] );
 		unset($_SESSION['fibCircle2'] );
+		unset($_SESSION['fibSide2']);
 		unset($_SESSION['fibVer3']);
 		unset($_SESSION['fibHor3'] );
 		unset($_SESSION['fibCircle3'] );
+		unset($_SESSION['fibSide3']);
 		unset($_SESSION['fibVer4'] );
 		unset($_SESSION['fibHor4']);
 		unset($_SESSION['fibCircle4'] );
+		unset($_SESSION['fibSide4']);
 	}
 	$fromdate1=$fromday1.$frommonth1.$fromyear1."000000";
 	$todate1=$today1.$tomonth1.$toyear1."245959";

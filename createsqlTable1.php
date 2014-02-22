@@ -37,7 +37,7 @@
 					echo "<br>";
 					echo "Calc time <b>".$time1."</b> sec"; unset($time1);
 					echo "<br>"; ?>
-					<font style="font-size:14px;"> Energy = </font> <font style="font-size:12px;"> <b id="<?php echo 'energy1'.$k1; ?>">0 J</b> </font>
+					<font style="font-size:14px;"> E = </font> <font style="font-size:12px;"> <b id="<?php echo 'energy1'.$k1; ?>">0 J</b> </font>
 					<?php echo "<br>"; ?>
 					<font style="font-size:14px;"> b = <b id="<?php echo 'b1'.$k1; ?>">0.000</b> </font>
 				</td>
@@ -64,8 +64,10 @@
 							<?php
 							if ( $ua['name']=='Mozilla Firefox' ) { ?>
 								<input style="font-size:10px;" type="button" value="Graph of b" onClick="window.open('graphs1/graphB.php?b1=<?php echo $k1; ?>','Graph for b',' width=900,height=600')"/>
+								<input style="font-size:10px;" type="button" value="Graph of Energy" onClick="window.open('graphs1/graphEnergy.php?b1=<?php echo $k1; ?>','Graph for b',' width=900,height=600')"/>
 							<?php }else{ ?>
 								<a href="graphs1/graphB.php?b1=<?php echo $k1; ?>" target="_blank" style="display:block; float:left; height:15px; width:50px; cursor:pointer;"> Graph for b </a>
+								<a href="graphs1/graphEnergy.php?b1=<?php echo $k1; ?>" target="_blank" style="display:block; float:left; height:15px; width:50px; cursor:pointer;"> Graph for Energy</a>
 							<?php } ?>
 						</form>
 					</font>
