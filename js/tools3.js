@@ -240,8 +240,8 @@ function selectTool3(id) {
 			$(".select3").hide();
 		}
 	});
-	
 }
+
 function fib_side3(coordinates3) {
 	var x1 = coordinates3[0].lat();
 	var y1 = coordinates3[0].lng();

@@ -780,6 +780,7 @@ function custom_distanceSide4(initial, num, type) {
 /* 
   toggle all lines4 from maps
 */
+
 function clearTool4(tool,val) {
 	for(var i = 0; i < tool.length; i++) {
 		tool[i].setMap(null);
@@ -919,6 +920,7 @@ function clearTool4(tool,val) {
 		}
 	}
 }
+
 
 function getdistancesCircle4() {
 	distancesCircle4 = ($("#fibCircle4").val()).split(",");

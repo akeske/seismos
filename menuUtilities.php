@@ -91,7 +91,7 @@
 
    
    
-   <li class='has-sub'><a href='#'><span>2st&nbsp;utility</span></a>
+   <li class='has-sub'><a href='#'><span>2nd&nbsp;utility</span></a>
 	<ul>
 		<li><a href="#" id="hidea2" onclick="hidemarkers2()">Hide markers</a>
 			<input type="hidden" id="hide2" value="0"></input>
@@ -154,7 +154,7 @@
    
    
    
-   <li class='has-sub'><a href='#'><span>3st&nbsp;utility</span></a>
+   <li class='has-sub'><a href='#'><span>3rd&nbsp;utility</span></a>
 	<ul>
 		<li><a href="#" id="hidea3" onclick="hidemarkers3()">Hide markers</a>
 			<input type="hidden" id="hide3" value="0"></input>
@@ -217,7 +217,7 @@
 	
 	
 	
-   <li class='has-sub'><a href='#'><span>4st&nbsp;utility</span></a>
+   <li class='has-sub'><a href='#'><span>4th&nbsp;utility</span></a>
 	<ul>
 		<li><a href="#" id="hidea4" onclick="hidemarkers4()">Hide markers</a>
 			<input type="hidden" id="hide4" value="0"></input>

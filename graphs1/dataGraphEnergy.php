@@ -33,7 +33,8 @@
 
 			$energy = round(pow( pow(10, $energyPerMagn), 2/3));
 			$x++;
-			$sumEnergy[$y] += $energy;
+			$sumEnergy[$y] += round($energy/1000000000, 4);
+
 		}
 	}
 

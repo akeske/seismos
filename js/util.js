@@ -78,6 +78,10 @@ function downloadScript(url) {
 }
 
 function distance(lat1, lon1, lat2, lon2, type) {
+	var p1 = new google.maps.LatLng(lat1, lon1);
+	var p2 = new google.maps.LatLng(lat2, lon2);
+
+	d = (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) / 1000).toFixed(3);
 	var R = 6371.16;
 	/*
 	var dLat = (lat2-lat1) * Math.PI / 180;
@@ -87,7 +91,7 @@ function distance(lat1, lon1, lat2, lon2, type) {
 		Math.sin(dLon/2) * Math.sin(dLon/2); 
 	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
 	var d = R *c;
-	*/
+	
 	if(type == 1) {
 		var dLon = Math.abs(lon2 - lon1);
 		var d = 2 * Math.PI * R * dLon / 360;
@@ -103,6 +107,7 @@ function distance(lat1, lon1, lat2, lon2, type) {
 		var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 		var d = R * c;
 	}
+	*/
 	if(d > 1) return Math.round(d) + " km";
 	else if(d <= 1) return Math.round(d * 1000) + " m";
 	return d;
