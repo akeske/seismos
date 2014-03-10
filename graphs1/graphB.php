@@ -1,14 +1,16 @@
 <?php // content="text/plain; charset=utf-8"
+
+include('dataGraphB.php');
+
 require_once ('../jpgraph/jpgraph.php');
 require_once ('../jpgraph/jpgraph_line.php');
-include('dataGraphB.php');
 
 $datax1 = $_SESSION['year1'];
 $datay1 = $_SESSION['b1'];
 
 $a = $_GET['k1']+1;
 // Setup the graph
-$graph = new Graph(900,600);
+$graph = new Graph(900,300);
 $graph->SetScale("textlin");
 $graph->SetShadow();
 $graph->img->SetAntiAliasing(false);

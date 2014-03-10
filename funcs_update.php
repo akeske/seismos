@@ -160,8 +160,8 @@ for ($k=2013;$k<=2013;$k++){
 //	}
 	for($d=$maxnumberline;$d<=$j;$d++) {
 		if($etos[$d]!=""){
-			$sqlDb = "INSERT INTO `seismos` (`idyear`, `year`, `name`, `info`, `lat`, `lng`, `megethos`, `vathos`, `type`, `typeSize`, `date`) VALUES
-			($d, $etos[$d], 'Athens[$etos[$d]][$d]', '', $lat[$d], $long[$d], $magnitude[$d], $depth[$d], $type[$d], $typeSize[$d], '$finaldate[$d]' )";
+			$sqlDb = "INSERT INTO `seismos` (`idyear`, `year`, `month`, `name`, `info`, `lat`, `lng`, `megethos`, `vathos`, `type`, `typeSize`, `date`) VALUES
+			($d, $etos[$d], $month[$d], 'Athens[$etos[$d]][$d]', '', $lat[$d], $long[$d], $magnitude[$d], $depth[$d], $type[$d], $typeSize[$d], '$finaldate[$d]' )";
 			// Execute query
 			if ( mysql_query($sqlDb,$con) ) {
 				$counter++;

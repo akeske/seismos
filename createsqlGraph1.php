@@ -47,15 +47,15 @@
 	$_SESSION['sqlgrmgnyearD1'.$k1]=$sqlgrmgnyearD1;
 
 	//calculation of b
-	$sqlb1 = "SELECT year, megethos FROM seismos
+	$sqlb1 = "SELECT year, month, megethos FROM seismos
 		WHERE date>=$fromdate1 AND date<=$todate1 AND 
 		lat>=$flat[$j] AND lat<=$tlat[$j] AND 
 		lng>=$flng[$i] AND lng<=$tlng[$i] AND 
 		vathos>=$fromdpth AND vathos<=$todpth AND 
 		megethos>=$frommagn AND megethos<=$tomagn
-		ORDER BY year, megethos";	
+		ORDER BY year, month, megethos";	
 	$_SESSION['sqlb1'.$k1]=$sqlb1;
-	$sqlbyear1 = "SELECT year, COUNT(*) AS totalearthquakes,
+	$sqlbyear1 = "SELECT year, month, COUNT(*) AS totalearthquakes,
 		MAX(megethos) AS maxMagn, MIN(megethos) AS minMagn,
 		( MAX( megethos ) - MIN( megethos ) ) / 0.2 AS steps FROM seismos
 		WHERE date>=$fromdate1 AND date<=$todate1 AND 
@@ -63,9 +63,9 @@
 		lng>=$flng[$i] AND lng<=$tlng[$i] AND 
 		vathos>=$fromdpth AND vathos<=$todpth AND 
 		megethos>=$frommagn AND megethos<=$tomagn
-		GROUP BY year
-		ORDER BY year, megethos";
-	//	echo $sqlb1;
+		GROUP BY year, month
+		ORDER BY year, month, megethos";
+	//	echo $sqlb1."<br>";
 	//	echo $sqlbyear1;
 	$_SESSION['sqlbyear1'.$k1]=$sqlbyear1;
 

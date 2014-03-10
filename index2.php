@@ -205,7 +205,7 @@ include("inc/database.php");
 		<tr>
 			<td>
 				<div id="map" style="position:relative;
-					top:-5px;
+					top:-10px;
 					height:555px;
 					width:1100px;
 					margin-right:10px;

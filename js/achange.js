@@ -176,7 +176,7 @@ LabelY.prototype.draw = function () {
 };
 
 
-
+/*
 // 0 - 15
 var iconM0 = new google.maps.MarkerImage('images/blue.png',
 	null,
@@ -308,7 +308,7 @@ var iconM19 = new google.maps.MarkerImage('images/starRed.png',
 );
 
 
-
+*/
 
 
 // - 3
@@ -420,7 +420,7 @@ customIcons["18"] = iconM18;
 customIcons["19"] = iconM19;
 */
 
-
+/*
 var colorIndex_ = 0;
 var COLORS = [
 	["red", "#ff0000"],
@@ -433,13 +433,14 @@ var COLORS = [
 function getColor(named) {
 	return COLORS[(colorIndex_++) % COLORS.length][named ? 0 : 1];
 }
+*/
 
 function getIcon(color) {
-	var icon = new google.maps.MarkerImage('http://google.com/mapfiles/ms/micons/' + color + '.png',
+	return new google.maps.MarkerImage('http://google.com/mapfiles/ms/micons/' + color + '.png',
 		new google.maps.Size(32, 32),
 		new google.maps.Point(0, 0)
 	);
-	return icon;
+
 }
 
 function check() {
@@ -467,22 +468,37 @@ function check() {
 		document.getElementById('fromdpth').value = Bdepth;
 		document.getElementById('todpth').value = Adepth;
 	}
+	Alat = null;
+	Blat = null;
+	Alng = null;
+	Blng = null;
+	delete Alat;
+	delete Blat;
+	delete Alng;
+	delete Blng;
+
 }
 
 function updateMarkerfrom(marker) {
-	latlng = marker.getPosition();
+	var latlng = marker.getPosition();
 	document.getElementById("fromlat").value = latlng.lat();
 	document.getElementById("fromlng").value = latlng.lng();
+	Alat = latlng;
+	delete latlng;
 }
 
 function updateMarkerto(marker) {
-	latlng = marker.getPosition();
+	var latlng = marker.getPosition();
 	document.getElementById("tolat").value = latlng.lat();
 	document.getElementById("tolng").value = latlng.lng();
+	Alat = latlng;
+	delete latlng;
 }
 
 var map;
+
 var infowindow;
+var counter = 0;
 
 var markerstart;
 var markerfin;
@@ -578,13 +594,13 @@ function load() {
 
 	var point2 = new google.maps.LatLng(33.98, 34.82);
 	var point1 = new google.maps.LatLng(41.40, 18.8);
-	var color = getColor(true);
+//	var color = getColor(true);
 	markerstart = new google.maps.Marker({
 		position: point1,
 		map: map,
 		title: 'start',
 		clickable: false,
-		icon: getIcon(color),
+		icon: getIcon("orange"),
 		//	icon: startYellow,
 		draggable: true
 	});
@@ -593,7 +609,7 @@ function load() {
 		map: map,
 		title: 'end',
 		clickable: false,
-		icon: getIcon(color),
+		icon: getIcon("orange"),
 		//	icon: startYellow,
 		draggable: true
 	});
@@ -605,7 +621,7 @@ function load() {
 		updateMarkerto(markerfin);
 	});
 
-	var list = google.maps.event.addListener(map, 'mousemove', function (event) {
+	google.maps.event.addListener(map, 'mousemove', function (event) {
 		document.getElementById('coordslat').value = event.latLng.lat().toFixed(6);
 		document.getElementById('coordslng').value = event.latLng.lng().toFixed(6);
 	});
@@ -622,12 +638,8 @@ function load() {
 		var line2 = [];
 		var lat;
 		var lng;
-		var polyline1 = {
-			"1": []
-		};
-		var polyline2 = {
-			"1": []
-		};
+		var polyline1;
+		var polyline2;
 		size = data.documentElement.getElementsByTagName("size");
 		size = parseFloat(size[0].getAttribute("size"));
 
@@ -686,23 +698,27 @@ function load() {
 			polyline1 = new google.maps.Polyline({
 				path: line1,
 				strokeColor: '#CC0000',
-				strokeOpacity: 0.5,
+				strokeOpacity: 1,
 				//	geodesic: true,
 				strokeWeight: 2
 			});
 			polyline2 = new google.maps.Polyline({
 				path: line2,
 				strokeColor: '#CC0000',
-				strokeOpacity: 0.5,
+				strokeOpacity: 1,
 				//	geodesic: true,
 				strokeWeight: 2
 			});
 			polyline1.setMap(map);
 			polyline2.setMap(map);
+			polyline1 = [];
+			polyline2 = [];
 			line1 = [];
 			line2 = [];
-		}
 
+			
+		}
+		gridlabelX = null;
 	});
 
 	function addCommas(n){
@@ -891,7 +907,7 @@ Magnitude	   Released Energy (to the nearest integer)
 		document.getElementById("predInfo").innerHTML = min+"&nbsp;->&nbsp;"+max+"&nbsp;&nbsp;";
 	//	document.getElementById("fromPred").value = min;
 	//	document.getElementById("toPred").value = max;
-	
+
 	});
 
 	downloadUrl("phpsqlajax_xmlD1.php", function (data) {
@@ -1018,7 +1034,6 @@ Magnitude	   Released Energy (to the nearest integer)
 
 }
 
-var counter = 0;
 function variable(){
 	//alert(markersPeriod1.length);
 	counter = markersPeriod1.length;
@@ -1147,6 +1162,7 @@ function setAllMapPred(map) {
   }
 }
 
+
 function createMarker(id, latlng, megethos, vathos, type, typeSize, date, cat, lat, lng, qntMarkers) {
 	var tempTypeSize = parseInt(typeSize);
 	if(id==qntMarkers+1){
@@ -1174,14 +1190,18 @@ function createMarker(id, latlng, megethos, vathos, type, typeSize, date, cat, l
 	var time = arr[2].split(":");
 	var day = time[0].split(" ");
 
-	var newDate = day[0]+"-"+arr[1]+"-"+arr[0]+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+day[1]+":"+time[1]+":"+time[2];
-	var html = "<table width='220'><font size='3'>"
-	html += "<tr align='left'><td><b><b>Date:   &nbsp;&nbsp;" + newDate + "</b></td></tr>"
-	html += "<tr align='left'><td><b><b>Magnitude:</b>  &nbsp; &nbsp; </b>" + megethos + " ML</td></tr>"
-	html += "<tr align='left'><td><b><b>Latitude:</b> &nbsp;  &nbsp; </b>" + lat + " N</td></tr>"
-	html += "<tr align='left'><td><b><b>Longitude:</b>  &nbsp;&nbsp;  </b>" + lng + " E</td></tr>"
-	html += "<tr align='left'><td><b><b>Depth:</b> &nbsp;&nbsp;   </b>" + vathos + " km</td></tr>"
+	var newDate = day[0]+"-"+arr[1]+"-"+arr[0]+"&nbsp;&nbsp;&nbsp;&nbsp;"+day[1]+":"+time[1]+":"+time[2];
+	var html = "<table width='220' height='140'><font size='3'>"
+	html += "<tr align='left'><td><b><b>Date:</td><td>" + newDate + "</b></td></tr>"
+	html += "<tr align='left'><td><b><b>Magnitude:</b></td><td></b>" + megethos + " ML</td></tr>"
+	html += "<tr align='left'><td><b><b>Latitude:</b></td><td></b>" + lat + " N</td></tr>"
+	html += "<tr align='left'><td><b><b>Longitude:</b></td><td></b>" + lng + " E</td></tr>"
+	html += "<tr align='left'><td><b><b>Depth:</b></td><td></b>" + vathos + " km</td></tr>"
 	html += "</font></table>"
+	arr = null;
+	time = null;
+	day = null;
+	newDate = null;
 
 	google.maps.event.addListener(marker, "click", function () {
 		if(infowindow) {
@@ -1198,6 +1218,7 @@ function createMarker(id, latlng, megethos, vathos, type, typeSize, date, cat, l
 	google.maps.event.addListener(map, 'click', function () {
 		infowindow.close();
 	});
+
 
 	
 	var stuLabel = new Label();
@@ -1266,6 +1287,14 @@ function dat1() {
 		var d = day + "/" + month + "/" + year;
 		document.getElementById('fromdate1').value = d;
 	}
+	month = null;
+	delete month;
+	year = null;
+	delete year;
+	day = null;
+	delete day;
+	d = null;
+	delete d;
 }
 
 function dat2() {
@@ -1283,6 +1312,16 @@ function dat2() {
 		var d = day + "/" + month + "/" + year;
 		document.getElementById('todate1').value = d;
 	}
+	currentTime = null;
+	delete currentTime;
+	month = null;
+	delete month;
+	year = null;
+	delete year;
+	day = null;
+	delete day;
+	d = null;
+	delete d;
 }
 
 function dat3() {
@@ -1295,6 +1334,16 @@ function dat3() {
 		var df = year + "/" + month + "/" + day;
 		document.getElementById('fromdate2').value = df;
 	}
+	d = null;
+	delete d;
+	dArray = null;
+	delete dArray;
+	year = null;
+	delete year;
+	day = null;
+	delete day;
+	df = null;
+	delete df;
 }
 
 function dat4() {
@@ -1307,6 +1356,16 @@ function dat4() {
 		var df = year + "/" + month + "/" + day;
 		document.getElementById('todate2').value = df;
 	}
+	d = null;
+	delete d;
+	dArray = null;
+	delete dArray;
+	year = null;
+	delete year;
+	day = null;
+	delete day;
+	df = null;
+	delete df;
 }
 
 function dat5() {
@@ -1319,6 +1378,16 @@ function dat5() {
 		var df = year + "/" + month + "/" + day;
 		document.getElementById('fromdate3').value = df;
 	}
+	d = null;
+	delete d;
+	dArray = null;
+	delete dArray;
+	year = null;
+	delete year;
+	day = null;
+	delete day;
+	df = null;
+	delete df;
 }
 
 function dat6() {
@@ -1331,11 +1400,24 @@ function dat6() {
 		var df = year + "/" + month + "/" + day;
 		document.getElementById('todate3').value = df;
 	}
+
+	d = null;
+	delete d;
+	dArray = null;
+	delete dArray;
+	year = null;
+	delete year;
+	day = null;
+	delete day;
+	df = null;
+	delete df;
 }
 
 function diastaseisfun() {
-	var A = document.getElementById('diastaseis').value;
-	document.getElementById('diastaseis2').value = A;
+	var a = document.getElementById('diastaseis').value;
+	document.getElementById('diastaseis2').value = a;
+	a = null;
+	delete a;
 }
 
 function latitude() {
@@ -1349,6 +1431,10 @@ function latitude() {
 		document.getElementById('fromlat').style.backgroundColor = "#D1D6FE";
 		document.getElementById('tolat').style.backgroundColor = "#D1D6FE";
 	}
+	a = null;
+	delete a;
+	b = null;
+	delete b;
 }
 
 function longitude() {
@@ -1361,6 +1447,10 @@ function longitude() {
 		document.getElementById('fromlng').style.backgroundColor = "#D1D6FE";
 		document.getElementById('tolng').style.backgroundColor = "#D1D6FE";
 	}
+	a = null;
+	delete a;
+	b = null;
+	delete b;
 }
 
 function depth() {
@@ -1373,6 +1463,10 @@ function depth() {
 		document.getElementById('fromdpth').style.backgroundColor = "#D1D6FE";
 		document.getElementById('todpth').style.backgroundColor = "#D1D6FE";
 	}
+	a = null;
+	delete a;
+	b = null;
+	delete b;
 }
 
 function magnitude() {
@@ -1385,6 +1479,10 @@ function magnitude() {
 		document.getElementById('frommagn').style.backgroundColor = "#D1D6FE";
 		document.getElementById('tomagn').style.backgroundColor = "#D1D6FE";
 	}
+	a = null;
+	delete a;
+	b = null;
+	delete b;
 }
 
 function hidegridmarkers() {
