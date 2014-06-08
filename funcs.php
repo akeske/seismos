@@ -22,13 +22,17 @@ for ($k=1964;$k<=2012;$k++){
 //	echo $maxnumberline;
 //	echo "<br>";
 	$i=0;
-	if ( $maxnumberline==null ) { $j=1; } else { $j=$maxnumberline; }
+	if(isset($maxnumberline)){
+		if ( $maxnumberline==null ) { $j=1; } else { $j=$maxnumberline; }
+	}
 	//$j=1;
 	foreach ($lines as $line_num => $line) {
 		if ($line_num==0 || $line_num==1) { continue; }
 		if ($line[0]=="1") { continue; }
 		if ($line[0]=="2") { continue; }
-		if ($line_num<=$maxnumberline) { continue; }
+		if(isset($maxnumberline)){
+			if ($line_num<=$maxnumberline) { continue; }
+		}
 	//	$line = htmlspecialchars($line);
 		$char=$line;
 		if( $char[2]=="" ){
@@ -67,7 +71,7 @@ for ($k=1964;$k<=2012;$k++){
 	}
 //	echo $j;
 //	break;
-	for($a=$maxnumberline;$a<$j;$a++){
+	for($a=$maxnumberline; $a<$j; $a++){
 		if( $minas[$a]=="JAN" ){
 			$month[$a]="01";
 		}
@@ -105,7 +109,7 @@ for ($k=1964;$k<=2012;$k++){
 			$month[$a]=12;
 		}
 	}
-	for($b=$maxnumberline;$b<$j;$b++) {
+	for($b=$maxnumberline; $b<$j; $b++) {
 	//	$finaldate[$b]=$etos[$b].$month[$b].$mera[$b].$wra[$b];
 		$finaldate[$b]=$etos[$b]."-".$month[$b]."-".$mera[$b]." ".$wra[$b].":".$lepta[$b].":".$deut[$b];
 	//	echo $finaldate[$b]."<br>";

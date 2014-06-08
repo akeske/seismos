@@ -1,9 +1,10 @@
 <?php
-ini_set('memory_limit', '60M');
+// ini_set('memory_limit', '120M');
 $time_start = microtime(true);
 $totalseismoi=0;
 for ($k=2013;$k<=2013;$k++){
 	$counter=0;
+//	$lines = file("earth.txt");
 	$lines = file("http://www.gein.noa.gr/HTML/Noa_cat/CAT".$k.".TXT");
 	$result = mysql_query("select max(year) from seismos");
 	$row = mysql_fetch_array($result);
@@ -16,16 +17,19 @@ for ($k=2013;$k<=2013;$k++){
 		$row = mysql_fetch_array($result);
 		$maxnumberline = $row['max(idyear)']+1;
 	}
-//	echo $maxnumberline;
-//	echo "<br>";
+	
 	$i=0;
-	if ( $maxnumberline==null ) { $j=1; } else { $j=$maxnumberline; }
+	if ( !isset($maxnumberline) ) { $j=1; $maxnumberline=1; } else { $j=$maxnumberline; }
+//	echo "num ".$j;
+//	echo "<br>";
 	//$j=1;
 	foreach ($lines as $line_num => $line) {
 		if ($line_num==0 || $line_num==1) { continue; }
 		if ($line[0]=="1") { continue; }
 		if ($line[0]=="2") { continue; }
-		if ($line_num<=$maxnumberline) { continue; }
+		if(isset($maxnumberline)){
+			if ($line_num<=$maxnumberline) { continue; }
+		}
 	//	$line = htmlspecialchars($line);
 		$char=$line;
 		$etos[$j]=$char[1].$char[2].$char[3].$char[4];
@@ -51,12 +55,14 @@ for ($k=2013;$k<=2013;$k++){
 		$long[$j]=$char[36].$char[37].$char[38].$char[39].$char[40];
 		$depth[$j]=$char[44].$char[45];
 		$magnitude[$j]=$char[55].$char[56].$char[57];
+//		echo "date".$mera[$j].":".$minas[$j]."<br>";
 		$j++;
 		$i=0;
 	}
 //	echo $j;
 //	break;
-	for($a=$maxnumberline;$a<=$j;$a++){
+	for($a=$maxnumberline; $a<$j; $a++){
+
 		if( $minas[$a]=="JAN" ){
 			$month[$a]="01";
 		}
@@ -94,9 +100,10 @@ for ($k=2013;$k<=2013;$k++){
 			$month[$a]=12;
 		}
 	}
-	for($b=$maxnumberline;$b<=$j;$b++) {
+	for($b=$maxnumberline; $b<$j; $b++) {
 	//	$finaldate[$b]=$etos[$b].$month[$b].$mera[$b].$wra[$b];
 		$finaldate[$b]=$etos[$b]."-".$month[$b]."-".$mera[$b]." ".$wra[$b].":".$lepta[$b].":".$deut[$b];
+//		echo $finaldate[$b]."<br>";
 		if ($depth[$b]<15) {
 			if ($magnitude[$b]<=2.5)
 				$type[$b]=0;
@@ -158,7 +165,7 @@ for ($k=2013;$k<=2013;$k++){
 //		echo $finaldate[$c]."--";
 //		echo $lat[$c]."-".$long[$c]."-".$depth[$c]."-".$magnitude[$c]."<br />";
 //	}
-	for($d=$maxnumberline;$d<=$j;$d++) {
+	for($d=$maxnumberline; $d<$j; $d++) {
 		if($etos[$d]!=""){
 			$sqlDb = "INSERT INTO `seismos` (`idyear`, `year`, `month`, `name`, `info`, `lat`, `lng`, `megethos`, `vathos`, `type`, `typeSize`, `date`) VALUES
 			($d, $etos[$d], $month[$d], 'Athens[$etos[$d]][$d]', '', $lat[$d], $long[$d], $magnitude[$d], $depth[$d], $type[$d], $typeSize[$d], '$finaldate[$d]' )";

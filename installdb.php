@@ -46,6 +46,7 @@ include("inc/database.php");
 						  `id` MEDIUMINT(6) NOT NULL AUTO_INCREMENT ,
 						  `idyear` MEDIUMINT(6) NULL ,
 						  `year` SMALLINT(4) NULL ,
+						  `month` SMALLINT(4) NULL ,
 						  `name` CHAR( 20 )  NULL ,
 						  `info` CHAR( 30 ) NULL ,
 						  `lat` FLOAT( 7, 4 ) NULL ,

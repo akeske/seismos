@@ -8,17 +8,72 @@
 	$sqlgroupyear = $_SESSION['sqlbyear1'.$b];
 	$result = mysql_query($sqlgroupyear);
 	$i = 0;
+	$tempyear = 0;
+	$tempx = 0;
+	$a = 0;
 	while($row = mysql_fetch_array($result)) {
 		$yearGroup[$i] = $row['year'];
 		$monthGroup[$i] = $row['month'];
-		$yAxis[$i] = $monthGroup[$i]." / ".$yearGroup[$i];
-		$totalearthquakes[$i] = $row['totalearthquakes'];
-		$min[$i] = $row['minMagn'];
-		$max[$i] = $row['maxMagn'];
-		$steps[$i] = round( $row['steps'] );
-		if($steps[$i]==0) $steps[$i]=1;
-	//	echo $steps[$i]."<br>";
+
+		if($tempyear!=0){
+			if( ($yearGroup[$i]-$tempyear)==1 ){
+				if($tempx!=12){
+					$tmp = $tempx;
+					for($aa=0; $aa<(12-$tmp); $aa++){
+						$tempx++;
+						$xAxis[$a] = $tempx;
+						$totalearthquakes[$a] = 0;
+						$min[$a] = 0;
+						$max[$a] = 0;
+						$steps[$a] = 0;
+			//			if($steps[$a]==0) $steps[$a]=1;
+						$a++;
+					}
+				}
+				$tempx = 0;
+			}
+		}
+		if( ($monthGroup[$i]-$tempx)!=1 ){
+			$counter = $monthGroup[$i]-$tempx-1;
+			$z = 0;		
+			while($z<$counter){			
+				$tempx++;
+				$xAxis[$a] = $tempx;
+				
+				$totalearthquakes[$a] = 0;
+				$min[$a] = 0;
+				$max[$a] = 0;
+				$steps[$a] = 0;
+	//			if($steps[$a]==0) $steps[$a]=1;
+
+				$z++;
+				$a++;
+			}
+		}
+		
+
+		if($tempyear == $yearGroup[$i]){
+			$xAxis[$a] = $monthGroup[$i];
+		}else{
+			$xAxis[$a] = $monthGroup[$i]." / ".$yearGroup[$i];
+			$tempyear = $yearGroup[$i];
+		}
+			
+		$totalearthquakes[$a] = $row['totalearthquakes'];
+		$min[$a] = $row['minMagn'];
+		$max[$a] = $row['maxMagn'];
+		$steps[$a] = round( $row['steps'] );
+		if($steps[$a]==0) $steps[$a]=1;
+		//	echo $steps[$i]."<br>";
+			
+		
+
+		$tempx = $monthGroup[$i];
 		$i++;
+		$a++;
+	}
+	for($y=0; $y<count($xAxis); $y++){
+	//	echo $xAxis[$y]."  ->  ".$min[$y]." ".$max[$y]."<br>";
 	}
 
 	$i = 0;
@@ -32,7 +87,7 @@
 	$DM = 0.2;
 	$x = 0;
 // echo $steps[0];
-	for($y=0; $y<count($yearGroup); $y++){
+	for($y=0; $y<count($xAxis); $y++){
 		$sumParanomastis = 0;
 	//	echo $x."--> ";
 	//	echo $y."--> ||| <br>";
@@ -46,11 +101,11 @@
 
 	//			echo $x." - ".$megethos[$x]." - ".$year[$x]." -- ";
 				if($megethos[$x]>=$min[$y] && $megethos[$x]<=$tempMax){
-	//				echo " [thesi:".$x."  step:".$i." ::".$min[$y]."-".$tempMax."  ->  ";
+	//			echo " [thesi:".$x."  step:".$i." ::".$min[$y]."-".$tempMax."  ->  ";
 					$counter++;
 					
-	//				echo $counter." , ".$megethos[$x]."]  ";
-			//		echo $megethos[$x];
+		//			echo $counter." , ".$megethos[$x]."]  ";
+		//			echo $megethos[$x];
 				}
 				$x++;
 				
@@ -66,20 +121,50 @@
 		$x += $totalearthquakes[$y];
 		if($sumParanomastis!=0){
 			$logarithmos = 1 + $totalearthquakes[$y]/$sumParanomastis;
+			$b1[$y] = round( log($logarithmos, 10)/$DM, 4);
+		}else{
+			$b1[$y] = 0;
 		}
 	//	echo " log:".$logarithmos;
-		$b1[$y] = round( log($logarithmos, 10)/$DM, 4);
+		
 	//	echo $b1[$y];
 	//	echo " <br> ";
 	//	echo " <br>-----<br> ";
 	}
 //	echo $logarithmos."   -";
-	for($y=0; $y<count($yearGroup); $y++){
-	//	echo $yAxis[$y]."  ->  ".$b1[$y]."<br>";
+/*
+	$i = 0;
+	while($rowgraph = mysql_fetch_array($resultgraph)) {
+		$megethos[$i] = $rowgraph['megethos'];
+		$year[$i] = $rowgraph['year'];
+		$i++;
+	}
+	$x = 0;
+
+	for($y=0; $y<count($xAxis); $y++){
+		$sumEnergy[$y] = 0;
+		for($z=0; $z<$totalearthquakes[$y]; $z++){
+			$energyPerMagn = 1.5*$megethos[$x]+4.7;
+
+			$energy = round(pow( pow(10, $energyPerMagn), 2/3));
+			$x++;
+			$sumEnergy[$y] += round($energy/1000000, 4);
+		//	echo $sumEnergy[$y]."<br>";
+		}
 	}
 
+
+
+	
+	for($y=0; $y<count($xAxis); $y++){
+	//	echo $xAxis[$y]."  ->  ";
+	//	echo $b1[$y]."<br>";
+	}
+*/
+//	$_SESSION['energy1']=$sumEnergy;
+
 	$_SESSION['b1']=$b1;
-	$_SESSION['year1']=$yAxis;
+	$_SESSION['year1']=$xAxis;
 	mysql_free_result($resultgraph);
 	mysql_free_result($result);
 ?>

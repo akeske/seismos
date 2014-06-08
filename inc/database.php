@@ -3,6 +3,7 @@
 /**
  * Connect to the mysql database.
 */
+error_reporting(E_ALL ^ E_DEPRECATED);
 if (!isset($_CONFIG))
     require 'config.php';
 
