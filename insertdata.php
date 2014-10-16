@@ -24,9 +24,11 @@ include("inc/database.php");
 		<?php include("menu.php"); ?>
 		<br>
 		<?php
+			$logged_in=false;
 			if($logged_in){
 				echo "Δεν είστε συνδεδεμένος";
 			}else{
+				$_SESSION['installcan'] = 0;
 				if($_SESSION['installcan'] ==0){ ?>		
 				<table align="center" border="0" width="900">
 				<tr>
@@ -42,14 +44,15 @@ include("inc/database.php");
 					</td>
 				</tr>
 				</table>
-	<?php		$query5 = "UPDATE users SET installcan=1 WHERE id=".$_SESSION['id'];
+	<?php	/*	$query5 = "UPDATE users SET installcan=1 WHERE id=".$_SESSION['id'];
 					mysql_query($query5,$con)or print("A MySQL error has occurred.<br />Your Query: " . $your_query . "<br /> Error: (" . mysql_errno() . ") " . mysql_error())."\n";
+			*/
 				}else{
 					echo "</br>";
 					echo "Έχετε κάνει εγκατάσταη τη βάση δεδομένων, οπότε δεν μπορείτε να την επαναγκαταστήσετε";
 					echo "</br>";
 					echo "Σας προτίνουμε να κάνετε <b>αναβάθμηση</b> τη βάση από <b><a href='insertdata.php'>εδώ</a></b>";
-				}
+				} 
 			?>
 <?php  } ?>
 	</div>

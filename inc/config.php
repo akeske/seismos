@@ -4,7 +4,7 @@
 	/* database settings */
 	$CFG_SERVER = "localhost";
 	$CFG_USER = "root";
-	$CFG_PASSWORD = "";
+	$CFG_PASSWORD = "root";
 	$CFG_DATABASE = "seismosdb";
 
 ?>

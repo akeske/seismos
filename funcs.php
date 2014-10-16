@@ -1,7 +1,7 @@
 <?php
 $time_start = microtime(true);
 $totalseismoi=0;
-for ($k=1964;$k<=2012;$k++){
+for ($k=1964;$k<=2013;$k++){
 	$counter=0;
 	if ( $k<1981 ) {
 		$lines = file("http://www.gein.noa.gr/HTML/Noa_cat/cat".$k.".txt");
@@ -19,7 +19,7 @@ for ($k=1964;$k<=2012;$k++){
 	$row = mysql_fetch_array($result);
 	$maxnumberline = $row['max(idyear)']+1;
 
-//	echo $maxnumberline;
+//	echo $maxnumberline."seismoi";
 //	echo "<br>";
 	$i=0;
 	if(isset($maxnumberline)){
@@ -35,8 +35,8 @@ for ($k=1964;$k<=2012;$k++){
 		}
 	//	$line = htmlspecialchars($line);
 		$char=$line;
-		if( $char[2]=="" ){
-			continue;
+		if( strlen($line)<2 ){
+			break;
 		}
 		$etos[$j]=$char[1].$char[2].$char[3].$char[4];
 		$minas[$j]=$char[6].$char[7].$char[8];
@@ -65,7 +65,7 @@ for ($k=1964;$k<=2012;$k++){
 		if( $char[55]==""){
 			$etos[$j]="";
 		}
-	//	echo $lat[$j]." ".$long[$j]." ".$depth[$j]." ".$magnitude[$j]."<br>";
+	//	echo $j."-- ".$lat[$j]." ".$long[$j]." ".$depth[$j]." ".$magnitude[$j]."<br>";
 		$j++;
 		$i=0;
 	}

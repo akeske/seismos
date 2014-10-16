@@ -2,14 +2,15 @@
 // ini_set('memory_limit', '120M');
 $time_start = microtime(true);
 $totalseismoi=0;
-for ($k=2013;$k<=2013;$k++){
+for ($k=2014;$k<=2014;$k++){
 	$counter=0;
 //	$lines = file("earth.txt");
-	$lines = file("http://www.gein.noa.gr/HTML/Noa_cat/CAT".$k.".TXT");
+	$lines = file("http://www.gein.noa.gr/services/current_catalogue.php");
+//	$lines = file("http://www.gein.noa.gr/HTML/Noa_cat/CAT".$k.".TXT");
 	$result = mysql_query("select max(year) from seismos");
 	$row = mysql_fetch_array($result);
 	$maxyear = $row['max(year)'];
-	if ( $maxyear>2012	 ){
+	if ( $maxyear>2013	 ){
 		$result = mysql_query("select max(year) from seismos");
 		$row = mysql_fetch_array($result);
 		$maxyear = $row['max(year)'];
