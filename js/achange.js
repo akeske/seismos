@@ -578,7 +578,7 @@ function load() {
 		navigationControl: false,
 
 		//	navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL},
-		mapTypeId: google.maps.MapTypeId.TERRAIN
+		mapTypeId: google.maps.MapTypeId.SATELLITE
 	};
 
 	map = new google.maps.Map(document.getElementById("map"), settings);

@@ -65,6 +65,46 @@ var iconside2 = new google.maps.MarkerImage('markers/tool2/side.png',
 );
 
 
+
+
+
+var iconline2 = new google.maps.MarkerImage('markers/tool2/red.png',
+	null,
+	null,
+	new google.maps.Point(8, 26),
+	new google.maps.Size(16, 26)
+);
+var iconline21 = new google.maps.MarkerImage('markers/tool2/red.png',
+	null,
+	null,
+	new google.maps.Point(8, 26),
+	new google.maps.Size(16, 26)
+);
+var iconver2 = new google.maps.MarkerImage('markers/tool2/red_ver.png',
+	null,
+	null,
+	new google.maps.Point(0, 8),
+	new google.maps.Size(26, 16)
+);
+var iconhor2 = new google.maps.MarkerImage('markers/tool2/red.png',
+	null,
+	null,
+	new google.maps.Point(8, 26),
+	new google.maps.Size(16, 26)
+);
+var iconcir2 = new google.maps.MarkerImage('markers/tool2/red.png',
+	null,
+	null,
+	new google.maps.Point(8, 26),
+	new google.maps.Size(16, 26)
+);
+var iconside2 = new google.maps.MarkerImage('markers/tool2/red.png',
+	null,
+	null,
+	new google.maps.Point(8, 26),
+	new google.maps.Size(16, 26)
+);
+
 function initialize2() {
 	document.getElementById('ver2').style.color='#000000';
 	document.getElementById('hor2').style.color='#be9400';
@@ -72,6 +112,13 @@ function initialize2() {
 	document.getElementById('line2').style.color='#806b7b';
 	document.getElementById('line21').style.color='#806b7b';
 	document.getElementById('side2').style.color ='#000000';
+
+	document.getElementById('ver2').style.color='#ff0000';
+	document.getElementById('hor2').style.color='#ff0000';
+	document.getElementById('cir2').style.color='#ff0000';
+	document.getElementById('line2').style.color='#ff0000';
+	document.getElementById('line21').style.color='#ff0000';
+	document.getElementById('side2').style.color ='#ff0000';
 	
 	getdistancesCircle2();
 	getdistancesVer2();
@@ -375,10 +422,10 @@ function drawSides2(x1, y1, x2, y2) {
 
 	var sidePath = new google.maps.Polyline({
 		path: side2coordinates2,
-		strokeColor: "#000000",
+		strokeColor: "#ff0000",
 		strokeOpacity: 1,
 		//	geodesic: true,
-		strokeWeight: 1
+		strokeWeight: 2
 	});
 	sidePath.setMap(map);
 	return sidePath;
@@ -441,9 +488,9 @@ function fib_circles2(coordinates2) {
 
 function drawCircle2(x, y, radius) {
 	var options = {
-		strokeColor: "#c11147",
-		strokeOpacity: 0.8,
-		strokeWeight: 1,
+		strokeColor: "#ff0000",
+		strokeOpacity: 1,
+		strokeWeight: 2,
 		fillOpacity: 0.0,
 		map: map,
 		center: new google.maps.LatLng(x, y),
@@ -525,10 +572,10 @@ function drawlines2(y1) {
 
 	var linePath = new google.maps.Polyline({
 		path: lines2coordinates2,
-		strokeColor: "#000000",
-		strokeOpacity: 0.8,
+		strokeColor: "#ff0000",
+		strokeOpacity: 1,
 	//	geodesic: true,
-		strokeWeight: 1
+		strokeWeight: 2
 	});
 
 	linePath.setMap(map);
@@ -605,10 +652,10 @@ function drawlines22(y1) {
 
 	var linePath = new google.maps.Polyline({
 		path: lines2coordinates2,
-		strokeColor: "#be9400",
-		strokeOpacity: 0.8,
+		strokeColor: "#ff0000",
+		strokeOpacity: 1,
 	//	geodesic: true,
-		strokeWeight: 1
+		strokeWeight: 2
 	});
 
 	linePath.setMap(map);
@@ -668,10 +715,10 @@ function drawline2(x1, y1, x2, y2) {
 
 	var linePath = new google.maps.Polyline({
 		path: lines1coordinates2,
-		strokeColor: "#806b7b",
-		strokeOpacity: 0.8,
+		strokeColor: "#ff0000",
+		strokeOpacity: 1,
 	//	geodesic: true,
-		strokeWeight: 1
+		strokeWeight: 2
 	});
 
 	linePath.setMap(map);
@@ -730,10 +777,10 @@ function drawline21(x1, y1, x2, y2) {
 
 	var linePath = new google.maps.Polyline({
 		path: lines1coordinates2,
-		strokeColor: "#806b7b",
-		strokeOpacity: 0.8,
+		strokeColor: "#ff0000",
+		strokeOpacity: 1,
 	//	geodesic: true,
-		strokeWeight: 1
+		strokeWeight: 2
 	});
 
 	linePath.setMap(map);
