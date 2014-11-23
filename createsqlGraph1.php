@@ -55,7 +55,7 @@
 		megethos>=$frommagn AND megethos<=$tomagn
 		ORDER BY year, month, megethos";	
 	$_SESSION['sqlb1'.$k1]=$sqlb1;
-	$sqlbyear1 = "SELECT year, month, megethos COUNT(*) AS totalearthquakes,
+	$sqlbyear1 = "SELECT year, month, megethos, COUNT(*) AS totalearthquakes,
 		MAX(megethos) AS maxMagn, MIN(megethos) AS minMagn,
 		( MAX( megethos ) - MIN( megethos ) ) / 0.2 AS steps FROM seismos
 		WHERE date>=$fromdate1 AND date<=$todate1 AND 

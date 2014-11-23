@@ -2,10 +2,10 @@
 	session_start();
 	include("../inc/database.php");
 	$b=$_GET['b1'];
-	$sqlgraph = $_SESSION['sqlb1'.$b];
-	$resultgraph = mysql_query($sqlgraph);
-
+	$sql = $_SESSION['sqlb1'.$b];
+	$resultgraph = mysql_query($sql);
 	$sqlgroupyear = $_SESSION['sqlbyear1'.$b];
+
 	$result = mysql_query($sqlgroupyear);
 	$i = 0;
 	$tempyear = 0;

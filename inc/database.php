@@ -9,7 +9,7 @@ if (!isset($_CONFIG))
 	
 $CFG_SERVER = "localhost";
 $CFG_USER = "root";
-$CFG_PASSWORD = "root";
+$CFG_PASSWORD = "";
 $CFG_DATABASE = "seismosdb";
 
 $con=mysql_connect ($CFG_SERVER, $CFG_USER, $CFG_PASSWORD)
