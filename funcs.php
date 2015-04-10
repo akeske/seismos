@@ -1,7 +1,7 @@
 <?php
 $time_start = microtime(true);
 $totalseismoi=0;
-for ($k=1964;$k<=2013;$k++){
+for ($k=1964;$k<=2014;$k++){
 	$counter=0;
 	if ( $k<1981 ) {
 		$lines = file("http://www.gein.noa.gr/HTML/Noa_cat/cat".$k.".txt");
