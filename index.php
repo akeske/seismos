@@ -34,7 +34,7 @@ include("inc/database.php");
 					<?php
 					echo "<br>";
 					include("funcs_update.php");
-					echo (" <meta http-equiv='refresh' content='2;url=index2.php'> ");
+				//	echo (" <meta http-equiv='refresh' content='2;url=index2.php'> ");
 					?>
 				</div>
 			</td>
