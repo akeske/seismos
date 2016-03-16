@@ -436,7 +436,7 @@ function getColor(named) {
 */
 
 function getIcon(color) {
-	return new google.maps.MarkerImage('http://google.com/mapfiles/ms/micons/' + color + '.png',
+	return new google.maps.MarkerImage('http:// google.com/mapfiles/ms/micons/' + color + '.png',
 		new google.maps.Size(32, 32),
 		new google.maps.Point(0, 0)
 	);
@@ -536,29 +536,26 @@ var lab = [];
 
 var coordinatesSpecialMarker;
 function specialMarkers(){
+
 	var specMarker;
 	
 	var listenSpecial = google.maps.event.addListener(map, 'click', function (event) {
-		
-		coordinatesSpecialMarker = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
-		alert(coordinatesSpecialMarker);
-		
+		coordinatesSpecialMarker = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());		
 	});
-var point1 = new google.maps.LatLng(44, 19);
-alert(coordinatesSpecialMarker);
-//	google.maps.event.removeListener(listenSpecial);
-	specMarker = new google.maps.Marker({
-		position: point1,
-		map: map,
-		title: 'scecialMarker',
-		clickable: false,
-		//	icon: startYellow,
-		draggable: true
-	});
+	var point1 = new google.maps.LatLng(44, 19);
+	//	google.maps.event.removeListener(listenSpecial);
+		specMarker = new google.maps.Marker({
+			position: point1,
+			map: map,
+			title: 'scecialMarker',
+			clickable: false,
+			//	icon: startYellow,
+			draggable: true
+		});
 
-	google.maps.event.addListener(specMarker, 'dragend', function () {
-		
-	});
+		google.maps.event.addListener(specMarker, 'dragend', function () {
+			
+		});
 }
 google.maps.event.addDomListener(window, 'load', specialMarkers);
 function load() {
@@ -600,7 +597,7 @@ function load() {
 		map: map,
 		title: 'start',
 		clickable: false,
-		icon: getIcon("orange"),
+		// icon: getIcon("red"),
 		//	icon: startYellow,
 		draggable: true
 	});
@@ -609,7 +606,7 @@ function load() {
 		map: map,
 		title: 'end',
 		clickable: false,
-		icon: getIcon("orange"),
+		// icon: getIcon("orange"),
 		//	icon: startYellow,
 		draggable: true
 	});

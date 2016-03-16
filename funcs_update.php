@@ -2,7 +2,7 @@
 // ini_set('memory_limit', '120M');
 $time_start = microtime(true);
 $totalseismoi=0;
-for ($k=2014;$k<=2014;$k++){
+for ($k=2015;$k<=2015;$k++){
 	$counter=0;
 //	$lines = file("earth.txt");
 	$lines = file("http://www.gein.noa.gr/services/current_catalogue.php");

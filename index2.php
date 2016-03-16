@@ -26,7 +26,7 @@ include("inc/database.php");
 
 	<script type="text/javascript" src="js/tcal.js"></script>
 
-	<script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3&amp;sensor=false"></script>
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3"></script>
 
 	<script type="text/javascript" src="js/achange.js"></script>
 	<script type="text/javascript" src="js/util.js"></script>
