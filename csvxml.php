@@ -18,13 +18,13 @@
 	//	$line = str_replace(',', '.', $line);
 	//	echo $line;
 		if ($line_num==0) {
-			$pieces = explode(",", $line);
+			// $pieces = explode(",", $line);
 			
-			$j=0;
-			for($i=2; $i<sizeof($pieces)-1; $i++){
-				$lon[$j] = $pieces[$i];
-				$j++;
-			}
+			// $j=0;
+			// for($i=2; $i<sizeof($pieces)-1; $i++){
+			// 	$lon[$j] = $pieces[$i];
+			// 	$j++;
+			// }
 			
 			/*
 			for($i=0; $i<sizeof($lon); $i++){
@@ -34,20 +34,21 @@
 			echo "<br><br>";
 			*/
 		}else{
-			$pieces = explode(",", $line);
-			$col = 0;
+			$pieces = explode(";", $line);
+			$data[$row][0] = $pieces[0];
+			$data[$row][1] = $pieces[1];
 			
-			if( $line_num != sizeof($lines)-1 ) {
-				$lat[$la] = $pieces[1];
-				$la++;
+			// if( $line_num != sizeof($lines)-1 ) {
+			// 	$lat[$la] = $pieces[1];
+			// 	$la++;
 			
-				for($i=2; $i<sizeof($pieces)-1; $i++){
-					if( $pieces[$i]=="" ) $pieces[$i]=0;
-					$data[$row][$col] = $pieces[$i];
-					$col++;
-				}
+				// for($i=2; $i<sizeof($pieces)-1; $i++){
+				// 	if( $pieces[$i]=="" ) $pieces[$i]=0;
+				// 	$data[$row][$col] = $pieces[$i];
+				// 	$col++;
+				// }
 				$row++;
-			}
+			// }
 			
 		}
 	}
@@ -68,19 +69,34 @@
 	}
 	*/
 	
-	echo '<markers>';
-	$j=1;
-	for($row=0; $row<sizeof($data); $row++){
-		for($col=0; $col<sizeof($data[$row]); $col++){
-			echo '<marker ';
-			echo 'id="' . $j . '" ';
-			echo 'lat="' . $lat[$row] . '" ';
-			echo 'lng="' . $lon[$col] . '" ';
-			echo 'num="' . $data[$row][$col] . '" ';
-			echo '/>';
+	// echo '<markers>';
+	// $j=1;
+	// for($row=0; $row<sizeof($data); $row++){
+	// 	for($col=0; $col<sizeof($data[$row]); $col++){
+	// 		echo '<marker ';
+	// 		echo 'id="' . $j . '" ';
+	// 		echo 'lat="' . $lat[$row] . '" ';
+	// 		echo 'lng="' . $lon[$col] . '" ';
+	// 		echo 'num="' . $data[$row][$col] . '" ';
+	// 		echo '/>';
 			
-			$j++;
-		}
+	// 		$j++;
+	// 	}
+	// }
+	// echo '</markers>';
+
+
+
+
+
+	echo '<markers>';	// for($row=0; $row<sizeof($data); $row++){
+	for($row=0; $row<sizeof($data); $row++){
+		echo '<marker ';
+		echo 'lat="' . $data[$row][0] . '" ';
+		echo 'lng="' . $data[$row][1] . '" ';
+		echo '/>';
+			// $j++;
+		// }
 	}
 	echo '</markers>';
 ?>

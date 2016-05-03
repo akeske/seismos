@@ -873,32 +873,32 @@ Magnitude	   Released Energy (to the nearest integer)
 		}
 	});
 
+	
 	downloadUrl("csvxml.php", function (data) {
 		var max=-9999;
 		var min=9999;
 		var markersXML = data.documentElement.getElementsByTagName("marker");
+		// for(i = fromPred; i <= toPred; i++) {
 		for(i = 0; i < markersXML.length; i++) {
-			var id = markersXML[i].getAttribute("id");
-			var num = markersXML[i].getAttribute("num");
+			// var id = markersXML[i].getAttribute("id");
+			// var num = markersXML[i].getAttribute("num");
 			var lat = markersXML[i].getAttribute("lat");
 			var lng = markersXML[i].getAttribute("lng");
 			var latlng = new google.maps.LatLng(parseFloat(markersXML[i].getAttribute("lat")),
 					parseFloat(markersXML[i].getAttribute("lng")));
 
-			var fromPred = parseInt( document.getElementById('fromPred').value );
-			var toPred = parseInt( document.getElementById('toPred').value );
-
-			if( num>=fromPred && num<=toPred){
-				var marker = createMarkerPred(id, latlng, num);
+			// if( num>=fromPred && num<=toPred){
+				// var marker = createMarkerPred(id, latlng, num);
+				var marker = createMarkerPred(i, latlng);
 				markersPredictions.push( marker );
-			}
-			num = parseInt( num );
-			if( num>max ){
-				max = num;
-			}
-			if( num<min ){
-				min = num;
-			}
+			// }
+			// num = parseInt( num );
+			// if( num>max ){
+			// 	max = num;
+			// }
+			// if( num<min ){
+			// 	min = num;
+			// }
 		}
 		counterPredictions = markersPredictions.length;
 		document.getElementById("predInfo").innerHTML = min+"&nbsp;->&nbsp;"+max+"&nbsp;&nbsp;";
@@ -1130,11 +1130,10 @@ function prevMarker() {
 	}
 }
 
-function createMarkerPred(id, latlng, num) {
+function createMarkerPred(id, latlng) {
 	var marker = new google.maps.Marker({
 		position: latlng,
 		map: null,
-		title: num,
 		clickable: true,
 		icon: customIcons[6]
 	});
@@ -1145,18 +1144,20 @@ function predictionsDisplay(){
 		document.getElementById("predShowHide").value = 1;
 		document.getElementById("predictionsDisplay").innerHTML = "Show&nbsp;predictions";
 		counterPredictions = 0;
-		setAllMapPred(null);
+		setAllMapPred(null, 0, markersPredictions.length);
 	}else{
 		document.getElementById("predShowHide").value = 0;
 		document.getElementById("predictionsDisplay").innerHTML = "Hide&nbsp;predictions";
 		counterPredictions = markersPredictions.length;
-		setAllMapPred(map);
+		var fromPred = parseInt( document.getElementById('fromPred').value );
+		var toPred = parseInt( document.getElementById('toPred').value );
+		setAllMapPred(map, fromPred, toPred);
 	}
 }
-function setAllMapPred(map) {
-  for (var i = 0; i < markersPredictions.length; i++) {
-	markersPredictions[i].setMap(map);
-  }
+function setAllMapPred(map, fromPred, toPred) {
+	for (var i = fromPred; i <= toPred; i++) {
+		markersPredictions[i].setMap(map);
+	}
 }
 
 
